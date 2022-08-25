@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,4 +24,7 @@ public class Theater {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
+
+    @OneToMany(mappedBy = "theater")
+    private final List<Screen> screens = new ArrayList<>();
 }

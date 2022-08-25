@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,4 +23,9 @@ public class Movie {
     @Column(name = "film_rating")
     private int filmRating;
     private int runtime;
+
+    @OneToMany(mappedBy = "movie")
+    private final List<Screen> screens = new ArrayList<>();
+
+
 }
