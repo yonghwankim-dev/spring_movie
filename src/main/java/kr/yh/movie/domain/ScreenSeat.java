@@ -20,7 +20,7 @@ public class ScreenSeat {
     private Long id;
     private ScreenSeatStatus status;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
@@ -34,7 +34,11 @@ public class ScreenSeat {
 
     //== 연관 관계 메서드 ==//
     public void setReservation(Reservation reservation){
+        if(this.reservation != null){
+            this.reservation.getScreenSeats().remove(this);
+        }
         this.reservation = reservation;
+        reservation.getScreenSeats().add(this);
     }
 
     public void setScreen(Screen screen){

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,15 +27,12 @@ public class Reservation {
     @Column(name = "reserved_datetime")
     private LocalDateTime reservedDateTime; // 예매시간
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "screen_seat_id")
-    private ScreenSeat screenSeat;      // 상영좌석정보
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ScreenSeat> screenSeats = new ArrayList<>(); // 상영좌석정보들
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;    // 회원정보
-
-
 
     //== 연관 관계 메서드 ==//
     public void setMember(Member member){
@@ -44,14 +43,20 @@ public class Reservation {
         member.getReservations().add(this);
     }
 
-    public void setScreenSeat(ScreenSeat screenSeat){
-        this.screenSeat = screenSeat;
-        screenSeat.setReservation(this);
+    //== 생성 메서드 ==//
+    public static Reservation createReservation(Member member, ScreenSeat screenSeat, int reservedPrice, Person person){
+        Reservation reservation = Reservation.builder()
+                                             .reservedPrice(reservedPrice)
+                                             .reservedDateTime(LocalDateTime.now())
+                                             .person(person)
+                                             .build();
+
+        reservation.setMember(member);
+        return reservation;
     }
 
-    //== 생성 메서드 ==//
-
     //== 비즈니스 로직 ==//
+    // 예매취소
     //== 조회 로직 ==//
 
 }
