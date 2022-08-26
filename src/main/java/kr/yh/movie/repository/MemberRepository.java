@@ -23,4 +23,13 @@ public class MemberRepository {
     public List<Member> findAll(){
         return em.createQuery("select m from Member m", Member.class).getResultList();
     }
+
+    public void modifyOne(Member member){
+        Member findMember = findOne(member.getId());
+        findMember.changeInfo(member);
+    }
+
+    public void deleteOne(Long id){
+        em.remove(findOne(id));
+    }
 }
