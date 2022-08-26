@@ -33,4 +33,16 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private final List<Reservation> reservations = new ArrayList<>();
+
+    //== 수정 로직 ==//
+    public void changeInfo(Member member){
+        this.name = member.name;
+        this.birthday = member.birthday;
+        this.phone = member.phone;
+        this.address = member.address;
+        this.email = member.email;
+        this.userId = member.userId;
+        this.password = member.password;
+        this.gender = member.gender;
+    }
 }
