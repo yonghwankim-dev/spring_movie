@@ -30,4 +30,13 @@ public class Theater {
 
     @OneToMany(mappedBy = "theater")
     private final List<Screen> screens = new ArrayList<>();
+
+    //== 연관 관계 메서드 ==//
+    public void setCinema(Cinema cinema){
+        if(this.cinema != null){
+            this.cinema.getTheaters().remove(this);
+        }
+        this.cinema = cinema;
+        cinema.getTheaters().add(this);
+    }
 }
