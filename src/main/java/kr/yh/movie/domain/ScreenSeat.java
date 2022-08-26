@@ -18,6 +18,7 @@ public class ScreenSeat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "screen_seat_id")
     private Long id;
+    @Enumerated(EnumType.STRING)
     private ScreenSeatStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -55,6 +56,12 @@ public class ScreenSeat {
         }
         this.seat = seat;
         seat.getScreenSeats().add(this);
+    }
+
+    //== 비즈니스 로직 ==//
+    // 상영좌석취소
+    public void cancel(){
+        this.status = ScreenSeatStatus.EMPTY;
     }
 
 }

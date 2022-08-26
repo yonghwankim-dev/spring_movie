@@ -26,7 +26,10 @@ public class Reservation {
     private Person person;    // 예매 인원정보
     @Column(name = "reserved_datetime")
     private LocalDateTime reservedDateTime; // 예매시간
-
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus status; // 예매상태
+    
+    
     @OneToMany(cascade = CascadeType.ALL)
     private List<ScreenSeat> screenSeats = new ArrayList<>(); // 상영좌석정보들
 
@@ -57,6 +60,26 @@ public class Reservation {
 
     //== 비즈니스 로직 ==//
     // 예매취소
-    //== 조회 로직 ==//
+    public void cancel(){
+        if(isExpiredReservation()){
+            throw new IllegalStateException("이미 만료된 예매입니다.");
+        }
+        if(isCanceledReservation()){
+            throw new IllegalStateException("이미 취소된 예매입니다.");
+        }
+        this.status = ReservationStatus.CANCEL;
+        for(ScreenSeat screenSeat : screenSeats){
+            screenSeat.cancel();
+        }
+    }
 
+    //== 조회 로직 ==//
+    // 예매가 만료되었는지 조회
+    private boolean isExpiredReservation(){
+        return status == ReservationStatus.EXPIRED;
+    }
+    // 예매가 취소되었는지 조회
+    private boolean isCanceledReservation(){
+        return status == ReservationStatus.CANCEL;
+    }
 }
