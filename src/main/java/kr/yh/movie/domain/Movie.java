@@ -26,6 +26,4 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie")
     private final List<Screen> screens = new ArrayList<>();
-
-
 }

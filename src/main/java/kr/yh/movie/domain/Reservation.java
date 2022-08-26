@@ -25,13 +25,15 @@ public class Reservation {
     @Column(name = "reserved_datetime")
     private LocalDateTime reservedDateTime; // 예매시간
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "screen_seat_id")
+    private ScreenSeat screenSeat;      // 상영좌석정보
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;    // 회원정보
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "screen_seat_id")
-    private ScreenSeat screenSeat;      // 상영좌석정보
+
 
     //== 연관 관계 메서드 ==//
     public void setMember(Member member){
