@@ -25,10 +25,10 @@ public class Theater {
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
 
-    @OneToMany(mappedBy = "theater")
+    @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
     private final List<Seat> seats = new ArrayList<>();
 
-    @OneToMany(mappedBy = "theater")
+    @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
     private final List<Screen> screens = new ArrayList<>();
 
     //== 연관 관계 메서드 ==//

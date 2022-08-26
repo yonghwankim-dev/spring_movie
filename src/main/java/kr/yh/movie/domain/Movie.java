@@ -24,6 +24,6 @@ public class Movie {
     private int filmRating;
     private int runtime;
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private final List<Screen> screens = new ArrayList<>();
 }

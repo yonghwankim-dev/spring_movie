@@ -24,7 +24,7 @@ public class Screen {
     private LocalDateTime startDateTime;   // 상영시작시간
     private int round;                      // 상영회차
 
-    @OneToMany(mappedBy = "screen")
+    @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL)
     private List<ScreenSeat> screenSeats = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

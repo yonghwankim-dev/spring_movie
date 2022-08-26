@@ -22,6 +22,6 @@ public class Cinema {
     private String name;        // 이름
     private String location;    // 지역
 
-    @OneToMany(mappedBy = "cinema")
+    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
     private final List<Theater> theaters = new ArrayList<Theater>();
 }

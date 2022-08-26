@@ -31,7 +31,7 @@ public class Member {
     private String password;	// 회원비밀번호
     private String gender;		// 회원성별
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private final List<Reservation> reservations = new ArrayList<>();
 
     //== 수정 로직 ==//

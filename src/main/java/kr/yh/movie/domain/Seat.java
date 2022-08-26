@@ -22,7 +22,7 @@ public class Seat {
     private String row;
     private String col;
 
-    @OneToMany(mappedBy = "seat")
+    @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL)
     private List<ScreenSeat> screenSeats = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

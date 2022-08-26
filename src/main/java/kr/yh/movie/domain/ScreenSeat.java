@@ -20,7 +20,7 @@ public class ScreenSeat {
     private Long id;
     private ScreenSeatStatus status;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 

@@ -25,7 +25,7 @@ public class Reservation {
     @Column(name = "reserved_datetime")
     private LocalDateTime reservedDateTime; // 예매시간
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "screen_seat_id")
     private ScreenSeat screenSeat;      // 상영좌석정보
 
@@ -48,7 +48,9 @@ public class Reservation {
         this.screenSeat = screenSeat;
         screenSeat.setReservation(this);
     }
+
     //== 생성 메서드 ==//
+
     //== 비즈니스 로직 ==//
     //== 조회 로직 ==//
 
