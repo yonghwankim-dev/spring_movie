@@ -18,8 +18,8 @@ public class Screen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "screen_id")
     private Long id;                       // 상영번호
+    @Column(name = "start_datetime")
     private LocalDateTime startDateTime;   // 상영시작시간
-//    private LocalDateTime finishDateTime;// 상영종료시간, 상영종료시간 = 상영시작시간 + 영화상영시간
     private int round;                      // 상영회차
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -26,8 +26,8 @@ public class Theater {
     private Cinema cinema;
 
     @OneToMany(mappedBy = "theater")
-    private final List<Screen> screens = new ArrayList<>();
+    private final List<Seat> seats = new ArrayList<>();
 
     @OneToMany(mappedBy = "theater")
-    private final List<Screen> seats = new ArrayList<>();
+    private final List<Screen> screens = new ArrayList<>();
 }
