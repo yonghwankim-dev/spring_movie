@@ -28,8 +28,7 @@ public class Reservation {
     private LocalDateTime reservedDateTime; // 예매시간
     @Enumerated(EnumType.STRING)
     private ReservationStatus status; // 예매상태
-    
-    
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<ScreenSeat> screenSeats = new ArrayList<>(); // 상영좌석정보들
 
