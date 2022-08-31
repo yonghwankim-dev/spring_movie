@@ -1,5 +1,6 @@
 package kr.yh.movie.domain;
 
+import kr.yh.movie.controller.MemberForm;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,6 +34,22 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private final List<Reservation> reservations = new ArrayList<>();
+
+    //== 생성 로직 ==//
+    public static Member createMember(MemberForm form){
+        Member member = Member.builder()
+                              .name(form.getName())
+                              .birthday(form.getBirthday())
+                              .phone(form.getPhone())
+                              .address(new Address(form.getCity(), form.getStreet(), form.getZipcode()))
+                              .email(form.getEmail())
+                              .userId(form.getUserId())
+                              .password(form.getPassword())
+                              .gender(form.getGender())
+                              .build();
+
+        return member;
+    }
 
     //== 수정 로직 ==//
     public void changeInfo(Member member){
