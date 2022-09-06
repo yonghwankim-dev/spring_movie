@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.awt.print.Book;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
     private String name;		// 회원이름
-    private LocalDateTime birthday;	// 회원생년월일
+    private LocalDate birthday;	// 회원생년월일
     private String phone;		// 회원핸드폰번호
     @Embedded
     private Address address;	// 회원주소
@@ -41,7 +42,7 @@ public class Member {
                               .name(form.getName())
                               .birthday(form.getBirthday())
                               .phone(form.getPhone())
-                              .address(new Address(form.getCity(), form.getStreet(), form.getZipcode()))
+                              .address(new Address(form.getZipcode(), form.getStreet(), form.getDetail()))
                               .email(form.getEmail())
                               .userId(form.getUserId())
                               .password(form.getPassword())

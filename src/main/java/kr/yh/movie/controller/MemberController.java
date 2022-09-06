@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -27,13 +28,13 @@ class MemberController {
     }
 
     @PostMapping("/members/new")
-    public String create(@Valid MemberForm memberForm, Errors errors, Model model){
-        if(errors.hasErrors()){
+    public String create(@Valid MemberForm memberForm, BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors()){
             // 회원가입 실패시 데이터 유지
             model.addAttribute("memberForm", memberForm);
-            Map<String, String> validatorResult = memberService.validateHandling(errors);
+            Map<String, String> validatorResult = memberService.validateHandling(bindingResult);
             for(String key : validatorResult.keySet()){
-                model.addAttribute(key, validatorResult.get(key))
+                model.addAttribute(key, validatorResult.get(key));
             }
             return "members/createMemberForm";
         }

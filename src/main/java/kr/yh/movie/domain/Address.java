@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Address {
-    private String city;        // 도시
-    private String street;      // 거리
     private String zipcode;     // 우편번호
+    private String street;      // 주소
+    private String detail;      // 상세주소
 }

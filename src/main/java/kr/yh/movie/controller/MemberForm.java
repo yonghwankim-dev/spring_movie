@@ -1,23 +1,30 @@
 package kr.yh.movie.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
+@Setter
 public class MemberForm {
     @NotEmpty(message = "회원 이름을 입력해주세요")
     private String name;
-    @NotEmpty(message = "생년월일을 입력해주세요")
-    private LocalDateTime birthday;
+    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
+    private LocalDate birthday;
     @NotEmpty(message = "핸드폰 번호를 입력해주세요")
     private String phone;
-    private String city;
-    private String street;
+    @NotEmpty(message = "주소를 입력해주세요")
     private String zipcode;
+    @NotEmpty(message = "주소를 입력해주세요")
+    private String street;
+    private String detail;
     @NotEmpty(message = "이메일을 입력해주세요")
     @Email(message = "이메일 형식이 올바르지 않습니다")
     private String email;
