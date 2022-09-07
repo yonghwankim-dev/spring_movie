@@ -4,6 +4,7 @@ import kr.yh.movie.domain.Address;
 import kr.yh.movie.domain.Member;
 import kr.yh.movie.service.MemberService;
 import kr.yh.movie.validator.CheckEmailValidator;
+import kr.yh.movie.validator.CheckPasswordEqualValidator;
 import kr.yh.movie.validator.CheckPhoneValidator;
 import kr.yh.movie.validator.CheckUserIdValidator;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ class MemberController {
     private final CheckUserIdValidator checkUserIdValidator;
     private final CheckPhoneValidator checkPhoneValidator;
     private final CheckEmailValidator checkEmailValidator;
+    private final CheckPasswordEqualValidator checkPasswordEqualValidator;
 
     // 커스텀 유효성 검증을 위해 추가
     @InitBinder
@@ -35,6 +37,7 @@ class MemberController {
         binder.addValidators(checkUserIdValidator);
         binder.addValidators(checkPhoneValidator);
         binder.addValidators(checkEmailValidator);
+        binder.addValidators(checkPasswordEqualValidator);
     }
 
     @GetMapping("/members/new")
@@ -57,11 +60,6 @@ class MemberController {
             // 회원가입 페이지로 다시 리턴
             return "members/createMemberForm";
         }
-
-        // 핸드폰번호, 이메일, 아이디 중복 여부 검사
-        memberService.checkPhoneDuplication(memberForm);
-        memberService.checkEmailDuplication(memberForm);
-        memberService.checkUserIdDuplication(memberForm);
 
         Member member = Member.createMember(memberForm);
         memberService.signUp(member);

@@ -61,9 +61,4 @@ public class MemberRepository {
                 .getResultList();
         return members.stream().findAny().isPresent();
     }
-
-
-
-
-
 }

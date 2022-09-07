@@ -36,32 +36,6 @@ public class MemberService {
         return validatorResult;
     }
 
-    // 아이디 중복 여부 확인
-    public void checkUserIdDuplication(MemberForm memberForm){
-        boolean userIdDuplicate = memberRepository.existByUserId(memberForm.getUserId());
-        if(userIdDuplicate){
-            throw new IllegalStateException("이미 존재하는 아이디입니다.");
-        }
-    }
-
-    // 핸드폰번호 중복 여부 확인
-    public void checkPhoneDuplication(MemberForm memberForm){
-        boolean phoneDuplicate = memberRepository.existByPhone(memberForm.getPhone());
-        if(phoneDuplicate){
-            throw new IllegalStateException("이미 존재하는 핸드폰번호입니다.");
-        }
-    }
-
-    // 이메일 중복 여부 확인
-    public void checkEmailDuplication(MemberForm memberForm){
-        boolean emailDuplicate = memberRepository.existByEmail(memberForm.getEmail());
-        if(emailDuplicate){
-            throw new IllegalStateException("이미 존재하는 이메일입니다.");
-        }
-    }
-
-
-
     // 로그인
     public void login(Member member){
 
