@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class MemberForm {
     @NotEmpty(message = "회원 이름을 입력해주세요")
     private String name;
-    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
     @NotEmpty(message = "핸드폰 번호를 입력해주세요")
     private String phone;
