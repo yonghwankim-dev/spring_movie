@@ -24,6 +24,8 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.POST, "/members/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
+                .formLogin().loginPage("/login").successForwardUrl("/")
+                .and()
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }
