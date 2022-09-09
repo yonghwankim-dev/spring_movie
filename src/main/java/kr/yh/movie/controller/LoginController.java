@@ -20,6 +20,7 @@ public class LoginController {
 
     @PostMapping
     public String login(){
+
         return "redirect:/";
     }
 }

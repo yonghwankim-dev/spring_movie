@@ -12,10 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -47,11 +44,8 @@ public class MemberController {
     }
 
     @PostMapping("/new")
-    public String create(@Valid MemberForm memberForm, Errors errors, Model model){
+    public String create(@Valid @ModelAttribute MemberForm memberForm, Errors errors, Model model){
         if(errors.hasErrors()){
-            // 회원가입 실패시 입력 데이터 값을 유지
-            model.addAttribute("memberForm", memberForm);
-
             // 유효성 통과 못한 필드와 메시지를 핸들링
             Map<String, String> validatorResult = memberService.validateHandling(errors);
             for(String key : validatorResult.keySet()){
