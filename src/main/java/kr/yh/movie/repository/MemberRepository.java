@@ -1,11 +1,12 @@
 package kr.yh.movie.repository;
 
-import kr.yh.movie.domain.Member;
+import kr.yh.movie.domain.member.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -60,5 +61,14 @@ public class MemberRepository {
                 .setParameter("userId",userId)
                 .getResultList();
         return members.stream().findAny().isPresent();
+    }
+
+    @Transactional
+    public int updateMemberLastLogin(String userId, LocalDateTime lastLoginTime){
+        int result = em.createQuery("update Member m set m.lastLoginTime = :lastLoginTime where m.userId = :userId", Member.class)
+                        .setParameter("lastLoginTime", lastLoginTime)
+                        .setParameter("userId", userId)
+                        .executeUpdate();
+        return result;
     }
 }

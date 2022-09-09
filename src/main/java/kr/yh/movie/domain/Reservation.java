@@ -1,5 +1,6 @@
 package kr.yh.movie.domain;
 
+import kr.yh.movie.domain.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

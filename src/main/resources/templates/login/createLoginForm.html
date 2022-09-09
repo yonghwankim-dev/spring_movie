@@ -4,26 +4,30 @@
 <body class="text-center">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
     <main class="form-signin w-50 m-auto">
-        <form role="form" th:action="@{/login}" th:object="${loginForm}" method="post">
+        <form method="post">
             <h1 class="h3 mb-3 fw-normal">Login</h1>
+
+            <div th:if="${param.error}">
+                <p th:text="${param.exception}" class="alert alert-danger"></p>
+            </div>
 
             <div class="form-floating">
                 <label th:for="userId">
                     UserId
                 </label>
-                <input type="text" class="form-control" th:field="*{userId}"/>
+                <input type="text" class="form-control" id="userId" name="userId"/>
 
             </div>
             <div class="form-floating">
                 <label th:for="password">
                     Password
                 </label>
-                <input type="password" class="form-control" th:field="*{password}">
+                <input type="password" class="form-control" id="password" name="password">
             </div>
 
             <div class="checkbox mb-3">
                 <label th:for="remember_me">
-                    <input type="checkbox" th:field="*{remember_me}" value="remember-me"> Remember me
+                    <input type="checkbox" id="remember-me" name="remember-me" value="remember-me"> Remember me
                 </label>
             </div>
             <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>

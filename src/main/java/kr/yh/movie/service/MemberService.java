@@ -1,13 +1,13 @@
 package kr.yh.movie.service;
 
-import kr.yh.movie.controller.MemberForm;
-import kr.yh.movie.domain.Member;
+import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
@@ -17,7 +17,7 @@ import java.util.Map;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class MemberService {
+public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     // 회원가입
@@ -36,9 +36,15 @@ public class MemberService {
         return validatorResult;
     }
 
-    // 로그인
-    public void login(Member member){
+    @Override
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        Member member = memberRepository.findOneByUserId(userId);
 
+        if(member == null){
+            throw new UsernameNotFoundException("회원이 존재하지 않습니다.");
+        }
+
+        return member;
     }
 
     // 로그아웃
