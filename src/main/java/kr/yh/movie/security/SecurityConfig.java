@@ -19,11 +19,12 @@ import org.springframework.security.web.header.writers.frameoptions.XFrameOption
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable();
         http.authorizeHttpRequests() // 권한요청 처리 설정 메서드
                 .antMatchers("/**","members/**", "/h2-console/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/members/**").permitAll();
-
+                .antMatchers(HttpMethod.POST, "/members/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 

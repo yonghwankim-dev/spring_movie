@@ -15,13 +15,15 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/members")
 @RequiredArgsConstructor
-class MemberController {
+public class MemberController {
 
     private final MemberService memberService;
     private final CheckUserIdValidator checkUserIdValidator;
@@ -38,13 +40,13 @@ class MemberController {
         binder.addValidators(checkPasswordEqualValidator);
     }
 
-    @GetMapping("/members/new")
+    @GetMapping("/new")
     public String createForm(Model model){
         model.addAttribute("memberForm", new MemberForm());
         return "members/createMemberForm";
     }
 
-    @PostMapping("/members/new")
+    @PostMapping("/new")
     public String create(@Valid MemberForm memberForm, Errors errors, Model model){
         if(errors.hasErrors()){
             // 회원가입 실패시 입력 데이터 값을 유지
