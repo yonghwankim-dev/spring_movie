@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.awt.print.Book;
@@ -38,6 +40,7 @@ public class Member {
 
     //== 생성 로직 ==//
     public static Member createMember(MemberForm form){
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Member member = Member.builder()
                               .name(form.getName())
                               .birthday(form.getBirthday())
@@ -45,10 +48,9 @@ public class Member {
                               .address(new Address(form.getZipcode(), form.getStreet(), form.getDetail()))
                               .email(form.getEmail())
                               .userId(form.getUserId())
-                              .password(form.getPassword())
+                              .password(passwordEncoder.encode(form.getPassword()))
                               .gender(form.getGender())
                               .build();
-
         return member;
     }
 
