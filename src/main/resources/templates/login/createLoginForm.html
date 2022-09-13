@@ -4,7 +4,7 @@
 <body class="text-center">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
     <main class="form-signin w-50 m-auto">
-        <form method="post">
+        <form th:action="@{/login}" method="post">
             <h1 class="h3 mb-3 fw-normal">Login</h1>
 
             <div th:if="${param.error}">
