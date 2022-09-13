@@ -31,15 +31,17 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests() // 권한요청 처리 설정 메서드
                 .antMatchers("/**","/login","members/**", "/h2-console/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/members/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .usernameParameter("userId")
+                .passwordParameter("password")
                 .loginProcessingUrl("/login")
                 .successHandler(authSuccessHandler)
                 .failureHandler(authFailureHandler)
+                .permitAll()
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

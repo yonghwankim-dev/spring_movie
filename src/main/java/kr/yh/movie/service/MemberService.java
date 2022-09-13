@@ -1,5 +1,6 @@
 package kr.yh.movie.service;
 
+import kr.yh.movie.controller.LoginForm;
 import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,11 @@ public class MemberService implements UserDetailsService {
         }
 
         return member;
+    }
+
+    public void login(LoginForm loginForm){
+        Member member = memberRepository.findOneByUserId(loginForm.getUserId());
+        System.out.println(member);
     }
 
     // 로그아웃
