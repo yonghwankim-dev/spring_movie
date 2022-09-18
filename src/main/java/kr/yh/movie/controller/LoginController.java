@@ -27,20 +27,8 @@ public class LoginController {
         return "login/createLoginForm";
     }
 
-    @PostMapping
-    public String login(@Valid @ModelAttribute LoginForm loginForm, Errors errors,Model model){
-        if(errors.hasErrors()){
-            // 유효성 통과 못한 필드와 메시지를 핸들링
-            Map<String, String> validatorResult = memberService.validateHandling(errors);
-            for(String key : validatorResult.keySet()){
-                model.addAttribute(key, validatorResult.get(key));
-            }
-            // 회원가입 페이지로 다시 리턴
-            return "login/createLoginForm";
-        }
+    @RequestMapping("/logout")
+    public void logout(){
 
-        memberService.login(loginForm);
-        log.info("PostMapping login");
-        return "redirect:/";
     }
 }

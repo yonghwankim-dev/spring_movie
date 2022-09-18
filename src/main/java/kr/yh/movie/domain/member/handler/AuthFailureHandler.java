@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 @Component
 public class AuthFailureHandler extends SimpleUrlAuthenticationFailureHandler {
@@ -32,6 +33,7 @@ public class AuthFailureHandler extends SimpleUrlAuthenticationFailureHandler {
             message = "계정이 잠금되었습니다.";
         }
 
+        message = URLEncoder.encode(message, "UTF-8");
         setDefaultFailureUrl("/login?error=true&exception="+message);
 
         super.onAuthenticationFailure(request, response, exception);

@@ -4,6 +4,8 @@ import kr.yh.movie.controller.LoginForm;
 import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,7 +20,8 @@ import java.util.Map;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class MemberService implements UserDetailsService {
+@Log
+public class MemberService{
     private final MemberRepository memberRepository;
 
     // 회원가입
@@ -36,29 +39,4 @@ public class MemberService implements UserDetailsService {
         }
         return validatorResult;
     }
-
-    @Override
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        Member member = memberRepository.findOneByUserId(userId);
-
-        if(member == null){
-            throw new UsernameNotFoundException("회원이 존재하지 않습니다.");
-        }
-
-        return member;
-    }
-
-    public void login(LoginForm loginForm){
-        Member member = memberRepository.findOneByUserId(loginForm.getUserId());
-        System.out.println(member);
-    }
-
-    // 로그아웃
-    public void logout(){
-
-    }
-
-
-
-
 }

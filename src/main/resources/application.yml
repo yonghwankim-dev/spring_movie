@@ -1,26 +1,16 @@
 spring:
-  datasource:
-    url : jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
-#    url: jdbc:h2:tcp://localhost/~/jpashop;
-    username : sa
-    password :
-    driver-class-name: org.h2.Driver
+  config:
+    import:
+      application-mysql.yml
+#      application-h2.yml
 
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
 
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
-    database-platform: org.hibernate.dialect.H2Dialect
-    defer-datasource-initialization: true
+  thymeleaf:
+    cache: false
 
 logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type : trace
+    org.springframework.web : debug
+    org.springframework.security: debug

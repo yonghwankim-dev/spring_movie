@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/movie?useSSL=false
+    username: movie_user
+    password: movie_user_password
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+    database: mysql
+
+    properties:
+      hibernate:
+        dialect:
+          nodeValue: org.hibernate.dialect.MySQL57Dialect
+          storage_engine: innodb # 트랜잭션을 지원하고, 커밋과 롤백 그리고 데이터 복구 기능을 제공하므로 데이터를 효과적으로 보호
+

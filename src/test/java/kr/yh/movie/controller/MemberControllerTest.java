@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
@@ -18,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional(readOnly = true)
 public class MemberControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -33,6 +35,7 @@ public class MemberControllerTest {
 
     // csrf 토큰없이 회원가입 시도시 회원가입 실패를 예상
     @Test
+    @Transactional
     public void 회원가입_실패() throws Exception{
         this.mockMvc.perform(post("/members/new")
                 .param("name","김용환")
@@ -51,6 +54,7 @@ public class MemberControllerTest {
     }
     
     @Test
+    @Transactional
     public void 회원가입_성공() throws Exception{
         this.mockMvc.perform(post("/members/new")
                 .param("name","김용환")
@@ -59,8 +63,8 @@ public class MemberControllerTest {
                 .param("zipcode", "06288")
                 .param("street","서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
                 .param("detail","")
-                .param("email","user1@gmail.com")
-                .param("userId","user1")
+                .param("email","user101@gmail.com")
+                .param("userId","user101")
                 .param("password","password12345@")
                 .param("password_confirm","password12345@")
                 .param("gender", "male")
@@ -68,5 +72,6 @@ public class MemberControllerTest {
         ).andExpect(status().is3xxRedirection())
          .andDo(print());
     }
+
 
 }

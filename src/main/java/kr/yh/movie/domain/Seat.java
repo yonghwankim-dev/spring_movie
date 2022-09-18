@@ -19,8 +19,8 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seat_id")
     private Long id;
-    private String row;
-    private String col;
+    private String seat_row;
+    private String seat_col;
 
     @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL)
     private List<ScreenSeat> screenSeats = new ArrayList<>();
