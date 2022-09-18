@@ -39,7 +39,6 @@ public class SecurityConfig {
     private final SecurityUserService securityUserService;
     private final AuthSuccessHandler authSuccessHandler;
     private final AuthFailureHandler authFailureHandler;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests() // 권한요청 처리 설정 메서드
@@ -76,12 +75,6 @@ public class SecurityConfig {
             .tokenValiditySeconds(60*60*24);
 
         return http.build();
-    }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        log.info("build Auth global...");
-        auth.userDetailsService(securityUserService);
     }
 
     @Bean
