@@ -1,6 +1,7 @@
 package kr.yh.movie.security;
 
 import kr.yh.movie.repository.MemberRepository;
+import kr.yh.movie.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,6 @@ public class SecurityUserService implements UserDetailsService {
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return memberRepository.findById(Long.parseLong(username)).get();
+        return new SecurityUser(memberRepository.findByUserId(username).get());
     }
 }

@@ -21,17 +21,22 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CharacterEncodingFilter;
+
+import javax.sql.DataSource;
 
 
 @EnableWebSecurity
 // @EnableGlobalMethodSecurity : 특정 페이지에 권한이 있는 유저만 접근을 허용하는 경우 권한 및 인증을 미리 체크하겠다는 설정을 활성화한다.
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true)
 @RequiredArgsConstructor
 @Log
 public class SecurityConfig {
-    private final MemberService memberService;
+    private final DataSource dataSource;
+    private final SecurityUserService securityUserService;
     private final AuthSuccessHandler authSuccessHandler;
     private final AuthFailureHandler authFailureHandler;
 
@@ -65,16 +70,18 @@ public class SecurityConfig {
             .permitAll();
 
         http.rememberMe()
-            .alwaysRemember(false) // 항상 기억할 것인지 여부
-            .tokenValiditySeconds(3600)
-            .rememberMeParameter("remember-me");
+            .key("yh")
+            .userDetailsService(securityUserService)
+            .tokenRepository(getJDBCRepository())
+            .tokenValiditySeconds(60*60*24);
+
         return http.build();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         log.info("build Auth global...");
-//        auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(securityUserService);
     }
 
     @Bean
@@ -86,5 +93,11 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    private PersistentTokenRepository getJDBCRepository(){
+        JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
+        repo.setDataSource(dataSource);
+        return repo;
     }
 }

@@ -9,8 +9,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
+
+    @Query("SELECT m FROM Member m WHERE m.userId = :userId")
+    Optional<Member> findByUserId(@Param("userId") String userId);
 
     @Query("SELECT CASE WHEN COUNT(m) > 0 THEN TRUE ELSE FALSE END FROM Member m WHERE m.phone = :phone")
     boolean existByPhone(@Param("phone") String phone);

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -35,7 +36,8 @@ public class LoginControllerTest {
         this.mockMvc.perform(post("/login")
                         .param("userId","user1")
                         .param("password","user1")
-        ).andExpect(status().is4xxClientError())
+                        .with(csrf())
+        ).andExpect(status().is3xxRedirection())
         .andDo(print());
     }
     
@@ -44,8 +46,10 @@ public class LoginControllerTest {
         this.mockMvc.perform(post("/login")
                         .param("userId","user1")
                         .param("password","pw1")
-        ).andExpect(status().is4xxClientError())
+                        .with(csrf())
+        ).andExpect(status().is3xxRedirection())
         .andDo(print());
     }
+
 
 }
