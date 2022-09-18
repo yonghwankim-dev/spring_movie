@@ -29,6 +29,6 @@ public class LoginController {
 
     @RequestMapping("/logout")
     public void logout(){
-
+        log.info("logout");
     }
 }

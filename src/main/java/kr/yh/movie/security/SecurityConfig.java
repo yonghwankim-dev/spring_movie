@@ -62,10 +62,9 @@ public class SecurityConfig {
             .expiredUrl("/login?error=true&exception=세션이 만료된 계정에 로그인을 시도하였습니다.");
 
         http.logout()
-            .logoutUrl("/logout")
             .logoutSuccessUrl("/login?logout")
-            .invalidateHttpSession(true)
             .deleteCookies("JSESSIONID", "remember-me")
+            .invalidateHttpSession(true)
             .permitAll();
 
         http.rememberMe()
