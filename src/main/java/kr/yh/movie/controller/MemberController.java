@@ -7,6 +7,7 @@ import kr.yh.movie.validator.CheckPasswordEqualValidator;
 import kr.yh.movie.validator.CheckPhoneValidator;
 import kr.yh.movie.validator.CheckUserIdValidator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/members")
 @RequiredArgsConstructor
+@Log
 public class MemberController {
 
     private final MemberService memberService;
@@ -57,5 +60,13 @@ public class MemberController {
         Member member = Member.createMember(memberForm);
         memberService.signUp(member);
         return "redirect:/";
+    }
+
+    @GetMapping("/list")
+    public String list(Model model){
+        log.info("member list");
+        List<Member> members = memberService.findMembers();
+        model.addAttribute("members", members);
+        return "members/memberList";
     }
 }
