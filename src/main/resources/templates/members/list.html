@@ -53,8 +53,6 @@
                 </table>
             </div>
 
-
-
             <!-- paging -->
             <nav class="d-flex justify-content-center">
                 <ul class="pagination">
@@ -64,7 +62,7 @@
 
                     <li class="page-item" th:each="p:${result.pageList}"
                         th:classappend="${p.pageNumber == result.currentPageNum - 1} ? active : ''">
-                        <a class="page-link" th:href="${p.pageNumber} + 1">[[${p.pageNumber} + 1]]</a></li>
+                        <a class="page-link" th:href="${p.pageNumber} + 1" th:text="${p.pageNumber} + 1"></a></li>
 
                     <li class="page-item" th:if="${result.nextPage}">
                         <a class="page-link" th:href="${result.nextPage.pageNumber} + 1">다음</a>
@@ -73,7 +71,7 @@
             </nav>
 
             <!-- end page display -->
-            <form id="f1" th:action="@{list}" method="get">
+            <form id="f1" th:action="@{/members/list}" method="get">
                 <input type="hidden" name="page" th:value="${result.currentPageNum}">       <!-- 현재 페이지 번호 -->
                 <input type="hidden" name="size" th:value="${result.currentPage.pageSize}"> <!-- 현재페이지의 페이지 크기 -->
                 <input type="hidden" name="type" th:value="${pageVO.type}">                 <!-- 검색 타입 -->
@@ -82,3 +80,49 @@
         </main>
     </div>
 </div>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            const formObj = $("#f1");
+            // 페이지 번호 클릭
+            $(".pagination a").click(function(e){
+                e.preventDefault();
+                formObj.find("[name='page']").val($(this).attr('href'));
+                formObj.submit();
+            });
+
+            // 검색 버튼 클릭
+            $("#searchBtn").click(function(e){
+                const typeStr    = $("#searchType").find(":selected").val();
+                const keywordStr = $("#searchKeyword").val();
+                console.log(typeStr, "", keywordStr);
+
+                formObj.find("[name='type']").val(typeStr);
+                formObj.find("[name='keyword']").val(keywordStr);
+                formObj.find("[name='page']").val("1");
+                formObj.submit();
+            });
+
+            // 회원 이름 클릭
+            $(".memberLink").click(function(e){
+                e.preventDefault(); // a 태그의 기본 동작을 막음
+                const memberId = $(this).attr("href");
+
+                // form 태그의 action을 게시물 조회가 가능한 링크로 변경함
+                formObj.attr("action", "/members/view");
+                formObj.append("<input type='hidden' name='id' value='" + memberId + "'>");
+                formObj.submit();
+            });
+        });
+
+        $(window).load(function(){
+            const msg = [[${msg}]];
+
+            if(msg == 'success'){
+                alert("정상적으로 처리되었습니다.");
+                const stateObj = {msg : ""};
+            }
+        });
+    </script>
+</th:block>
