@@ -6,8 +6,12 @@ import kr.yh.movie.validator.CheckEmailValidator;
 import kr.yh.movie.validator.CheckPasswordEqualValidator;
 import kr.yh.movie.validator.CheckPhoneValidator;
 import kr.yh.movie.validator.CheckUserIdValidator;
+import kr.yh.movie.vo.PageMarker;
+import kr.yh.movie.vo.PageVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -39,6 +43,15 @@ public class MemberController {
         binder.addValidators(checkPasswordEqualValidator);
     }
 
+    @GetMapping("/list")
+    public String list(@ModelAttribute("pageVO")PageVO pageVO, Model model){
+        log.info("member list");
+        Pageable page = pageVO.makePageable(0, "id");
+        Page<Member> result = memberService.findAll(memberService.makePredicates(pageVO.getType(), pageVO.getKeyword()), page);
+        model.addAttribute("result", new PageMarker<Member>(result));
+        return "members/list";
+    }
+
     @GetMapping("/new")
     public String createForm(Model model){
         model.addAttribute("memberForm", new MemberForm());
@@ -62,11 +75,5 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @GetMapping("/list")
-    public String list(Model model){
-        log.info("member list");
-        List<Member> members = memberService.findMembers();
-        model.addAttribute("members", members);
-        return "members/memberList";
-    }
+
 }

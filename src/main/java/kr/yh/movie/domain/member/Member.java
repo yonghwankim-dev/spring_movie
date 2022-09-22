@@ -3,10 +3,7 @@ package kr.yh.movie.domain.member;
 import kr.yh.movie.controller.MemberForm;
 import kr.yh.movie.domain.Address;
 import kr.yh.movie.domain.Reservation;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,6 +22,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
+@ToString(exclude = {"reservations", "roles"})
 @Builder
 public class Member implements UserDetails {
     @Id
