@@ -2,6 +2,7 @@ package kr.yh.movie.controller;
 
 import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.service.MemberService;
+import kr.yh.movie.util.RedirectAttributeUtil;
 import kr.yh.movie.validator.CheckEmailValidator;
 import kr.yh.movie.validator.CheckPasswordEqualValidator;
 import kr.yh.movie.validator.CheckPhoneValidator;
@@ -106,12 +107,37 @@ public class MemberController {
         });
 
         // 페이징과 검색했던 결과로 이동하는 경우
-        rttr.addAttribute("page", pageVO.getPage());
-        rttr.addAttribute("size", pageVO.getSize());
-        rttr.addAttribute("type", pageVO.getType());
-        rttr.addAttribute("keyword", pageVO.getKeyword());
+        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
 
         return "redirect:/members/view";
+    }
+
+    @PostMapping("/delete")
+    public String delete(Long id, PageVO pageVO, RedirectAttributes rttr){
+        log.info("DELETE ID : " + id);
+
+        memberService.deleteById(id);
+
+        rttr.addFlashAttribute("msg", "success");
+
+        // 페이징과 검색했던 결과로 이동하는 경우
+        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
+
+        return "redirect:/members/list";
+    }
+
+    @PostMapping("/deletes")
+    public String delete(@RequestParam(value = "checks") List<Long> ids, PageVO pageVO, RedirectAttributes rttr){
+        log.info("DELETE IDS : " + ids);
+
+        memberService.deleteAllById(ids);
+
+        rttr.addFlashAttribute("msg", "success");
+
+        // 페이징과 검색했던 결과로 이동하는 경우
+        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
+
+        return "redirect:/members/list";
     }
 
 }

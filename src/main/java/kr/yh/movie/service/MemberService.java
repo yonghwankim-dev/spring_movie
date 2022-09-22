@@ -104,6 +104,7 @@ public class MemberService{
         return memberRepository.count();
     }
 
+    @Transactional
     public void deleteById(Long aLong) {
         memberRepository.deleteById(aLong);
     }
@@ -112,6 +113,7 @@ public class MemberService{
         memberRepository.delete(entity);
     }
 
+    @Transactional
     public void deleteAllById(Iterable<? extends Long> longs) {
         memberRepository.deleteAllById(longs);
     }
