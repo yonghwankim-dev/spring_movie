@@ -1,14 +1,12 @@
 package kr.yh.movie.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Address {
@@ -19,5 +17,11 @@ public class Address {
     @Override
     public String toString() {
         return String.format("%s %s %s", zipcode, street, detail);
+    }
+
+    public void changeInfo(String zipcode, String street, String detail){
+        this.zipcode = zipcode;
+        this.street  = street;
+        this.detail  = detail;
     }
 }

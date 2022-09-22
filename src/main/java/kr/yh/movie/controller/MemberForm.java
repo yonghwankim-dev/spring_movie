@@ -1,5 +1,6 @@
 package kr.yh.movie.controller;
 
+import kr.yh.movie.domain.member.Member;
 import lombok.*;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,7 +12,10 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@ToString
 public class MemberForm {
+    private Long id;
     @NotEmpty(message = "회원 이름을 입력해주세요")
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -37,4 +41,17 @@ public class MemberForm {
     @NotEmpty(message = "성별을 선택해주세요")
     private String gender;
 
+    public MemberForm(Member member){
+        this.id       = member.getId();
+        this.name     = member.getName();
+        this.birthday = member.getBirthday();
+        this.phone    = member.getPhone();
+        this.zipcode  = member.getAddress().getZipcode();
+        this.street   = member.getAddress().getStreet();
+        this.detail   = member.getAddress().getDetail();
+        this.email    = member.getEmail();
+        this.userId   = member.getUserId();
+        this.password = member.getPassword();
+        this.gender   = member.getGender();
+    }
 }

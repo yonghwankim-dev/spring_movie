@@ -13,10 +13,12 @@ import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -83,5 +85,33 @@ public class MemberController {
         return "members/view";
     }
 
+    @GetMapping("/modify")
+    public String modifyGET(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
+        log.info("MODIFY ID: " + id);
+
+        memberService.findById(id).ifPresent(member->model.addAttribute("form", new MemberForm(member)));
+        return "members/modify";
+    }
+
+    @PostMapping("/modify")
+    public String modifyPOST(MemberForm form, PageVO pageVO, RedirectAttributes rttr){
+        log.info("Modify member form : " + form);
+
+        memberService.findById(form.getId()).ifPresent(origin->{
+            origin.changeInfo(form);
+            log.info("after origin.changeInfo : " + origin);
+            memberService.save(origin);
+            rttr.addFlashAttribute("msg", "success");
+            rttr.addAttribute("id", origin.getId());
+        });
+
+        // 페이징과 검색했던 결과로 이동하는 경우
+        rttr.addAttribute("page", pageVO.getPage());
+        rttr.addAttribute("size", pageVO.getSize());
+        rttr.addAttribute("type", pageVO.getType());
+        rttr.addAttribute("keyword", pageVO.getKeyword());
+
+        return "redirect:/members/view";
+    }
 
 }

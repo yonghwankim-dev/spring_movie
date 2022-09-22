@@ -74,15 +74,12 @@ public class Member implements UserDetails {
     }
 
     //== 수정 로직 ==//
-    public void changeInfo(Member member){
-        this.name = member.name;
-        this.birthday = member.birthday;
-        this.phone = member.phone;
-        this.address = member.address;
-        this.email = member.email;
-        this.userId = member.userId;
-        this.password = member.password;
-        this.gender = member.gender;
+    public void changeInfo(MemberForm form){
+        this.name     = form.getName();
+        this.phone    = form.getPhone();
+        this.address.changeInfo(form.getZipcode(), form.getStreet(), form.getDetail());
+        this.email    = form.getEmail();
+        this.userId   = form.getUserId();
     }
 
     // 계정이 갖고 있는 권한 목록은 리턴

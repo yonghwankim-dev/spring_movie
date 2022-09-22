@@ -75,6 +75,7 @@ public class MemberService{
         return memberRepository.makePredicates(type, keyword);
     }
 
+    @Transactional
     public <S extends Member> S save(S entity) {
         return memberRepository.save(entity);
     }
