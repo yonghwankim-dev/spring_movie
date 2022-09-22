@@ -75,5 +75,13 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @GetMapping("/view")
+    public String view(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
+        log.info("Member Id : " + id);
+
+        memberService.findById(id).ifPresent(member->model.addAttribute("member", member));
+        return "members/view";
+    }
+
 
 }
