@@ -87,7 +87,7 @@ public class MemberController {
     }
 
     @GetMapping("/modify")
-    public String modifyGET(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
+    public String modifyForm(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
         log.info("MODIFY ID: " + id);
 
         memberService.findById(id).ifPresent(member->model.addAttribute("form", new MemberForm(member)));
@@ -95,7 +95,7 @@ public class MemberController {
     }
 
     @PostMapping("/modify")
-    public String modifyPOST(MemberForm form, PageVO pageVO, RedirectAttributes rttr){
+    public String modify(MemberForm form, PageVO pageVO, RedirectAttributes rttr){
         log.info("Modify member form : " + form);
 
         memberService.findById(form.getId()).ifPresent(origin->{
