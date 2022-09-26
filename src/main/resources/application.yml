@@ -14,3 +14,8 @@ logging:
     org.hibernate.type : trace
     org.springframework.web : debug
     org.springframework.security: debug
+
+
+server:
+  compression:
+    enabled: true # 응답 압축 활성화
