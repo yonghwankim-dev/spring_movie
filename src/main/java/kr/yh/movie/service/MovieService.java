@@ -64,6 +64,7 @@ public class MovieService {
         movieRepository.delete(entity);
     }
 
+    @Transactional
     public void deleteAllById(Iterable<? extends Long> longs) {
         movieRepository.deleteAllById(longs);
     }
