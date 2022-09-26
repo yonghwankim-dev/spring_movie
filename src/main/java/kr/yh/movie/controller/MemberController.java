@@ -127,7 +127,7 @@ public class MemberController {
     }
 
     @PostMapping("/deletes")
-    public String delete(@RequestParam(value = "checks") List<Long> ids, PageVO pageVO, RedirectAttributes rttr){
+    public String deletes(@RequestParam(value = "checks") List<Long> ids, PageVO pageVO, RedirectAttributes rttr){
         log.info("DELETE IDS : " + ids);
 
         memberService.deleteAllById(ids);

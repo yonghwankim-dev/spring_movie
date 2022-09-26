@@ -38,7 +38,7 @@
                 <tr th:each="member : ${result.content}">
                     <td><input type="checkbox" name="check" th:value="${member.id}"/></td>
                     <td th:text="${member.id}"></td>
-                    <td><a th:href="${member.id}" class="memberLink">[[${member.name}]]</a></td>
+                    <td><a th:href="${member.id}" class="voLink">[[${member.name}]]</a></td>
                     <td th:text="${member.birthday}"></td>
                     <td th:text="${member.phone}"></td>
                     <td th:text="${member.address}"></td>
@@ -74,6 +74,8 @@
             <input type="hidden" name="size" th:value="${result.currentPage.pageSize}"> <!-- 현재페이지의 페이지 크기 -->
             <input type="hidden" name="type" th:value="${pageVO.type}">                 <!-- 검색 타입 -->
             <input type="hidden" name="keyword" th:value="${pageVO.keyword}">           <!-- 검색 내용 -->
+            <input type="hidden" name="checks">                                         <!-- 선택한 체크박스들-->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         </form>
 
     </main>
@@ -110,18 +112,18 @@
                 const typeStr    = $("#searchType").find(":selected").val();
                 const keywordStr = $("#searchKeyword").val();
                 $("[name='check']:checked").each(function(i, inputTag){checks.push(inputTag.value);});
-
-                console.log(typeStr, "", keywordStr);
-                console.log(checks);
+                formObj.find("[name='checks'").val(checks);
                 formObj.find("[name='type']").val(typeStr);
                 formObj.find("[name='keyword']").val(keywordStr);
                 formObj.find("[name='page']").val("1");
-                // formObj.find("[name='checks']").val(checks);
+
+                formObj.attr("action", "deletes");
+                formObj.attr("method", "post");
                 formObj.submit();
             });
 
             // 회원 이름 클릭
-            $(".memberLink").click(function(e){
+            $(".voLink").click(function(e){
                 e.preventDefault(); // a 태그의 기본 동작을 막음
                 const memberId = $(this).attr("href");
 

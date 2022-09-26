@@ -3,6 +3,7 @@ package kr.yh.movie.controller;
 import kr.yh.movie.domain.Movie;
 import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.service.MovieService;
+import kr.yh.movie.util.RedirectAttributeUtil;
 import kr.yh.movie.vo.PageMarker;
 import kr.yh.movie.vo.PageVO;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +65,16 @@ public class MovieController {
 
     @PostMapping("/deletes")
     public String deletes(@RequestParam(value = "checks") List<Long> ids, PageVO pageVO, RedirectAttributes rttr){
-        return null;
+        log.info("DELETE IDS : " + ids);
+
+        movieService.deleteAllById(ids);
+
+        rttr.addFlashAttribute("msg", "success");
+
+        // 페이징과 검색했던 결과로 이동하는 경우
+        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
+
+        return "redirect:/movies/list";
     }
 
 }
