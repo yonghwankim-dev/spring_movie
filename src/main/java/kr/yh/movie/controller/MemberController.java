@@ -51,7 +51,7 @@ public class MemberController {
         log.info("member list");
         Pageable page = pageVO.makePageable(0, "id");
         Page<Member> result = memberService.findAll(memberService.makePredicates(pageVO.getType(), pageVO.getKeyword()), page);
-        model.addAttribute("result", new PageMarker<Member>(result));
+        model.addAttribute("result", new PageMarker<>(result));
         return "members/list";
     }
 
