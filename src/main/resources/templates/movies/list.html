@@ -97,6 +97,13 @@
                 formObj.submit();
             });
 
+            // 추가 버튼 클릭
+            $("#addBtn").click(function(e){
+                formObj.attr("action", "add");
+                formObj.attr("method", "get");
+                formObj.submit();
+            })
+
             // 삭제 버튼 클릭
             $("#deleteBtn").click(function(e){
                 let   checks = [];

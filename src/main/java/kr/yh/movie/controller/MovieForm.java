@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -17,7 +19,7 @@ public class MovieForm {
     @NotEmpty(message = "영화제목을 입력해주세요.")
     private String  name;
     private int     filmRating;
-    @NotEmpty(message = "상영시간을 입력해주세요")
+    @Min(value = 1, message = "상영시간은 0보다 커야합니다.")
     private int     runtime;
 
     public MovieForm(Movie movie){

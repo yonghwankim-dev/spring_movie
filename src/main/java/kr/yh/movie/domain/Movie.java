@@ -2,10 +2,10 @@ package kr.yh.movie.domain;
 
 import kr.yh.movie.controller.MemberForm;
 import kr.yh.movie.controller.MovieForm;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import kr.yh.movie.domain.member.Member;
+import lombok.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,6 +15,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
+@ToString(exclude = {"screens"})
 @Builder
 public class Movie {
     @Id
@@ -28,6 +30,16 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private final List<Screen> screens = new ArrayList<>();
+
+    //== 생성 로직 ==//
+    public static Movie createMovie(MovieForm form){
+        Movie movie = Movie.builder()
+                            .name(form.getName())
+                            .filmRating(form.getFilmRating())
+                            .runtime(form.getRuntime())
+                            .build();
+        return movie;
+    }
 
     //== 수정 로직 ==//
     public void changeInfo(MovieForm form){

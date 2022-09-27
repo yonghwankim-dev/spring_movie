@@ -1,6 +1,7 @@
 package kr.yh.movie.controller;
 
 import kr.yh.movie.domain.Movie;
+import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.service.MovieService;
 import kr.yh.movie.util.RedirectAttributeUtil;
 import kr.yh.movie.vo.PageMarker;
@@ -11,10 +12,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/movies")
@@ -32,14 +36,29 @@ public class MovieController {
         return "movies/list";
     }
 
-    @GetMapping("/new")
-    public String createForm(){
-        return null;
+    @GetMapping("/add")
+    public String addForm(@ModelAttribute("pageVO") PageVO pageVO, Model model){
+        log.info("movie add get");
+        model.addAttribute("form", new MovieForm());
+        return "movies/add";
     }
 
-    @PostMapping("/new")
-    public String create(){
-        return null;
+    @PostMapping("/add")
+    public String add(@Valid @ModelAttribute MovieForm movieForm, Errors errors, Model model) {
+        log.info("movie add post" + movieForm);
+        if(errors.hasErrors()){
+            // 유효성 통과 못한 필드와 메시지를 핸들링
+            Map<String, String> validatorResult = movieService.validateHandling(errors);
+            for(String key : validatorResult.keySet()){
+                model.addAttribute(key, validatorResult.get(key));
+            }
+            // 회원가입 페이지로 다시 리턴
+            return "movies/add";
+        }
+
+        Movie movie = Movie.createMovie(movieForm);
+        movieService.save(movie);
+        return "redirect:/movies/list";
     }
 
     @GetMapping("/view")
