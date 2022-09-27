@@ -37,7 +37,7 @@ public class MovieController {
     }
 
     @GetMapping("/add")
-    public String addForm(Model model){
+    public String addForm(@ModelAttribute("pageVO")PageVO pageVO, Model model){
         log.info("movie add get");
         model.addAttribute("form", new MovieForm());
         return "movies/add";

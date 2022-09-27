@@ -38,7 +38,7 @@ public class CinemaController {
     }
 
     @GetMapping("/add")
-    public String addForm(Model model){
+    public String addForm(@ModelAttribute("pageVO")PageVO pageVO, Model model){
         log.info("cinema add get");
         model.addAttribute("form", new CinemaForm());
         return "cinemas/add";

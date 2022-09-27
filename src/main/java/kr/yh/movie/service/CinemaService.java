@@ -25,7 +25,7 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 @Log
 public class CinemaService {
-    private CinemaRepository cinemaRepository;
+    private final CinemaRepository cinemaRepository;
     public Predicate makePredicates(String type, String keyword) {
         return cinemaRepository.makePredicates(type, keyword);
     }
@@ -39,6 +39,7 @@ public class CinemaService {
         return validatorResult;
     }
 
+    @Transactional
     public <S extends Cinema> S save(S entity) {
         return cinemaRepository.save(entity);
     }
@@ -67,22 +68,27 @@ public class CinemaService {
         return cinemaRepository.count();
     }
 
+    @Transactional
     public void deleteById(Long aLong) {
         cinemaRepository.deleteById(aLong);
     }
 
+    @Transactional
     public void delete(Cinema entity) {
         cinemaRepository.delete(entity);
     }
 
+    @Transactional
     public void deleteAllById(Iterable<? extends Long> longs) {
         cinemaRepository.deleteAllById(longs);
     }
 
+    @Transactional
     public void deleteAll(Iterable<? extends Cinema> entities) {
         cinemaRepository.deleteAll(entities);
     }
 
+    @Transactional
     public void deleteAll() {
         cinemaRepository.deleteAll();
     }
