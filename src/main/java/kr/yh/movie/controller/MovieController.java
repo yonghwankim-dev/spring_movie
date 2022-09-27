@@ -77,8 +77,17 @@ public class MovieController {
     }
 
     @PostMapping("/delete")
-    public String delete(){
-        return null;
+    public String delete(Long id, PageVO pageVO, RedirectAttributes rttr){
+        log.info("DELETE ID : " + id);
+
+        movieService.deleteById(id);
+
+        rttr.addFlashAttribute("msg", "success");
+
+        // 페이징과 검색했던 결과로 이동하는 경우
+        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
+
+        return "redirect:/movies/list";
     }
 
     @PostMapping("/deletes")

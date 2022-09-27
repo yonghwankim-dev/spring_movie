@@ -56,10 +56,12 @@ public class MovieService {
         return movieRepository.count();
     }
 
+    @Transactional
     public void deleteById(Long aLong) {
         movieRepository.deleteById(aLong);
     }
 
+    @Transactional
     public void delete(Movie entity) {
         movieRepository.delete(entity);
     }
@@ -69,10 +71,12 @@ public class MovieService {
         movieRepository.deleteAllById(longs);
     }
 
+    @Transactional
     public void deleteAll(Iterable<? extends Movie> entities) {
         movieRepository.deleteAll(entities);
     }
 
+    @Transactional
     public void deleteAll() {
         movieRepository.deleteAll();
     }
