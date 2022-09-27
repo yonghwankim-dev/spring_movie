@@ -1,5 +1,7 @@
 package kr.yh.movie.domain;
 
+import kr.yh.movie.controller.MemberForm;
+import kr.yh.movie.controller.MovieForm;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,4 +28,11 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private final List<Screen> screens = new ArrayList<>();
+
+    //== 수정 로직 ==//
+    public void changeInfo(MovieForm form){
+        this.name       = form.getName();
+        this.filmRating = form.getFilmRating();
+        this.runtime    = form.getRuntime();
+    }
 }

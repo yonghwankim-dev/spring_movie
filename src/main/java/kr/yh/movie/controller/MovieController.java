@@ -1,7 +1,6 @@
 package kr.yh.movie.controller;
 
 import kr.yh.movie.domain.Movie;
-import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.service.MovieService;
 import kr.yh.movie.util.RedirectAttributeUtil;
 import kr.yh.movie.vo.PageMarker;
@@ -44,18 +43,37 @@ public class MovieController {
     }
 
     @GetMapping("/view")
-    public String view(){
-        return null;
+    public String view(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
+        log.info("Movie Id : " + id);
+
+        movieService.findById(id).ifPresent(vo->model.addAttribute("vo", vo));
+        return "movies/view";
     }
 
     @GetMapping("/modify")
-    public String modifyForm(){
-        return null;
+    public String modifyForm(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
+        log.info("MODIFY FORM ID: " + id);
+
+        movieService.findById(id).ifPresent(vo->model.addAttribute("form", new MovieForm(vo)));
+        return "movies/modify";
     }
 
     @PostMapping("/modify")
-    public String modify(){
-        return null;
+    public String modify(MovieForm form, PageVO pageVO, RedirectAttributes rttr){
+        log.info("Modify movie form : " + form);
+
+        movieService.findById(form.getId()).ifPresent(origin->{
+            origin.changeInfo(form);
+            log.info("after origin.changeInfo : " + origin);
+            movieService.save(origin);
+            rttr.addFlashAttribute("msg", "success");
+            rttr.addAttribute("id", origin.getId());
+        });
+
+        // 페이징과 검색했던 결과로 이동하는 경우
+        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
+
+        return "redirect:/movies/view";
     }
 
     @PostMapping("/delete")
