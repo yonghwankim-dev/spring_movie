@@ -83,7 +83,10 @@ public class TheaterController {
     }
 
     @GetMapping("/modify")
-    public String modifyForm(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
+    public String modifyForm(@ModelAttribute("cinemaId") Long cinemaId,
+                             Long id,
+                             @ModelAttribute("pageVO") PageVO pageVO,
+                             Model model){
         log.info("MODIFY FORM ID: " + id);
 
         theaterService.findById(id).ifPresent(vo->model.addAttribute("form", new TheaterForm(vo)));
@@ -91,9 +94,12 @@ public class TheaterController {
     }
 
     @PostMapping("/modify")
-    public String modify(TheaterForm form, PageVO pageVO, RedirectAttributes rttr){
+    public String modify(Long cinemaId,
+                         TheaterForm form,
+                         PageVO pageVO,
+                         RedirectAttributes rttr){
         log.info("Modify theater form : " + form);
-
+        cinemaService.findById(cinemaId).ifPresent(vo->form.setCinema(vo));
         theaterService.findById(form.getId()).ifPresent(origin->{
             origin.changeInfo(form);
             log.info("after origin.changeInfo : " + origin);
@@ -103,13 +109,17 @@ public class TheaterController {
         });
 
         // 페이징과 검색했던 결과로 이동하는 경우
+        rttr.addAttribute("cinemaId", cinemaId);
         RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
 
-        return "redirect:/cinemas/theaters/view";
+        return "redirect:/theaters/view";
     }
 
     @PostMapping("/delete")
-    public String delete(Long id, PageVO pageVO, RedirectAttributes rttr){
+    public String delete(Long cinemaId,
+                         Long id,
+                         PageVO pageVO,
+                         RedirectAttributes rttr){
         log.info("DELETE ID : " + id);
 
         theaterService.deleteById(id);
@@ -117,9 +127,10 @@ public class TheaterController {
         rttr.addFlashAttribute("msg", "success");
 
         // 페이징과 검색했던 결과로 이동하는 경우
+        rttr.addAttribute("cinemaId", cinemaId);
         RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
 
-        return "redirect:/cinemas/theaters/list";
+        return "redirect:/theaters/list";
     }
 
     @PostMapping("/deletes")
