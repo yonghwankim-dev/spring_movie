@@ -72,7 +72,10 @@ public class TheaterController {
     }
 
     @GetMapping("/view")
-    public String view(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
+    public String view(@ModelAttribute("cinemaId")Long cinemaId,
+                       Long id,
+                       @ModelAttribute("pageVO") PageVO pageVO,
+                       Model model){
         log.info("theater Id : " + id);
 
         theaterService.findById(id).ifPresent(vo->model.addAttribute("vo", vo));
