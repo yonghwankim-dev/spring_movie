@@ -1,5 +1,7 @@
 package kr.yh.movie.domain;
 
+import kr.yh.movie.controller.CinemaForm;
+import kr.yh.movie.controller.TheaterForm;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,5 +40,20 @@ public class Theater {
         }
         this.cinema = cinema;
         cinema.getTheaters().add(this);
+    }
+
+    //== 생성 로직 ==//
+    public static Theater createTheater(TheaterForm form){
+        Theater theater = Theater.builder()
+                                 .name(form.getName())
+                                 .cinema(form.getCinema())
+                                 .build();
+        return theater;
+    }
+
+    //== 수정 로직 ==//
+    public void changeInfo(TheaterForm form){
+        this.name       = form.getName();
+        this.cinema     = form.getCinema();
     }
 }

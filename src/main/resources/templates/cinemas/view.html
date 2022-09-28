@@ -23,6 +23,7 @@
 
         <!-- 수정/삭제 버튼 -->
         <div class="d-flex justify-content-end">
+            <a th:href="@{home(id=${vo.id})}" class="btn btn-primary">관리</a>
             <a th:href="@{modify(page=${pageVO.page},
                                  size=${pageVO.size},
                                  type=${pageVO.type},
