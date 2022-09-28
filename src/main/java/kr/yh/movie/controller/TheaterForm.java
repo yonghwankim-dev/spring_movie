@@ -2,10 +2,7 @@ package kr.yh.movie.controller;
 
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Theater;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -13,6 +10,8 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @ToString
 public class TheaterForm {
     private Long    id;

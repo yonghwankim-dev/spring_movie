@@ -1,4 +1,6 @@
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:with="cinemaId=${cinemaId}">
 
 <nav id="side" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:fragment="side">
     <div class="sidebar-sticky pt-3">
@@ -16,19 +18,19 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/theaters/list(id=${cinemaId})}">
+                <a class="nav-link" th:href="@{/theaters/list(cinemaId=${cinemaId})}">
                     <i class="fa-solid fa-chair"></i>
                     상영관관리
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/screens/list(id=${cinemaId})}">
+                <a class="nav-link" th:href="@{/screens/list(cinemaId=${cinemaId})}">
                     <i class="fa-solid fa-video"></i>
                     상영관리
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/reservations/list(id=${cinemaId})}">
+                <a class="nav-link" th:href="@{/reservations/list(cinemaId=${cinemaId})}">
                     <i class="fa-solid fa-ticket"></i>
                     예약관리
                 </a>

@@ -2,6 +2,7 @@ package kr.yh.movie.controller;
 
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Theater;
+import kr.yh.movie.service.CinemaService;
 import kr.yh.movie.service.TheaterService;
 import kr.yh.movie.util.RedirectAttributeUtil;
 import kr.yh.movie.vo.PageMarker;
@@ -26,25 +27,33 @@ import java.util.Map;
 @Log
 public class TheaterController {
     private final TheaterService theaterService;
+    private final CinemaService  cinemaService;
 
     @GetMapping("/list")
-    public String list(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
+    public String list(@ModelAttribute("cinemaId") Long cinemaId, @ModelAttribute("pageVO") PageVO pageVO, Model model){
         log.info("theater list");
         Pageable page = pageVO.makePageable(0, "id");
         Page<Theater> result = theaterService.findAll(theaterService.makePredicates(pageVO.getType(), pageVO.getKeyword()), page);
-        model.addAttribute("result", new PageMarker<Theater>(result));
+        model.addAttribute("result", new PageMarker<>(result));
         return "cinemas/theaters/list";
     }
 
     @GetMapping("/add")
-    public String addForm(@ModelAttribute("pageVO")PageVO pageVO, Model model){
-        log.info("theater add get");
+    public String addForm(@ModelAttribute("cinemaId") Long cinemaId,
+                          @ModelAttribute("pageVO")PageVO pageVO,
+                          Model model){
+        log.info("theater add get, cinemaId : " + cinemaId);
+        cinemaService.findById(cinemaId).ifPresent(vo->model.addAttribute("cinema",vo));
         model.addAttribute("form", new TheaterForm());
         return "cinemas/theaters/add";
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute TheaterForm theaterForm, Errors errors, Model model) {
+    public String add(Long cinemaId,
+                      @Valid @ModelAttribute TheaterForm theaterForm,
+                      Errors errors,
+                      Model model,
+                      RedirectAttributes rttr) {
         log.info("theater add post" + theaterForm);
         if(errors.hasErrors()){
             // 유효성 통과 못한 필드와 메시지를 핸들링
@@ -54,10 +63,12 @@ public class TheaterController {
             }
             return "cinemas/theaters/add";
         }
-
+        cinemaService.findById(cinemaId).ifPresent(vo->theaterForm.setCinema(vo));
         Theater theater = Theater.createTheater(theaterForm);
         theaterService.save(theater);
-        return "redirect:/cinemas/theaters/list";
+
+        rttr.addAttribute("cinemaId", cinemaId);
+        return "redirect:/theaters/list";
     }
 
     @GetMapping("/view")
@@ -109,16 +120,18 @@ public class TheaterController {
     }
 
     @PostMapping("/deletes")
-    public String deletes(@RequestParam(value = "checks") List<Long> ids, PageVO pageVO, RedirectAttributes rttr){
+    public String deletes(Long cinemaId, @RequestParam(value = "checks") List<Long> ids, PageVO pageVO, RedirectAttributes rttr){
         log.info("DELETE IDS : " + ids);
+        log.info("cinemaId   : " + cinemaId);
 
         theaterService.deleteAllById(ids);
 
         rttr.addFlashAttribute("msg", "success");
 
         // 페이징과 검색했던 결과로 이동하는 경우
+        rttr.addAttribute("cinemaId", cinemaId);
         RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
 
-        return "redirect:/cinemas/theaters/list";
+        return "redirect:/theaters/list";
     }
 }
