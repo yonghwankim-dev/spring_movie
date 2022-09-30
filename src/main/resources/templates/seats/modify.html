@@ -123,7 +123,17 @@
 
             // 좌석열 제거
             $(document).on("click", "#delColBtn", function(e){
-                alert("좌석열 제거 클릭");
+                let lastColVal = $(".col_head:last").val();
+
+                if(lastColVal <= 1){
+                    alert("좌석열을 더이상 제거할수 없습니다.");
+                    return;
+                }
+
+                $(".seatRow_head th:last").remove();
+                $(".seatRow").each(function(e){
+                   $(this).find("td:last").remove();
+                });
             });
 
             function createNewRow(lastRowVal, lastColVal){
