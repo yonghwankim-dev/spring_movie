@@ -95,7 +95,13 @@
 
             // 좌석행 제거
             $("#delRowBtn").click(function(e){
-                alert("좌석행 제거 클릭");
+                let trCnt = $("#seatTable tr").length;
+
+                if(trCnt > 2){
+                    $("#seatTable > tbody:last > tr:last").remove();
+                }else{
+                    alert("좌석행을 더이상 제거할 수 없습니다.");
+                }
             });
 
             // 좌석열 추가
