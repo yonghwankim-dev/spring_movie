@@ -2,5 +2,17 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div th:fragment="seats">
-    <h1>This is Seats</h1>
+    <table>
+        <tr>
+            <th></th>
+            <th scope="col" th:each="col : ${cols}" th:text="${col}"></th>
+        </tr>
+
+        <tr th:each="seatList : ${seats}">
+            <th scope="row" th:text="${rows[seatListStat.index]}"></th>
+            <td th:each="seat : ${seatList}">
+                <span th:text="${seat.seat_row + seat.seat_col}"></span>
+            </td>
+        </tr>
+    </table>
 </div>

@@ -1,8 +1,10 @@
 package kr.yh.movie.controller;
 
 import kr.yh.movie.domain.Cinema;
+import kr.yh.movie.domain.Seat;
 import kr.yh.movie.domain.Theater;
 import kr.yh.movie.service.CinemaService;
+import kr.yh.movie.service.SeatService;
 import kr.yh.movie.service.TheaterService;
 import kr.yh.movie.util.RedirectAttributeUtil;
 import kr.yh.movie.vo.PageMarker;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/theaters")
@@ -27,6 +31,7 @@ import java.util.Map;
 @Log
 public class TheaterController {
     private final TheaterService theaterService;
+    private final SeatService    seatService;
     private final CinemaService  cinemaService;
 
     @GetMapping("/list")
@@ -77,9 +82,32 @@ public class TheaterController {
                        @ModelAttribute("pageVO") PageVO pageVO,
                        Model model){
         log.info("theater Id : " + id);
+        List<Seat> findedSeats = seatService.findAllByTheaterId(id);
+        List<String> rows = seatService.getSeatRowsByTheaterId(id);
+        List<String> cols = seatService.getSeatColsByTheaterId(id);
 
+        List<List<Seat>> seats = to2DList(findedSeats, rows.size());
+
+        model.addAttribute("seats", seats);
+        model.addAttribute("rows", rows);
+        model.addAttribute("cols", cols);
         theaterService.findById(id).ifPresent(vo->model.addAttribute("vo", vo));
+
         return "cinemas/theaters/view";
+    }
+
+    private static List<List<Seat>> to2DList(List<Seat> seats, int rows){
+        List<List<Seat>> result = new ArrayList<>();
+        IntStream.range(0,rows).forEach(i->result.add(new ArrayList<>()));
+
+        for(Seat seat : seats){
+            result.get(getRowIndex(seat.getSeat_row())).add(seat);
+        }
+        return result;
+    }
+
+    private static int getRowIndex(String row){
+        return (int) row.charAt(0) - 65;
     }
 
     @GetMapping("/modify")

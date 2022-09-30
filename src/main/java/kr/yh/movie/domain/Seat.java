@@ -1,9 +1,6 @@
 package kr.yh.movie.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = {"screenSeats", "theater"})
 public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +19,7 @@ public class Seat {
     private Long id;
     private String seat_row;
     private String seat_col;
+    private boolean isActivated;
 
     @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL)
     private List<ScreenSeat> screenSeats = new ArrayList<>();
