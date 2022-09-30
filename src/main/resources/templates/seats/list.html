@@ -2,7 +2,8 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div th:fragment="seats">
-    <table>
+    <h2>좌석 정보</h2>
+    <table class="table table-striped">
         <tr>
             <th></th>
             <th scope="col" th:each="col : ${cols}" th:text="${col}"></th>
@@ -11,8 +12,13 @@
         <tr th:each="seatList : ${seats}">
             <th scope="row" th:text="${rows[seatListStat.index]}"></th>
             <td th:each="seat : ${seatList}">
-                <span th:text="${seat.seat_row + seat.seat_col}"></span>
+                <span th:if="${seat.isActivated == true}" th:text="${seat.seat_row + seat.seat_col}"></span>
             </td>
         </tr>
     </table>
+
+    <div class="d-flex justify-content-end">
+        <a th:href="@{/seats/modify(theaterId=${vo.id},
+                             cinemaId=${cinemaId})}" class="btn btn-primary">좌석 편집</a>
+    </div>
 </div>

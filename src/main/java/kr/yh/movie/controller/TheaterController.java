@@ -7,6 +7,7 @@ import kr.yh.movie.service.CinemaService;
 import kr.yh.movie.service.SeatService;
 import kr.yh.movie.service.TheaterService;
 import kr.yh.movie.util.RedirectAttributeUtil;
+import kr.yh.movie.util.SeatUtil;
 import kr.yh.movie.vo.PageMarker;
 import kr.yh.movie.vo.PageVO;
 import lombok.RequiredArgsConstructor;
@@ -86,7 +87,7 @@ public class TheaterController {
         List<String> rows = seatService.getSeatRowsByTheaterId(id);
         List<String> cols = seatService.getSeatColsByTheaterId(id);
 
-        List<List<Seat>> seats = to2DList(findedSeats, rows.size());
+        List<List<Seat>> seats = SeatUtil.to2DList(findedSeats, rows.size());
 
         model.addAttribute("seats", seats);
         model.addAttribute("rows", rows);
@@ -96,19 +97,7 @@ public class TheaterController {
         return "cinemas/theaters/view";
     }
 
-    private static List<List<Seat>> to2DList(List<Seat> seats, int rows){
-        List<List<Seat>> result = new ArrayList<>();
-        IntStream.range(0,rows).forEach(i->result.add(new ArrayList<>()));
 
-        for(Seat seat : seats){
-            result.get(getRowIndex(seat.getSeat_row())).add(seat);
-        }
-        return result;
-    }
-
-    private static int getRowIndex(String row){
-        return (int) row.charAt(0) - 65;
-    }
 
     @GetMapping("/modify")
     public String modifyForm(@ModelAttribute("cinemaId") Long cinemaId,
