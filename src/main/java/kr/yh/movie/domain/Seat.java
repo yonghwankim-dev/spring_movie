@@ -19,7 +19,6 @@ public class Seat {
     private Long id;
     private String seat_row;
     private String seat_col;
-    private boolean isActivated;
 
     @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL)
     private List<ScreenSeat> screenSeats = new ArrayList<>();

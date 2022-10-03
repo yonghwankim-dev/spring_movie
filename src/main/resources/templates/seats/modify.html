@@ -8,12 +8,20 @@
     <main role="main" class="col-md-9 col-lg-10 ml-sm-auto px-md-4">
         <h2>좌석 편집 화면</h2>
         <div>
-            <form id="f1">
+            <form id="f1" th:object="${form}">
                 <div class="d-flex">
                     <table id="seatTable" class="table table-striped">
                         <tr class="seatRow_head">
                             <th></th>
-                            <th scope="col" th:each="col : ${cols}">
+
+                            <!-- 열이 없는 경우 -->
+                            <th scope="col" th:if="${cols.size() eq 0}" th:each="col : ${#numbers.sequence(1,9)}">
+                                <span th:text="${col}"></span>
+                                <input type="checkbox" class="col_head" th:value="${col}"/>
+                            </th>
+
+                            <!-- 열이 존재하는 경우 -->
+                            <th scope="col" th:if="${cols.size() gt 0}" th:each="col : ${cols}">
                                 <span th:text="${col}"></span>
                                 <input type="checkbox" class="col_head" th:value="${col}"/>
                             </th>
@@ -42,6 +50,9 @@
                     <button type="button" class="btn btn-light w-100" id="delRowBtn">-</button>
                     <button type="button" class="btn btn-light w-100" id="addRowBtn">+</button>
                 </div>
+
+                <input type="hidden" name="theaterId" th:value="${theaterId}"/>
+                <input type="hidden" name="cinemaId" th:value="${cinemaId}"/>
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
             </form>
         </div>
@@ -57,16 +68,18 @@
 
 <th:block layout:fragment="script">
     <script th:inline="javascript">
+
         $(document).ready(function(){
             const formObj  = $("#f1");
-            $(".modifyBtn").on("click",function(e){
+
+            $(document).on("click", ".modifyBtn" ,function(e){
                 formObj.attr("action", "modify");
                 formObj.attr("method", "post");
                 formObj.submit();
             });
 
             // 열 체크박스 전체 선택
-            $(".col_head").on("click", function(e){
+            $(document).on("click", ".col_head" ,function(e){
                 const num = $(this).val();
                 if($(this).is(":checked")){
                     $("input[data-col='"+num+"']").prop("checked", true);
@@ -88,9 +101,12 @@
 
             // 좌석행 추가
             $(document).on("click", "#addRowBtn", function(e){
-                let lastRowVal = $(".row_head:last").val();
-                let lastColVal = $(".col_head:last").val();
-                let newRow = createNewRow(lastRowVal, lastColVal);
+                let curRowHeadTag = $(".row_head:last");
+                let curColHeadTag = $(".col_head:last");
+                let curRowVal     = curRowHeadTag.val() !== undefined ? curRowHeadTag.val() : "";
+                let curColVal     = curColHeadTag.val() !== undefined ? curColHeadTag.val() : 0;
+
+                let newRow = createNewRow(curRowVal, curColVal);
 
                 $("#seatTable > tbody:last").append(newRow);
             });
@@ -136,33 +152,20 @@
                 });
             });
 
-            function createNewRow(lastRowVal, lastColVal){
-                if(lastRowVal === "Z"){
+            function createNewRow(curRowVal, curColVal){
+                if(curRowVal === "Z"){
                     alert("행을 추가할 수 없습니다.");
                     return;
                 }
 
                 let newTr = $("<tr>");
-                let nextRowVal = getNextRowVal(lastRowVal);
+                let nextRowVal = getNextRowVal(curRowVal);
                 let innerHtml = createThTag(nextRowVal);
-                for(let i = 1; i <= lastColVal; i++){
+                for(let i = 1; i <= curColVal; i++){
                     innerHtml += createTdTag(nextRowVal, i);
                 }
                 newTr.append(innerHtml);
                 return newTr;
-            }
-
-            function getNextRowVal(lastRowVal){
-                return String.fromCharCode(lastRowVal.charCodeAt(0) + 1);
-            }
-
-            function createThTag(nextRowVal){
-                let innerHtml = "";
-                innerHtml +=    '<th scope="row">';
-                innerHtml +=        '<span>'+nextRowVal+'</span>';
-                innerHtml +=        '<input type="checkbox" class="row_head" value="'+nextRowVal+'"/>';
-                innerHtml +=    '</th>';
-                return innerHtml;
             }
 
             function createNewCol(rowCnt, lastColVal){
@@ -174,6 +177,35 @@
                     innerHtml += createTdTag(curRowVal, nextColVal);
                     curRowVal = getNextRowVal(curRowVal);
                 }
+                return innerHtml;
+            }
+
+            function createColHead(colVal){
+                let innerHtml = "";
+                innerHtml += '<th scope="col">';
+                innerHtml += '<span>'+colVal+'</span>';
+                innerHtml += '<input type="checkbox" class="col_head" value="'+colVal+'"/>';
+                innerHtml += '</th>';
+                return innerHtml;
+            }
+
+            function getNextRowVal(val){
+                if(val === ""){
+                    return "A";
+                }
+                return String.fromCharCode(val.charCodeAt(0) + 1);
+            }
+
+            function getNextColVal(lastColVal){
+                return Number(lastColVal) + 1;
+            }
+
+            function createThTag(nextRowVal){
+                let innerHtml = "";
+                innerHtml +=    '<th scope="row">';
+                innerHtml +=        '<span>'+nextRowVal+'</span>';
+                innerHtml +=        '<input type="checkbox" class="row_head" value="'+nextRowVal+'"/>';
+                innerHtml +=    '</th>';
                 return innerHtml;
             }
 
@@ -190,18 +222,6 @@
                 innerHtml +=    '</td>';
                 return innerHtml;
             }
-            function getNextColVal(lastColVal){
-                return Number(lastColVal) + 1;
-            }
-            function createColHead(colVal){
-                let innerHtml = "";
-                innerHtml += '<th scope="col">';
-                innerHtml += '<span>'+colVal+'</span>';
-                innerHtml += '<input type="checkbox" class="col_head" value="'+colVal+'"/>';
-                innerHtml += '</th>';
-                return innerHtml;
-            }
-
         });
     </script>
 </th:block>

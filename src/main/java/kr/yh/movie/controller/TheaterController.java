@@ -83,17 +83,13 @@ public class TheaterController {
                        @ModelAttribute("pageVO") PageVO pageVO,
                        Model model){
         log.info("theater Id : " + id);
-        List<Seat> findedSeats = seatService.findAllByTheaterId(id);
-        List<String> rows = seatService.getSeatRowsByTheaterId(id);
-        List<String> cols = seatService.getSeatColsByTheaterId(id);
 
-        List<List<Seat>> seats = SeatUtil.to2DList(findedSeats, rows.size());
+        Pageable page = pageVO.makePageable(0, "id");
+        Theater theater = theaterService.findById(id).get();
+        Page<Seat> result = seatService.findAll(seatService.makePredicates(pageVO.getType(), pageVO.getKeyword(), theater), page);
 
-        model.addAttribute("seats", seats);
-        model.addAttribute("rows", rows);
-        model.addAttribute("cols", cols);
+        model.addAttribute("result", new PageMarker<>(result));
         theaterService.findById(id).ifPresent(vo->model.addAttribute("vo", vo));
-
         return "cinemas/theaters/view";
     }
 
