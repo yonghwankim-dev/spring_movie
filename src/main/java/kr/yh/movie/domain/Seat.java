@@ -1,5 +1,7 @@
 package kr.yh.movie.domain;
 
+import kr.yh.movie.controller.SeatForm;
+import kr.yh.movie.controller.TheaterForm;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,5 +36,14 @@ public class Seat {
         }
         this.theater = theater;
         theater.getSeats().add(this);
+    }
+
+    //== 생성 로직 ==//
+    public static Seat createSeat(SeatForm form){
+        Seat seat = Seat.builder()
+                        .seat_row(form.getSeat_row())
+                        .seat_col(form.getSeat_col())
+                        .build();
+        return seat;
     }
 }

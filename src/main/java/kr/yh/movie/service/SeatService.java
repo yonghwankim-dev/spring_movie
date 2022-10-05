@@ -30,6 +30,7 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 @Log
 public class SeatService {
+    private final TheaterService theaterService;
     private final SeatRepository repo;
 
     public Map<String, String> validateHandling(Errors errors) {
@@ -41,7 +42,8 @@ public class SeatService {
         return validatorResult;
     }
 
-    public Predicate makePredicates(String type, String keyword, Theater theater) {
+    public Predicate makePredicates(String type, String keyword, Long theaterId) {
+        Theater theater = theaterService.findById(theaterId).get();
         return repo.makePredicates(type, keyword, theater);
     }
 

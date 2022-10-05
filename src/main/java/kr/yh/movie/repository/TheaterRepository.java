@@ -10,12 +10,12 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 public interface TheaterRepository extends CrudRepository<Theater, Long>, QuerydslPredicateExecutor<Theater> {
-    default Predicate makePredicates(String type, String keyword){
+    default Predicate makePredicates(String type, String keyword, Cinema cinema){
         BooleanBuilder builder = new BooleanBuilder();
         QTheater theater = QTheater.theater;
 
         // type if ~ else
-
+        builder.and(theater.cinema.eq(cinema));
         // id > 0
         builder.and(theater.id.gt(0));
 

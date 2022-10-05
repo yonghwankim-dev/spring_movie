@@ -28,6 +28,7 @@ import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/theaters")
+@SessionAttributes("cinemaId")
 @RequiredArgsConstructor
 @Log
 public class TheaterController {
@@ -36,10 +37,12 @@ public class TheaterController {
     private final CinemaService  cinemaService;
 
     @GetMapping("/list")
-    public String list(@ModelAttribute("cinemaId") Long cinemaId, @ModelAttribute("pageVO") PageVO pageVO, Model model){
+    public String list(@ModelAttribute("cinemaId") Long cinemaId,
+                       @ModelAttribute("pageVO") PageVO pageVO,
+                       Model model){
         log.info("theater list");
         Pageable page = pageVO.makePageable(0, "id");
-        Page<Theater> result = theaterService.findAll(theaterService.makePredicates(pageVO.getType(), pageVO.getKeyword()), page);
+        Page<Theater> result = theaterService.findAll(theaterService.makePredicates(pageVO.getType(), pageVO.getKeyword(), cinemaId), page);
         model.addAttribute("result", new PageMarker<>(result));
         return "cinemas/theaters/list";
     }
@@ -85,8 +88,7 @@ public class TheaterController {
         log.info("theater Id : " + id);
 
         Pageable page = pageVO.makePageable(0, "id");
-        Theater theater = theaterService.findById(id).get();
-        Page<Seat> result = seatService.findAll(seatService.makePredicates(pageVO.getType(), pageVO.getKeyword(), theater), page);
+        Page<Seat> result = seatService.findAll(seatService.makePredicates(pageVO.getType(), pageVO.getKeyword(), id), page);
 
         model.addAttribute("result", new PageMarker<>(result));
         theaterService.findById(id).ifPresent(vo->model.addAttribute("vo", vo));

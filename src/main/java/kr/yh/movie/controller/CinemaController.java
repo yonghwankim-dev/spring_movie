@@ -23,6 +23,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/cinemas")
+@SessionAttributes("cinemaId")
 @RequiredArgsConstructor
 @Log
 public class CinemaController {
@@ -125,9 +126,11 @@ public class CinemaController {
     }
 
     @GetMapping("/home")
-    public String home(Long id, Model model){
-        log.info("cinema home");
-        cinemaService.findById(id).ifPresent(vo->model.addAttribute("vo", vo));
+    public String home(Long cinemaId, Model model){
+        log.info("cinema home : " + cinemaId);
+        cinemaService.findById(cinemaId).ifPresent(vo->model.addAttribute("vo", vo));
+
+        model.addAttribute("cinemaId", cinemaId);
         return "cinemas/home";
     }
 }

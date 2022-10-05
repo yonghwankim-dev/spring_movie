@@ -2,7 +2,9 @@ package kr.yh.movie.service;
 
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
+import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Theater;
+import kr.yh.movie.repository.CinemaRepository;
 import kr.yh.movie.repository.TheaterRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -25,10 +27,12 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 @Log
 public class TheaterService {
+    private final CinemaRepository cinemaRepository;
     private final TheaterRepository repo;
 
-    public Predicate makePredicates(String type, String keyword) {
-        return repo.makePredicates(type, keyword);
+    public Predicate makePredicates(String type, String keyword, Long cinemaId) {
+        Cinema cinema = cinemaRepository.findById(cinemaId).get();
+        return repo.makePredicates(type, keyword, cinema);
     }
 
     public Map<String, String> validateHandling(Errors errors) {
