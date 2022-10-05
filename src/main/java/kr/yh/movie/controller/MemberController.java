@@ -2,7 +2,6 @@ package kr.yh.movie.controller;
 
 import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.service.MemberService;
-import kr.yh.movie.util.RedirectAttributeUtil;
 import kr.yh.movie.validator.CheckEmailValidator;
 import kr.yh.movie.validator.CheckPasswordEqualValidator;
 import kr.yh.movie.validator.CheckPhoneValidator;
@@ -26,6 +25,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/members")
+@SessionAttributes("pageVO")
 @RequiredArgsConstructor
 @Log
 public class MemberController {
@@ -46,10 +46,11 @@ public class MemberController {
     }
 
     @GetMapping("/list")
-    public String list(@ModelAttribute("pageVO")PageVO pageVO, Model model){
+    public String list(PageVO pageVO, Model model){
         Pageable page = pageVO.makePageable(0, "id");
         Page<Member> result = memberService.findAll(memberService.makePredicates(pageVO.getType(), pageVO.getKeyword()), page);
         model.addAttribute("result", new PageMarker<>(result));
+        model.addAttribute("pageVO", pageVO);
         return "members/list";
     }
 
@@ -87,7 +88,7 @@ public class MemberController {
     }
 
     @PostMapping("/modify")
-    public String modify(MemberForm form, PageVO pageVO, RedirectAttributes rttr){
+    public String modify(MemberForm form, RedirectAttributes rttr){
         memberService.findById(form.getId()).ifPresent(origin->{
             origin.changeInfo(form);
             memberService.save(origin);
@@ -95,25 +96,22 @@ public class MemberController {
             rttr.addAttribute("id", origin.getId());
         });
 
-        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
         return "redirect:/members/view";
     }
 
     @PostMapping("/delete")
-    public String delete(Long id, PageVO pageVO, RedirectAttributes rttr){
+    public String delete(Long id, RedirectAttributes rttr){
         memberService.deleteById(id);
 
         rttr.addFlashAttribute("msg", "success");
-        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
         return "redirect:/members/list";
     }
 
     @PostMapping("/deletes")
-    public String deletes(@RequestParam(value = "checks") List<Long> ids, PageVO pageVO, RedirectAttributes rttr){
+    public String deletes(@RequestParam(value = "checks") List<Long> ids, RedirectAttributes rttr){
         memberService.deleteAllById(ids);
 
         rttr.addFlashAttribute("msg", "success");
-        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
         return "redirect:/members/list";
     }
 }

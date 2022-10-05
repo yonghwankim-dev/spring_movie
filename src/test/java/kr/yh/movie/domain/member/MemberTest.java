@@ -50,8 +50,6 @@ public class MemberTest {
         //then
     }
 
-
-
     private static LocalDate getRandomBirthday(){
         GregorianCalendar gc = new GregorianCalendar();
 
