@@ -1,5 +1,6 @@
 package kr.yh.movie.controller;
 
+import kr.yh.movie.domain.Seat;
 import kr.yh.movie.domain.Theater;
 import lombok.*;
 
@@ -18,4 +19,11 @@ public class SeatForm {
     @NotEmpty(message = "좌석열은 자연수여야 합니다.")
     private String seat_col;
     private Theater theater;
+
+    public SeatForm(Seat seat){
+        this.id       = seat.getId();
+        this.seat_row = seat.getSeat_row();
+        this.seat_col = seat.getSeat_col();
+        this.theater  = seat.getTheater();
+    }
 }

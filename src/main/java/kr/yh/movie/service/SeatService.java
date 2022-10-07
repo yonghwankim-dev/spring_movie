@@ -47,10 +47,12 @@ public class SeatService {
         return repo.makePredicates(type, keyword, theater);
     }
 
+    @Transactional
     public <S extends Seat> S save(S entity) {
         return repo.save(entity);
     }
 
+    @Transactional
     public <S extends Seat> Iterable<S> saveAll(Iterable<S> entities) {
         return repo.saveAll(entities);
     }
@@ -75,22 +77,27 @@ public class SeatService {
         return repo.count();
     }
 
+    @Transactional
     public void deleteById(Long aLong) {
         repo.deleteById(aLong);
     }
 
+    @Transactional
     public void delete(Seat entity) {
         repo.delete(entity);
     }
 
+    @Transactional
     public void deleteAllById(Iterable<? extends Long> longs) {
         repo.deleteAllById(longs);
     }
 
+    @Transactional
     public void deleteAll(Iterable<? extends Seat> entities) {
         repo.deleteAll(entities);
     }
 
+    @Transactional
     public void deleteAll() {
         repo.deleteAll();
     }

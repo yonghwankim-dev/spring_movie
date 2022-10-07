@@ -46,9 +46,9 @@ public class SeatController {
 
     @GetMapping("/add")
     public String addForm(@ModelAttribute("theaterId") Long theaterId,
+                          @ModelAttribute("pageVO") PageVO pageVO,
                           Model model){
         log.info("addForm");
-
         model.addAttribute("form", new SeatForm());
         return "seats/add";
     }
@@ -86,37 +86,47 @@ public class SeatController {
     }
 
     @GetMapping("/modify")
-    public String modifyForm(@ModelAttribute("theaterId") Long theaterId,
-                             @ModelAttribute("cinemaId") Long cinemaId,
+    public String modifyForm(@ModelAttribute("seatId") Long seatId,
+                             @ModelAttribute("pageVO") PageVO pageVO,
                              Model model){
         log.info("modifyForm");
+        seatService.findById(seatId).ifPresent(vo->model.addAttribute("form", new SeatForm(vo)));
 
         return "seats/modify";
     }
 
     @PostMapping("/modify")
-    public String modify(SeatModifyForm form,
+    public String modify(SeatForm form,
                          Long theaterId,
-                         Long cinemaId,
+                         PageVO pageVO,
                          RedirectAttributes rttr){
-        log.info("modify : " + form.getSeat());
+        log.info("modify : " + form);
 
-        return "redirect:/theaters/view";
+        theaterService.findById(theaterId).ifPresent(vo->form.setTheater(vo));
+        seatService.findById(form.getId()).ifPresent(origin->{
+            origin.changeInfo(form);
+            seatService.save(origin);
+            rttr.addFlashAttribute("msg", "success");
+            rttr.addAttribute("id", origin.getId());
+        });
+
+        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
+        rttr.addAttribute("theaterId", theaterId);
+        return "redirect:/seats/list";
     }
 
     @PostMapping("/delete")
-    public String delete(@ModelAttribute("seatId") Long seatId,
+    public String delete(SeatForm form,
                          @ModelAttribute("theaterId") Long theaterId,
                          RedirectAttributes rttr,
                          Model model){
-        log.info("DELETE SEAT, seatId=" + seatId);
-        seatService.deleteById(seatId);
+        log.info("DELETE SEAT, seatId=" + form.getId());
+        seatService.deleteById(form.getId());
 
         rttr.addFlashAttribute("msg", "success");
 
         // 페이징과 검색했던 결과로 이동하는 경우
         rttr.addAttribute("theaterId", theaterId);
-
         return "redirect:/seats/list";
     }
 

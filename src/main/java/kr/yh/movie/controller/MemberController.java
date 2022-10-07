@@ -95,7 +95,6 @@ public class MemberController {
             rttr.addFlashAttribute("msg", "success");
             rttr.addAttribute("id", origin.getId());
         });
-
         return "redirect:/members/view";
     }
 

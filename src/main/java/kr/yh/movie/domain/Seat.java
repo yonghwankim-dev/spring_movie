@@ -43,7 +43,14 @@ public class Seat {
         Seat seat = Seat.builder()
                         .seat_row(form.getSeat_row())
                         .seat_col(form.getSeat_col())
+                        .theater(form.getTheater())
                         .build();
         return seat;
+    }
+
+    //== 수정 로직 ==//
+    public void changeInfo(SeatForm form){
+        this.seat_row = form.getSeat_row();
+        this.seat_col = form.getSeat_col();
     }
 }
