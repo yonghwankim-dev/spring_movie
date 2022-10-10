@@ -1,5 +1,7 @@
 package kr.yh.movie.domain;
 
+import kr.yh.movie.controller.ScreenForm;
+import kr.yh.movie.controller.ScreenSeatForm;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -56,6 +58,26 @@ public class ScreenSeat {
         }
         this.seat = seat;
         seat.getScreenSeats().add(this);
+    }
+
+    //== 생성 로직 ==//
+    public static ScreenSeat createScreenSeat(ScreenSeatForm form){
+        ScreenSeat screenSeat = ScreenSeat.builder()
+                                          .id(form.getId())
+                                          .status(form.getStatus())
+                                          .reservation(form.getReservation())
+                                          .screen(form.getScreen())
+                                          .seat(form.getSeat())
+                                          .build();
+        return screenSeat;
+    }
+
+    //== 수정 로직 ==//
+    public void changeInfo(ScreenSeatForm form){
+        this.status      = form.getStatus();
+        this.reservation = form.getReservation();
+        this.screen      = form.getScreen();
+        this.seat        = form.getSeat();
     }
 
     //== 비즈니스 로직 ==//

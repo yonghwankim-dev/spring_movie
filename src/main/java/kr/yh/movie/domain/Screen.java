@@ -1,5 +1,7 @@
 package kr.yh.movie.domain;
 
+import kr.yh.movie.controller.CinemaForm;
+import kr.yh.movie.controller.ScreenForm;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,5 +52,24 @@ public class Screen {
         }
         this.theater = theater;
         theater.getScreens().add(this);
+    }
+
+    //== 생성 로직 ==//
+    public static Screen createScreen(ScreenForm form){
+        Screen screen = Screen.builder()
+                .startDateTime(form.getStartDateTime())
+                .movie(form.getMovie())
+                .theater(form.getTheater())
+                .round(form.getRound())
+                .build();
+        return screen;
+    }
+
+    //== 수정 로직 ==//
+    public void changeInfo(ScreenForm form){
+        this.startDateTime  = form.getStartDateTime();
+        this.movie          = form.getMovie();
+        this.theater        = form.getTheater();
+        this.round          = form.getRound();
     }
 }
