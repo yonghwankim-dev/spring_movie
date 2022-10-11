@@ -27,6 +27,8 @@ public interface ScreenRepository extends CrudRepository<Screen, Long>, Querydsl
             builder.and(screen.movie.name.like("%"+keyword+"%"));
         }else if(type.equals("theater")){
             builder.and(screen.theater.name.like("%"+keyword+"%"));
+        }else if(type.equals("round")){
+            builder.and(screen.round.eq(Integer.parseInt(keyword)));
         }
 
         return builder;

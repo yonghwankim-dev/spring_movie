@@ -11,7 +11,9 @@
         <div class="d-flex justify-content-between mt-3 mb-3">
             <div class="d-flex">
                 <select id="searchType" class="form-control col-3">
-                    <option value="name" th:selected="${pageVO.type} == 'movie'">영화명</option>
+                    <option value="movie" th:selected="${pageVO.type} == 'movie'">영화명</option>
+                    <option value="theater" th:selected="${pageVO.type} == 'theater'">상영관명</option>
+                    <option value="round" th:selected="${pageVO.type} == 'round'">상영회차</option>
                 </select>
                 <input class="form-control col-7" type="text" id="searchKeyword" placeholder="검색" th:value="${pageVO.keyword}"/>
                 <button id="searchBtn" class="btn btn-primary col-3">검색</button>
@@ -38,11 +40,11 @@
                 <tbody>
                 <tr th:each="vo : ${result.content}">
                     <td><input type="checkbox" name="checks" th:value="${vo.id}"/></td>
-                    <td th:text="${vo.id}"></td>
-                    <td><a th:href="${vo.id}" class="voLink">[[${vo.movie.name}]]</a></td>
+                    <td><a  th:href="${vo.id}" th:text="${vo.id}" class="voLink"></a></td>
+                    <td th:text="${vo.movie.name}"></td>
                     <td th:text="${vo.theater.name}"></td>
                     <td th:text="${vo.round}"></td>
-                    <td th:text="${vo.startDateTime}"></td>
+                    <td th:text="${#temporals.format(vo.startDateTime, 'yyyy-MM-dd HH:mm')}"></td>
                 </tr>
                 </tbody>
             </table>
