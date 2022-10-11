@@ -11,6 +11,7 @@ import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,13 +28,7 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 @Log
 public class TheaterService {
-    private final CinemaRepository cinemaRepository;
     private final TheaterRepository repo;
-
-    public Predicate makePredicates(String type, String keyword, Long cinemaId) {
-        Cinema cinema = cinemaRepository.findById(cinemaId).get();
-        return repo.makePredicates(type, keyword, cinema);
-    }
 
     public Map<String, String> validateHandling(Errors errors) {
         Map<String, String> validatorResult = new HashMap<>();
@@ -133,5 +128,14 @@ public class TheaterService {
 
     public <S extends Theater, R> R findBy(Predicate predicate, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return repo.findBy(predicate, queryFunction);
+    }
+
+    @Query("SELECT t FROM Theater t WHERE t.cinema.id = :cinemaId")
+    public Iterable<Theater> findAllByCinemaId(Long cinemaId) {
+        return repo.findAllByCinemaId(cinemaId);
+    }
+
+    public Predicate makePredicates(String type, String keyword, Long cinemaId) {
+        return repo.makePredicates(type, keyword, cinemaId);
     }
 }

@@ -5,6 +5,7 @@ import kr.yh.movie.domain.Screen;
 import kr.yh.movie.domain.Seat;
 import kr.yh.movie.domain.Theater;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 public class ScreenForm {
     private Long id;
     @NotEmpty(message = "시작시간을 입력해주세요")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startDateTime;
     @Min(value = 1, message = "회차를 입력해주세요")
     private int round;

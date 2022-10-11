@@ -6,16 +6,25 @@ import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.QCinema;
 import kr.yh.movie.domain.QTheater;
 import kr.yh.movie.domain.Theater;
+import kr.yh.movie.domain.member.Member;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface TheaterRepository extends CrudRepository<Theater, Long>, QuerydslPredicateExecutor<Theater> {
-    default Predicate makePredicates(String type, String keyword, Cinema cinema){
+    @Query("SELECT t FROM Theater t WHERE t.cinema.id = :cinemaId")
+    Iterable<Theater> findAllByCinemaId(@Param("cinemaId") Long cinemaId);
+
+    default Predicate makePredicates(String type, String keyword, Long cinemaId){
         BooleanBuilder builder = new BooleanBuilder();
         QTheater theater = QTheater.theater;
 
         // type if ~ else
-        builder.and(theater.cinema.eq(cinema));
+        builder.and(theater.cinema.id.eq(cinemaId));
         // id > 0
         builder.and(theater.id.gt(0));
 

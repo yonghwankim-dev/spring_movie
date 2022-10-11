@@ -1,8 +1,11 @@
 package kr.yh.movie.controller;
 
-import kr.yh.movie.domain.Cinema;
+import kr.yh.movie.domain.Movie;
 import kr.yh.movie.domain.Screen;
+import kr.yh.movie.domain.Theater;
+import kr.yh.movie.service.MovieService;
 import kr.yh.movie.service.ScreenService;
+import kr.yh.movie.service.TheaterService;
 import kr.yh.movie.util.RedirectAttributeUtil;
 import kr.yh.movie.vo.PageMarker;
 import kr.yh.movie.vo.PageVO;
@@ -25,7 +28,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Log
 public class ScreenController {
-    private final ScreenService screenService;
+    private final ScreenService  screenService;
+    private final MovieService   movieService;
+    private final TheaterService theaterService;
 
     @GetMapping("/list")
     public String list(@ModelAttribute("pageVO") PageVO pageVO, Model model){
@@ -63,8 +68,16 @@ public class ScreenController {
     }
 
     @GetMapping("/modify")
-    public String modifyForm(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
+    public String modifyForm(Long id,
+                             @ModelAttribute("cinemaId") Long cinemaId,
+                             @ModelAttribute("pageVO") PageVO pageVO,
+                             Model model){
+        List<Movie> movies = (List<Movie>) movieService.findAll();
+        List<Theater> theaters = (List<Theater>) theaterService.findAllByCinemaId(cinemaId);
+
         screenService.findById(id).ifPresent(vo->model.addAttribute("form", new ScreenForm(vo)));
+        model.addAttribute("movies", movies);
+        model.addAttribute("theaters", theaters);
         return "screens/modify";
     }
 
