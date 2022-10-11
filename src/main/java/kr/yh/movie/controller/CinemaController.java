@@ -127,9 +127,7 @@ public class CinemaController {
 
     @GetMapping("/home")
     public String home(Long cinemaId, Model model){
-        log.info("cinema home : " + cinemaId);
         cinemaService.findById(cinemaId).ifPresent(vo->model.addAttribute("vo", vo));
-
         model.addAttribute("cinemaId", cinemaId);
         return "cinemas/home";
     }

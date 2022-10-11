@@ -18,19 +18,19 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/theaters/list}">
+                <a class="nav-link" th:href="@{/theaters/list(cinemaId=${cinemaId})}">
                     <i class="fa-solid fa-chair"></i>
                     상영관관리
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/screens/list}">
+                <a class="nav-link" th:href="@{/screens/list(cinemaId=${cinemaId})}">
                     <i class="fa-solid fa-video"></i>
                     상영관리
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/reservations/list}">
+                <a class="nav-link" th:href="@{/reservations/list(cinemaId=${cinemaId})}">
                     <i class="fa-solid fa-ticket"></i>
                     예약관리
                 </a>

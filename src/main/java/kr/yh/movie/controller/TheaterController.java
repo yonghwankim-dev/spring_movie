@@ -40,21 +40,19 @@ public class TheaterController {
     public String list(@ModelAttribute("cinemaId") Long cinemaId,
                        @ModelAttribute("pageVO") PageVO pageVO,
                        Model model){
-        log.info("theater list");
         Pageable page = pageVO.makePageable(0, "id");
         Page<Theater> result = theaterService.findAll(theaterService.makePredicates(pageVO.getType(), pageVO.getKeyword(), cinemaId), page);
         model.addAttribute("result", new PageMarker<>(result));
-        return "cinemas/theaters/list";
+        return "theaters/list";
     }
 
     @GetMapping("/add")
     public String addForm(@ModelAttribute("cinemaId") Long cinemaId,
                           @ModelAttribute("pageVO")PageVO pageVO,
                           Model model){
-        log.info("theater add get, cinemaId : " + cinemaId);
         cinemaService.findById(cinemaId).ifPresent(vo->model.addAttribute("cinema",vo));
         model.addAttribute("form", new TheaterForm());
-        return "cinemas/theaters/add";
+        return "theaters/add";
     }
 
     @PostMapping("/add")
@@ -63,14 +61,12 @@ public class TheaterController {
                       Errors errors,
                       Model model,
                       RedirectAttributes rttr) {
-        log.info("theater add post" + theaterForm);
         if(errors.hasErrors()){
-            // 유효성 통과 못한 필드와 메시지를 핸들링
             Map<String, String> validatorResult = theaterService.validateHandling(errors);
             for(String key : validatorResult.keySet()){
                 model.addAttribute(key, validatorResult.get(key));
             }
-            return "cinemas/theaters/add";
+            return "theaters/add";
         }
         cinemaService.findById(cinemaId).ifPresent(vo->theaterForm.setCinema(vo));
         Theater theater = Theater.createTheater(theaterForm);
@@ -85,14 +81,12 @@ public class TheaterController {
                        Long id,
                        @ModelAttribute("pageVO") PageVO pageVO,
                        Model model){
-        log.info("theater Id : " + id);
-
         Pageable page = pageVO.makePageable(0, "id");
         Page<Seat> result = seatService.findAll(seatService.makePredicates(pageVO.getType(), pageVO.getKeyword(), id), page);
 
         model.addAttribute("result", new PageMarker<>(result));
         theaterService.findById(id).ifPresent(vo->model.addAttribute("vo", vo));
-        return "cinemas/theaters/view";
+        return "theaters/view";
     }
 
 
@@ -102,10 +96,8 @@ public class TheaterController {
                              Long id,
                              @ModelAttribute("pageVO") PageVO pageVO,
                              Model model){
-        log.info("MODIFY FORM ID: " + id);
-
         theaterService.findById(id).ifPresent(vo->model.addAttribute("form", new TheaterForm(vo)));
-        return "cinemas/theaters/modify";
+        return "theaters/modify";
     }
 
     @PostMapping("/modify")
@@ -113,17 +105,14 @@ public class TheaterController {
                          TheaterForm form,
                          PageVO pageVO,
                          RedirectAttributes rttr){
-        log.info("Modify theater form : " + form);
         cinemaService.findById(cinemaId).ifPresent(vo->form.setCinema(vo));
         theaterService.findById(form.getId()).ifPresent(origin->{
             origin.changeInfo(form);
-            log.info("after origin.changeInfo : " + origin);
             theaterService.save(origin);
             rttr.addFlashAttribute("msg", "success");
             rttr.addAttribute("id", origin.getId());
         });
 
-        // 페이징과 검색했던 결과로 이동하는 경우
         rttr.addAttribute("cinemaId", cinemaId);
         RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
 
