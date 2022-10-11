@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/admin/cinema/layout}"
+      th:with="cinemaId=${session.cinemaId}">
+
+<div class="container-fluid" layout:fragment="content">
+    <main role="main" class="col-md-9 col-lg-10 ml-sm-auto px-md-4">
+        <h2>상영 상세 정보</h2>
+        <div>
+            <div class="form-group">
+                <label>아이디번호</label>
+                <input class="form-control" name="id" th:value="${vo.id}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>영화명</label>
+                <input class="form-control" th:value="${vo.movie.name}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>상영관명</label>
+                <input class="form-control" th:value="${vo.theater.name}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>상영회차</label>
+                <input class="form-control" th:value="${vo.round}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>상영시간</label>
+                <input class="form-control" th:value="${#temporals.format(vo.startDateTime,'yyyy-MM-dd HH:mm')}" readonly>
+            </div>
+        </div>
+
+        <!-- 수정/삭제 버튼 -->
+        <div class="d-flex justify-content-end">
+            <a th:href="@{modify(page=${pageVO.page},
+                                 size=${pageVO.size},
+                                 type=${pageVO.type},
+                                 keyword=${pageVO.keyword},
+                                 id=${vo.id},
+                                 cinemaId=${cinemaId})}" class="btn btn-warning">수정/삭제</a>
+
+            <a th:href="@{list(page=${pageVO.page},
+                               size=${pageVO.size},
+                               type=${pageVO.type},
+                               keyword=${pageVO.keyword})}" class="btn btn-primary">목록으로</a>
+        </div>
+    </main>
+</div>
