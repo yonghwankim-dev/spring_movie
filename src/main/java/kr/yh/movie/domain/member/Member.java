@@ -30,17 +30,25 @@ public class Member implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
+
     private String name;		// 회원이름
+
     private LocalDate birthday;	// 회원생년월일
+
     @Column(name = "phone", unique = true)
     private String phone;		// 회원핸드폰번호
+
     @Embedded
     private Address address;	// 회원주소
+
     @Column(name = "email", unique = true)
     private String email;		// 회원이메일
+
     @Column(name = "userId", unique = true)
     private String userId;	    // 회원아이디
+
     private String password;	// 회원비밀번호
+
     private String gender;		// 회원성별
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -55,6 +63,7 @@ public class Member implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "member")
     private List<MemberRole> roles;
+
 
 
     //== 생성 로직 ==//
@@ -92,6 +101,7 @@ public class Member implements UserDetails {
         return grantedAuthorities;
     }
 
+    // 계정의 아이디를 리턴
     @Override
     public String getUsername() {
         return userId;

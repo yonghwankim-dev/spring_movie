@@ -25,6 +25,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/screens")
+@SessionAttributes({"cinemaId"})
 @RequiredArgsConstructor
 @Log
 public class ScreenController {
@@ -41,8 +42,15 @@ public class ScreenController {
     }
 
     @GetMapping("/add")
-    public String addForm(@ModelAttribute("pageVO")PageVO pageVO, Model model){
+    public String addForm(@ModelAttribute("cinemaId") Long cinemaId,
+                          @ModelAttribute("pageVO")PageVO pageVO,
+                          Model model){
+        List<Movie> movies = (List<Movie>) movieService.findAll();
+        List<Theater> theaters = (List<Theater>) theaterService.findAllByCinemaId(cinemaId);
+
         model.addAttribute("form", new ScreenForm());
+        model.addAttribute("movies", movies);
+        model.addAttribute("theaters", theaters);
         return "screens/add";
     }
 

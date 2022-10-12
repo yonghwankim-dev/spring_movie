@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +25,13 @@ public class Screen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "screen_id")
     private Long id;                       // 상영번호
+
     @Column(name = "start_datetime")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startDateTime;   // 상영시작시간
+
+    @Min(value = 1)
+    @Max(value = 100)
     private int round;                      // 상영회차
 
     @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL)
@@ -41,17 +47,11 @@ public class Screen {
 
     //== 연관 관계 메서드 ==//
     public void setMovie(Movie movie){
-        if(this.movie != null){
-            this.movie.getScreens().remove(this);
-        }
         this.movie = movie;
         movie.getScreens().add(this);
     }
 
     public void setTheater(Theater theater){
-        if(this.theater != null){
-            this.theater.getScreens().remove(this);
-        }
         this.theater = theater;
         theater.getScreens().add(this);
     }

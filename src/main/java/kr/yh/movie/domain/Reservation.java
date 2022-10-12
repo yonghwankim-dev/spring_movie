@@ -39,11 +39,13 @@ public class Reservation {
 
     //== 연관 관계 메서드 ==//
     public void setMember(Member member){
-        if(this.member != null){ // 기존 회원이 존재하는 경우
-            this.member.getReservations().remove(this);
-        }
         this.member = member;
         member.getReservations().add(this);
+    }
+
+    public void setScreenSeats(ScreenSeat screenSeat){
+        screenSeats.add(screenSeat);
+        screenSeat.setReservation(this);
     }
 
     //== 생성 메서드 ==//

@@ -31,9 +31,6 @@ public class Seat {
 
     //== 연관 관계 메서드 ==//
     public void setTheater(Theater theater){
-        if(this.theater != null){
-            this.theater.getSeats().remove(this);
-        }
         this.theater = theater;
         theater.getSeats().add(this);
     }

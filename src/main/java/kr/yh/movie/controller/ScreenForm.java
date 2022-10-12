@@ -7,6 +7,7 @@ import kr.yh.movie.domain.Theater;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -24,6 +25,7 @@ public class ScreenForm {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startDateTime;
     @Min(value = 1, message = "회차를 입력해주세요")
+    @Max(value = 100, message = "최대회차는 100까지입니다.")
     private int round;
     @NotEmpty(message = "영화를 선택해주세요")
     private Movie movie;

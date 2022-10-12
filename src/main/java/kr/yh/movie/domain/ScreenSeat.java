@@ -37,25 +37,15 @@ public class ScreenSeat {
 
     //== 연관 관계 메서드 ==//
     public void setReservation(Reservation reservation){
-        if(this.reservation != null){
-            this.reservation.getScreenSeats().remove(this);
-        }
         this.reservation = reservation;
-        reservation.getScreenSeats().add(this);
     }
 
     public void setScreen(Screen screen){
-        if(this.screen != null){
-            this.screen.getScreenSeats().remove(this);
-        }
         this.screen = screen;
         screen.getScreenSeats().add(this);
     }
 
     public void setSeat(Seat seat){
-        if(this.seat != null){
-            this.seat.getScreenSeats().remove(this);
-        }
         this.seat = seat;
         seat.getScreenSeats().add(this);
     }
