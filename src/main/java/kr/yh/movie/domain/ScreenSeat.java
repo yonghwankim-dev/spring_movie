@@ -2,10 +2,7 @@ package kr.yh.movie.domain;
 
 import kr.yh.movie.controller.ScreenForm;
 import kr.yh.movie.controller.ScreenSeatForm;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 

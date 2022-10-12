@@ -1,4 +1,4 @@
-package kr.yh.movie.domain;
+package kr.yh.movie.domain.member;
 
 import lombok.*;
 

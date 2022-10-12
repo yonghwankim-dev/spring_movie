@@ -80,6 +80,7 @@ public class MemberService{
         return memberRepository.save(entity);
     }
 
+    @Transactional
     public <S extends Member> Iterable<S> saveAll(Iterable<S> entities) {
         return memberRepository.saveAll(entities);
     }
@@ -109,6 +110,7 @@ public class MemberService{
         memberRepository.deleteById(aLong);
     }
 
+    @Transactional
     public void delete(Member entity) {
         memberRepository.delete(entity);
     }
@@ -118,10 +120,12 @@ public class MemberService{
         memberRepository.deleteAllById(longs);
     }
 
+    @Transactional
     public void deleteAll(Iterable<? extends Member> entities) {
         memberRepository.deleteAll(entities);
     }
 
+    @Transactional
     public void deleteAll() {
         memberRepository.deleteAll();
     }

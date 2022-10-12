@@ -1,7 +1,6 @@
 package kr.yh.movie.domain.member;
 
 import kr.yh.movie.controller.MemberForm;
-import kr.yh.movie.domain.Address;
 import kr.yh.movie.domain.Reservation;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,7 +21,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "member_id")
 @ToString(exclude = {"reservations", "roles"})
 @Builder
 public class Member implements UserDetails {
@@ -55,16 +54,16 @@ public class Member implements UserDetails {
     private final List<Reservation> reservations = new ArrayList<>();
 
     @CreationTimestamp
-    private LocalDateTime regDate; // 생성 시각
+    private LocalDateTime regDate;
 
     @UpdateTimestamp
-    private LocalDateTime lastLoginTime; // 마지막 로그인 시각
+    private LocalDateTime lastLoginTime;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "member")
-    private List<MemberRole> roles;
+    @UpdateTimestamp
+    private LocalDateTime lastUpdatedTime;
 
-
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private final List<MemberRole> roles = new ArrayList<>();
 
     //== 생성 로직 ==//
     public static Member createMember(MemberForm form){
