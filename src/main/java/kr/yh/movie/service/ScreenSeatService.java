@@ -27,8 +27,8 @@ import java.util.function.Function;
 public class ScreenSeatService {
     private final ScreenSeatRepository screenSeatRepository;
 
-    public Predicate makePredicates(String type, String keyword) {
-        return screenSeatRepository.makePredicates(type, keyword);
+    public Predicate makePredicates(String type, String keyword, Long screenId) {
+        return screenSeatRepository.makePredicates(type, keyword, screenId);
     }
 
     public Map<String, String> validateHandling(Errors errors) {

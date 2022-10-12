@@ -27,9 +27,11 @@ public class ScreenSeatController {
     private final ScreenSeatService service;
     
     @GetMapping("/list")
-    public String list(@ModelAttribute("pageVO") PageVO pageVO, Model model){
+    public String list(Long screenId,
+                       @ModelAttribute("pageVO") PageVO pageVO,
+                       Model model){
         Pageable page = pageVO.makePageable(0, "id");
-        Page<ScreenSeat> result = service.findAll(service.makePredicates(pageVO.getType(), pageVO.getKeyword()), page);
+        Page<ScreenSeat> result = service.findAll(service.makePredicates(pageVO.getType(), pageVO.getKeyword(), screenId), page);
         model.addAttribute("result", new PageMarker<ScreenSeat>(result));
         return "screenSeats/list";
     }
