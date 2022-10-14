@@ -1,13 +1,17 @@
 package kr.yh.movie.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
 @Getter
+@Setter
+@AllArgsConstructor
 public class Person {
-    private int teenager;   // 청소년 인원수
-    private int adult;      // 성인   인원수
-    private int senior;     // 노약자 인원수
+    private int teenager;
+    private int adult;
+    private int senior;
 }

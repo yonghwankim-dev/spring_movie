@@ -5,6 +5,8 @@ import kr.yh.movie.controller.ScreenSeatForm;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "screen_seat")
@@ -50,13 +52,28 @@ public class ScreenSeat {
     //== 생성 로직 ==//
     public static ScreenSeat createScreenSeat(ScreenSeatForm form){
         ScreenSeat screenSeat = ScreenSeat.builder()
-                                          .id(form.getId())
-                                          .status(form.getStatus())
-                                          .reservation(form.getReservation())
-                                          .screen(form.getScreen())
-                                          .seat(form.getSeat())
-                                          .build();
+                .id(form.getId())
+                .status(form.getStatus())
+                .reservation(form.getReservation())
+                .screen(form.getScreen())
+                .seat(form.getSeat())
+                .build();
         return screenSeat;
+    }
+
+    public static List<ScreenSeat> createScreenSeats(Screen screen, List<Seat> seats){
+        List<ScreenSeat> result = new ArrayList<>();
+
+        seats.forEach(seat->{
+            ScreenSeat screenSeat = ScreenSeat.builder()
+                                              .status(ScreenSeatStatus.EMPTY)
+                                              .build();
+            screenSeat.setScreen(screen);
+            screenSeat.setSeat(seat);
+            result.add(screenSeat);
+        });
+
+        return result;
     }
 
     //== 수정 로직 ==//

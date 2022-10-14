@@ -26,6 +26,7 @@ import java.util.function.Function;
 @Log
 public class ScreenService {
     private final ScreenRepository screenRepository;
+    private final ScreenSeatService screenSeatService;
 
     public Predicate makePredicates(String type, String keyword) {
         return screenRepository.makePredicates(type, keyword);
@@ -38,6 +39,11 @@ public class ScreenService {
             validatorResult.put(validKeyName, error.getDefaultMessage());
         }
         return validatorResult;
+    }
+
+    @Transactional
+    public Long register(Screen screen) {
+        return null;
     }
 
     @Transactional
