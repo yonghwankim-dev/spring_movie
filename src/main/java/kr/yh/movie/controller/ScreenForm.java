@@ -21,15 +21,12 @@ import java.time.LocalDateTime;
 @ToString
 public class ScreenForm {
     private Long id;
-    @NotEmpty(message = "시작시간을 입력해주세요")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startDateTime;
     @Min(value = 1, message = "회차를 입력해주세요")
     @Max(value = 100, message = "최대회차는 100까지입니다.")
     private int round;
-    @NotEmpty(message = "영화를 선택해주세요")
     private Movie movie;
-    @NotEmpty(message = "상영관을 선택해주세요")
     private Theater theater;
 
     public ScreenForm(Screen screen){

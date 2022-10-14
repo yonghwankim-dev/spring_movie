@@ -25,7 +25,6 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/members")
-@SessionAttributes("pageVO")
 @RequiredArgsConstructor
 @Log
 public class MemberController {

@@ -16,7 +16,7 @@
 
                 <div class="form-group">
                     <label>영화명</label>
-                    <select class="form-control" th:field="*{movie}">
+                    <select class="form-control" name="movieId">
                         <th:block th:each="movie : ${movies}">
                             <option th:text="${movie.name}"
                                     th:value="${movie.id}"
@@ -28,7 +28,7 @@
 
                 <div class="form-group">
                     <label>상영관명</label>
-                    <select class="form-control" th:field="*{theater}">
+                    <select class="form-control" name="theaterId">
                         <th:block th:each="theater : ${theaters}">
                             <option th:text="${theater.name}"
                                     th:value="${theater.id}"

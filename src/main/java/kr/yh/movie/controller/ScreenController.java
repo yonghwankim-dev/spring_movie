@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -55,7 +56,16 @@ public class ScreenController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute ScreenForm screenForm, Errors errors, Model model) {
+    public String add(Long movieId,
+                      Long theaterId,
+                      @Valid @ModelAttribute ScreenForm screenForm,
+                      Errors errors,
+                      Model model) {
+        Movie movie = movieService.findById(movieId).get();
+        Theater theater = theaterService.findById(theaterId).get();
+        screenForm.setMovie(movie);
+        screenForm.setTheater(theater);
+        log.info("screenForm : " + screenForm);
         if(errors.hasErrors()){
             Map<String, String> validatorResult = screenService.validateHandling(errors);
             for(String key : validatorResult.keySet()){
@@ -90,7 +100,16 @@ public class ScreenController {
     }
 
     @PostMapping("/modify")
-    public String modify(ScreenForm form, PageVO pageVO, RedirectAttributes rttr){
+    public String modify(Long movieId,
+                         Long theaterId,
+                         @Valid ScreenForm form,
+                         PageVO pageVO,
+                         RedirectAttributes rttr){
+        Movie movie = movieService.findById(movieId).get();
+        Theater theater = theaterService.findById(theaterId).get();
+        form.setMovie(movie);
+        form.setTheater(theater);
+
         screenService.findById(form.getId()).ifPresent(origin->{
             origin.changeInfo(form);
             screenService.save(origin);

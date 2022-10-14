@@ -1,6 +1,7 @@
 package kr.yh.movie.controller;
 
 import kr.yh.movie.domain.member.Member;
+import kr.yh.movie.domain.member.MemberRole;
 import lombok.*;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
