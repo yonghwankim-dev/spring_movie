@@ -68,10 +68,10 @@ public class CinemaController {
     }
 
     @GetMapping("/modify")
-    public String modifyForm(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
-        log.info("MODIFY FORM ID: " + id);
-
-        cinemaService.findById(id).ifPresent(vo->model.addAttribute("form", new CinemaForm(vo)));
+    public String modifyForm(Long cienamId,
+                             Model model){
+        cinemaService.findById(cienamId)
+                     .ifPresent(vo->model.addAttribute("form", new CinemaForm(vo)));
         return "cinemas/modify";
     }
 

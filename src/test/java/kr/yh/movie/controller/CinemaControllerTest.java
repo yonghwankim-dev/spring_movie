@@ -94,12 +94,18 @@ public class CinemaControllerTest {
     }
     
     @Test
-    public void testModifyForm(){
+    public void testModifyForm() throws Exception {
         //given
-        
+        String url = "/cinemas/modify";
+        String cinemaId = "1";
         //when
-        
+        CinemaForm form = (CinemaForm) this.mockMvc.perform(get(url)
+                                                   .param("cinemaId", cinemaId)
+                                                   .contentType(MediaType.APPLICATION_JSON))
+                                                   .andExpect(status().isOk())
+                                                   .andReturn().getModelAndView().getModel().get("form");
         //then
+        assertThat(form.getId()).isEqualTo(Long.parseLong(cinemaId));
     }
     
     @Test
