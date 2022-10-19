@@ -59,10 +59,11 @@ public class CinemaController {
     }
 
     @GetMapping("/view")
-    public String view(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
-        log.info("Cinema Id : " + id);
-
-        cinemaService.findById(id).ifPresent(vo->model.addAttribute("vo", vo));
+    public String view(Long cinemaId,
+                       @ModelAttribute("pageVO") PageVO pageVO,
+                       Model model){
+        cinemaService.findById(cinemaId)
+                     .ifPresent(vo->model.addAttribute("vo", vo));
         return "cinemas/view";
     }
 

@@ -35,11 +35,13 @@ public class CinemaControllerTest {
         //given
         String url = "/cinemas/list";
         //when
-        PageMarker<Page<Cinema>> result =
-                (PageMarker<Page<Cinema>>) this.mockMvc.perform(get(url)
-                                                       .contentType(MediaType.TEXT_HTML))
-                                                       .andExpect(status().isOk())
-                                                       .andReturn().getModelAndView().getModel().get("result");
+        PageMarker<Page<Cinema>> result = (PageMarker<Page<Cinema>>) this.mockMvc.perform(get(url)
+                                                                         .contentType(MediaType.TEXT_HTML))
+                                                                         .andExpect(status().isOk())
+                                                                         .andReturn()
+                                                                         .getModelAndView()
+                                                                         .getModel()
+                                                                         .get("result");
         //then
         assertThat(result).isNotNull();
     }
@@ -77,12 +79,18 @@ public class CinemaControllerTest {
     }
     
     @Test
-    public void testView(){
+    public void testView() throws Exception {
         //given
-        
+        String url = "/cinemas/view";
+        String cinemaId = "1";
         //when
-        
+        Cinema foundCinema = (Cinema) this.mockMvc.perform(get(url)
+                                                  .param("cinemaId", cinemaId)
+                                                  .contentType(MediaType.TEXT_HTML))
+                                                  .andExpect(status().isOk())
+                                                  .andReturn().getModelAndView().getModel().get("vo");
         //then
+        assertThat(foundCinema.getId()).isEqualTo(Long.parseLong(cinemaId));
     }
     
     @Test
