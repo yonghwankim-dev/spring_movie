@@ -55,16 +55,6 @@ public class Screen {
     }
 
     //== 생성 로직 ==//
-    public static Screen createScreen(ScreenForm form){
-        Screen screen = Screen.builder()
-                .startDateTime(form.getStartDateTime())
-                .movie(form.getMovie())
-                .theater(form.getTheater())
-                .round(form.getRound())
-                .build();
-        return screen;
-    }
-
     public static Screen createScreen(LocalDateTime startDateTime, int round, Movie movie, Theater theater){
         Screen screen = Screen.builder()
                               .startDateTime(LocalDateTime.now())
@@ -77,10 +67,4 @@ public class Screen {
     }
 
     //== 수정 로직 ==//
-    public void changeInfo(ScreenForm form){
-        this.startDateTime  = form.getStartDateTime();
-        this.movie          = form.getMovie();
-        this.theater        = form.getTheater();
-        this.round          = form.getRound();
-    }
 }

@@ -106,7 +106,7 @@ public class ScreenController {
         Theater theater = theaterService.findById(form.getTheaterId()).get();
 
         screenService.findById(form.getId()).ifPresent(origin->{
-            origin.changeInfo(form);
+//            origin.changeInfo(form);
             screenService.save(origin);
             rttr.addFlashAttribute("msg", "success");
             rttr.addAttribute("id", origin.getId());
