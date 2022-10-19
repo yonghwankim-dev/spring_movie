@@ -76,19 +76,15 @@ public class CinemaController {
     }
 
     @PostMapping("/modify")
-    public String modify(CinemaForm form, PageVO pageVO, RedirectAttributes rttr){
-        log.info("Modify cinema form : " + form);
-
+    public String modify(CinemaForm form,
+                         RedirectAttributes rttr){
         cinemaService.findById(form.getId()).ifPresent(origin->{
             origin.changeInfo(form);
-            log.info("after origin.changeInfo : " + origin);
             cinemaService.save(origin);
+            rttr.addFlashAttribute("modifiedCinema", origin);
             rttr.addFlashAttribute("msg", "success");
             rttr.addAttribute("id", origin.getId());
         });
-
-        // 페이징과 검색했던 결과로 이동하는 경우
-        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
 
         return "redirect:/cinemas/view";
     }

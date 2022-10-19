@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.http.MediaType.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -36,7 +37,7 @@ public class CinemaControllerTest {
         String url = "/cinemas/list";
         //when
         PageMarker<Page<Cinema>> result = (PageMarker<Page<Cinema>>) this.mockMvc.perform(get(url)
-                                                                         .contentType(MediaType.TEXT_HTML))
+                                                                         .contentType(TEXT_HTML))
                                                                          .andExpect(status().isOk())
                                                                          .andReturn()
                                                                          .getModelAndView()
@@ -52,7 +53,7 @@ public class CinemaControllerTest {
         String url = "/cinemas/add";
         //when
         CinemaForm form = (CinemaForm) this.mockMvc.perform(get(url)
-                                                   .contentType(MediaType.TEXT_HTML))
+                                                   .contentType(TEXT_HTML))
                                                    .andExpect(status().isOk())
                                                    .andReturn().getModelAndView().getModel().get("form");
         //then
@@ -70,7 +71,7 @@ public class CinemaControllerTest {
         Cinema savedCinema = (Cinema) this.mockMvc.perform(post(url)
                                                   .param("name", name)
                                                   .param("loc", loc)
-                                                  .contentType(MediaType.APPLICATION_JSON)
+                                                  .contentType(APPLICATION_JSON)
                                                   .with(csrf()))
                                                   .andExpect(status().is3xxRedirection())
                                                   .andReturn().getFlashMap().get("savedCinema");
@@ -86,7 +87,7 @@ public class CinemaControllerTest {
         //when
         Cinema foundCinema = (Cinema) this.mockMvc.perform(get(url)
                                                   .param("cinemaId", cinemaId)
-                                                  .contentType(MediaType.TEXT_HTML))
+                                                  .contentType(TEXT_HTML))
                                                   .andExpect(status().isOk())
                                                   .andReturn().getModelAndView().getModel().get("vo");
         //then
@@ -101,7 +102,7 @@ public class CinemaControllerTest {
         //when
         CinemaForm form = (CinemaForm) this.mockMvc.perform(get(url)
                                                    .param("cinemaId", cinemaId)
-                                                   .contentType(MediaType.APPLICATION_JSON))
+                                                   .contentType(APPLICATION_JSON))
                                                    .andExpect(status().isOk())
                                                    .andReturn().getModelAndView().getModel().get("form");
         //then
@@ -109,12 +110,24 @@ public class CinemaControllerTest {
     }
     
     @Test
-    public void testModify(){
+    @Transactional
+    public void testModify() throws Exception {
         //given
-        
+        String url = "/cinemas/modify";
+        String cinemaId = "1";
+        String modifiedName = "강서";
+        String loc = "서울";
         //when
-        
+        Cinema modifiedCinema = (Cinema) this.mockMvc.perform(post(url)
+                                             .param("id", cinemaId)
+                                             .param("name", modifiedName)
+                                             .param("loc", loc)
+                                             .contentType(APPLICATION_JSON)
+                                             .with(csrf()))
+                                             .andExpect(status().is3xxRedirection())
+                                             .andReturn().getFlashMap().get("modifiedCinema");
         //then
+        assertThat(modifiedCinema.getName()).isEqualTo(modifiedName);
     }
     
     @Test
