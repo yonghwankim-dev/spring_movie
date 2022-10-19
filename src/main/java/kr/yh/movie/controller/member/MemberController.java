@@ -99,16 +99,16 @@ public class MemberController {
     }
 
     @PostMapping("/delete")
-    public String delete(Long id, RedirectAttributes rttr){
-        memberService.deleteById(id);
-
+    public String delete(Long memberId,
+                         RedirectAttributes rttr){
+        memberService.deleteById(memberId);
         rttr.addFlashAttribute("msg", "success");
         return "redirect:/members/list";
     }
 
     @PostMapping("/deletes")
-    public String deletes(@RequestParam(value = "checks") List<Long> ids, RedirectAttributes rttr){
-        memberService.deleteAllById(ids);
+    public String deletes(@RequestParam(value = "checks") List<Long> memberIds, RedirectAttributes rttr){
+        memberService.deleteAllById(memberIds);
 
         rttr.addFlashAttribute("msg", "success");
         return "redirect:/members/list";

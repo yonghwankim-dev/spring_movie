@@ -174,22 +174,38 @@ public class MemberControllerTest {
     
     @Test
     @Transactional
-    public void testDelete(){
+    public void testDelete() throws Exception {
         //given
-        
+        String url = "/members/delete";
+        String memberId = "1";
         //when
-        
+        String msg = (String) this.mockMvc.perform(post(url)
+                                          .param("memberId", memberId)
+                                          .contentType(MediaType.APPLICATION_JSON)
+                                          .with(csrf()))
+                                          .andExpect(status().is3xxRedirection())
+                                          .andReturn()
+                                          .getFlashMap()
+                                          .get("msg");
         //then
+        assertThat(msg).isEqualTo("success");
     }
 
     @Test
     @Transactional
-    public void testDeletes(){
+    public void testDeletes() throws Exception {
         //given
-        
+        String url = "/members/deletes";
+        String[] memberIds = {"1","2"};
         //when
-        
+        String msg = (String) this.mockMvc.perform(post(url)
+                                          .param("checks", memberIds)
+                                          .contentType(MediaType.APPLICATION_JSON)
+                                          .with(csrf()))
+                                          .andExpect(status().is3xxRedirection())
+                                          .andReturn().getFlashMap().get("msg");
         //then
+        assertThat(msg).isEqualTo("success");
     }
 
 
