@@ -35,7 +35,8 @@ public class ScreenController {
     private final TheaterService theaterService;
 
     @GetMapping("/list")
-    public String list(@ModelAttribute("pageVO") PageVO pageVO, Model model){
+    public String list(@ModelAttribute("pageVO") PageVO pageVO,
+                       Model model){
         Pageable page = pageVO.makePageable(0, "id");
         Page<Screen> result = screenService.findAll(screenService.makePredicates(pageVO.getType(), pageVO.getKeyword()), page);
         model.addAttribute("result", new PageMarker<>(result));
@@ -56,7 +57,10 @@ public class ScreenController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute ScreenForm form, Errors errors, Model model, RedirectAttributes rttr) {
+    public String add(@Valid @ModelAttribute ScreenForm form,
+                      Errors errors,
+                      Model model,
+                      RedirectAttributes rttr) {
         if(ScreenValidator.validate(errors, model)){
             return "screens/add";
         }
@@ -72,8 +76,10 @@ public class ScreenController {
     }
 
     @GetMapping("/view")
-    public String view(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
-        screenService.findById(id).ifPresent(vo->model.addAttribute("vo", vo));
+    public String view(Long screenId,
+                       @ModelAttribute("pageVO") PageVO pageVO,
+                       Model model){
+        screenService.findById(screenId).ifPresent(vo->model.addAttribute("vo", vo));
         return "screens/view";
     }
 

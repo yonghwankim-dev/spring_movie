@@ -90,4 +90,19 @@ public class ScreenControllerTest {
         //then
         assertThat(savedScreen).isNotNull();
     }
+    
+    @Test
+    public void testView() throws Exception {
+        //given
+        String url = "/screens/view";
+        String screenId = "3";
+        //when
+        Screen screen = (Screen) this.mockMvc.perform(get(url)
+                                             .param("screenId", screenId)
+                                             .contentType(MediaType.TEXT_HTML))
+                                             .andExpect(status().isOk())
+                                             .andReturn().getModelAndView().getModel().get("vo");
+        //then
+        assertThat(screen.getId()).isEqualTo(3L);
+    }
 }
