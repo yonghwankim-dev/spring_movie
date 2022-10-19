@@ -1,12 +1,9 @@
 package kr.yh.movie.domain;
 
-import kr.yh.movie.controller.ScreenForm;
 import kr.yh.movie.controller.ScreenSeatForm;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "screen_seat")

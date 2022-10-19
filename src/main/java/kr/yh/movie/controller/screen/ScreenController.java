@@ -1,4 +1,4 @@
-package kr.yh.movie.controller;
+package kr.yh.movie.controller.screen;
 
 import kr.yh.movie.domain.Movie;
 import kr.yh.movie.domain.Screen;
@@ -6,7 +6,6 @@ import kr.yh.movie.domain.Theater;
 import kr.yh.movie.service.MovieService;
 import kr.yh.movie.service.ScreenService;
 import kr.yh.movie.service.TheaterService;
-import kr.yh.movie.util.RedirectAttributeUtil;
 import kr.yh.movie.vo.PageMarker;
 import kr.yh.movie.vo.PageVO;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -60,17 +58,12 @@ public class ScreenController {
 
     @PostMapping("/add")
     public String add(@Valid @ModelAttribute ScreenForm form, Errors errors, Model model) {
-        if(errors.hasErrors()){
-            Map<String, String> validatorResult = screenService.validateHandling(errors);
-            for(String key : validatorResult.keySet()){
-                model.addAttribute(key, validatorResult.get(key));
-            }
+        if(ScreenValidator.validate(errors, model)){
             return "screens/add";
         }
 
         Movie movie = movieService.findById(form.getMovieId()).get();
         Theater theater = theaterService.findById(form.getTheaterId()).get();
-
         screenService.save(createScreen(form.getStartDateTime(),
                                         form.getRound(),
                                         movie,
