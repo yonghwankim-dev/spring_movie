@@ -42,11 +42,6 @@ public class SeatService {
         return validatorResult;
     }
 
-    public Predicate makePredicates(String type, String keyword, Long theaterId) {
-        Theater theater = theaterService.findById(theaterId).get();
-        return repo.makePredicates(type, keyword, theater);
-    }
-
     @Transactional
     public <S extends Seat> S save(S entity) {
         return repo.save(entity);
@@ -136,5 +131,14 @@ public class SeatService {
 
     public <S extends Seat, R> R findBy(Predicate predicate, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return repo.findBy(predicate, queryFunction);
+    }
+
+    public Predicate makePredicates(String type, String keyword, Long theaterId) {
+        return repo.makePredicates(type, keyword, theaterId);
+    }
+
+    @Query("SELECT s FROM Seat s WHERE s.theater.id = :theaterId AND s.id > 0")
+    public List<Seat> findAllByTheaterId(Long theaterId) {
+        return repo.findAllByTheaterId(theaterId);
     }
 }
