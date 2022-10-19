@@ -4,6 +4,7 @@ import kr.yh.movie.controller.screen.ScreenForm;
 import kr.yh.movie.domain.Movie;
 import kr.yh.movie.domain.Screen;
 import kr.yh.movie.domain.Theater;
+import kr.yh.movie.service.ScreenService;
 import kr.yh.movie.vo.PageMarker;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional(readOnly = true)
 public class ScreenControllerTest {
+    @Autowired
+    ScreenService screenService;
+
     @Autowired
     MockMvc mockMvc;
 
@@ -126,5 +130,34 @@ public class ScreenControllerTest {
         assertThat(form).isNotNull();
         assertThat(movies).isNotNull();
         assertThat(theaters).isNotNull();
+    }
+    
+    @Test
+    @Transactional
+    public void testModify() throws Exception {
+        //given
+        String url = "/screens/modify";
+        String screenId = "3";
+        String movieId = "1";
+        String theaterId = "1";
+        String round = "2";
+        String startDateTime = LocalDateTime.now().toString();
+
+        //when
+        String modifiedScreenId = (String) this.mockMvc.perform(post(url)
+                                                      .param("id", screenId)
+                                                      .param("startDateTime", startDateTime)
+                                                      .param("round", round)
+                                                      .param("movieId", movieId)
+                                                      .param("theaterId", theaterId)
+                                                      .contentType(MediaType.APPLICATION_JSON)
+                                                      .with(csrf()))
+                                                      .andExpect(status().is3xxRedirection())
+                                                      .andReturn()
+                                                      .getModelAndView().getModel().get("screenId");
+        Screen foundScreen = screenService.findById(Long.parseLong(modifiedScreenId)).get();
+        //then
+        assertThat(foundScreen.getId()).isEqualTo(Long.parseLong(screenId));
+        assertThat(foundScreen.getRound()).isEqualTo(Integer.parseInt(round));
     }
 }

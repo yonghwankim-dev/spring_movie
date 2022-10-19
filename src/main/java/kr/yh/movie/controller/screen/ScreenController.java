@@ -99,18 +99,23 @@ public class ScreenController {
 
     @PostMapping("/modify")
     public String modify(@Valid ScreenForm form,
-                         PageVO pageVO,
+                         Errors errors,
+                         Model model,
                          RedirectAttributes rttr){
+        if(ScreenValidator.validate(errors, model)){
+            return "screens/modify";
+        }
+
         Movie movie = movieService.findById(form.getMovieId()).get();
         Theater theater = theaterService.findById(form.getTheaterId()).get();
 
         screenService.findById(form.getId()).ifPresent(origin->{
-//            origin.changeInfo(form);
+            origin.changeInfo(form, movie, theater);
             screenService.save(origin);
             rttr.addFlashAttribute("msg", "success");
-            rttr.addAttribute("id", origin.getId());
+            rttr.addAttribute("screenId", origin.getId());
         });
-        addAttributesPage(pageVO, rttr);
+
         return "redirect:/screens/view";
     }
 

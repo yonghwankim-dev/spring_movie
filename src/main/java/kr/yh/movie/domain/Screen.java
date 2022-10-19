@@ -1,5 +1,6 @@
 package kr.yh.movie.domain;
 
+import kr.yh.movie.controller.screen.ScreenForm;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -42,13 +43,19 @@ public class Screen {
     private Theater theater;
 
     //== 연관 관계 메서드 ==//
-    public void setMovie(Movie movie){
+    private void setMovie(Movie movie){
         this.movie = movie;
+        if(movie.getScreens().contains(this)){
+            movie.getScreens().remove(this);
+        }
         movie.getScreens().add(this);
     }
 
-    public void setTheater(Theater theater){
+    private void setTheater(Theater theater){
         this.theater = theater;
+        if(theater.getScreens().contains(this)){
+            theater.getScreens().remove(this);
+        }
         theater.getScreens().add(this);
     }
 
@@ -65,4 +72,10 @@ public class Screen {
     }
 
     //== 수정 로직 ==//
+    public void changeInfo(ScreenForm form, Movie movie, Theater theater){
+        this.startDateTime = form.getStartDateTime();
+        this.round = form.getRound();
+        setMovie(movie);
+        setTheater(theater);
+    }
 }
