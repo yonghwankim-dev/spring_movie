@@ -1,9 +1,7 @@
-package kr.yh.movie.controller;
+package kr.yh.movie.controller.cinema;
 
 import kr.yh.movie.domain.Cinema;
-import kr.yh.movie.domain.Movie;
 import kr.yh.movie.service.CinemaService;
-import kr.yh.movie.service.MovieService;
 import kr.yh.movie.util.RedirectAttributeUtil;
 import kr.yh.movie.vo.PageMarker;
 import kr.yh.movie.vo.PageVO;
@@ -30,17 +28,16 @@ public class CinemaController {
     private final CinemaService cinemaService;
 
     @GetMapping("/list")
-    public String list(@ModelAttribute("pageVO") PageVO pageVO, Model model){
-        log.info("cinema list");
+    public String list(@ModelAttribute("pageVO") PageVO pageVO,
+                       Model model){
         Pageable page = pageVO.makePageable(0, "id");
         Page<Cinema> result = cinemaService.findAll(cinemaService.makePredicates(pageVO.getType(), pageVO.getKeyword()), page);
-        model.addAttribute("result", new PageMarker<Cinema>(result));
+        model.addAttribute("result", new PageMarker<>(result));
         return "cinemas/list";
     }
 
     @GetMapping("/add")
-    public String addForm(@ModelAttribute("pageVO")PageVO pageVO, Model model){
-        log.info("cinema add get");
+    public String addForm(Model model){
         model.addAttribute("form", new CinemaForm());
         return "cinemas/add";
     }

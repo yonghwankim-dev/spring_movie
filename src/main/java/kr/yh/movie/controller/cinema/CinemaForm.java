@@ -1,4 +1,4 @@
-package kr.yh.movie.controller;
+package kr.yh.movie.controller.cinema;
 
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Movie;

@@ -1,6 +1,5 @@
 package kr.yh.movie.domain;
 
-import kr.yh.movie.controller.CinemaForm;
 import kr.yh.movie.controller.TheaterForm;
 import lombok.*;
 
