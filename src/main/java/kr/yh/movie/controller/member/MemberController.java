@@ -71,14 +71,19 @@ public class MemberController {
     }
 
     @GetMapping("/view")
-    public String view(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
-        memberService.findById(id).ifPresent(member->model.addAttribute("member", member));
+    public String view(Long memberId,
+                       @ModelAttribute("pageVO") PageVO pageVO,
+                       Model model){
+        memberService.findById(memberId)
+                     .ifPresent(member->model.addAttribute("member", member));
         return "members/view";
     }
 
     @GetMapping("/modify")
-    public String modifyForm(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
-        memberService.findById(id).ifPresent(member->model.addAttribute("form", new MemberForm(member)));
+    public String modifyForm(Long memberId,
+                             Model model){
+        memberService.findById(memberId)
+                     .ifPresent(member->model.addAttribute("form", new MemberForm(member)));
         return "members/modify";
     }
 

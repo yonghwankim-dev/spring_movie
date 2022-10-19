@@ -110,109 +110,71 @@ public class MemberControllerTest {
         assertThat(savedMember.getName()).isEqualTo("김용환");
     }
 
-
     @Test
     public void testView() throws Exception {
         //given
+        String url = "/members/view";
+        String memberId = "1";
         //when
+        Member member = (Member) this.mockMvc.perform(get(url)
+                                             .param("memberId", memberId)
+                                             .contentType(MediaType.TEXT_HTML))
+                                             .andExpect(status().isOk())
+                                             .andReturn().getModelAndView().getModel().get("member");
         //then
+        assertThat(member.getId()).isEqualTo(Long.parseLong(memberId));
     }
     
     @Test
-    public void 회원수정폼() throws Exception {
+    public void testModifyForm() throws Exception {
         //given
-        String memberId = "100";
-        PageVO pageVO = performMembersList();
-        Member member = performMembersView(memberId, pageVO);
+        String url = "/members/modify";
+        String memberId = "1";
         //when
-        MemberForm form = performMembersModify(member.getId(), pageVO);
-        //then
-        assertThat(form.getId()).isEqualTo(Long.parseLong(memberId));
-    }
-
-    private Member performMembersView(String memberId, PageVO pageVO) throws Exception {
-        Member member = (Member) this.mockMvc.perform(get("/members/view")
-                                             .sessionAttr("pageVO", pageVO)
-                                             .param("id", memberId)
-                                             .contentType(MediaType.TEXT_HTML))
-                                             .andExpect(status().isOk())
-                                             .andExpect(view().name("members/view"))
-                                             .andReturn().getModelAndView().getModel().get("member");
-        return member;
-    }
-
-    public PageVO performMembersList() throws Exception {
-        PageVO pageVO = (PageVO) this.mockMvc.perform(get("/members/list")
-                                             .contentType(MediaType.TEXT_HTML))
-                                             .andExpect(status().isOk())
-                                             .andReturn().getModelAndView().getModel().get("pageVO");
-        return pageVO;
-    }
-
-    public MemberForm performMembersModify(Long id, PageVO pageVO) throws Exception {
-        MemberForm form = (MemberForm) this.mockMvc.perform(get("/members/modify")
-                                                   .sessionAttr("pageVO", pageVO)
-                                                   .param("id", String.valueOf(id))
+        MemberForm form = (MemberForm) this.mockMvc.perform(get(url)
+                                                   .param("memberId", memberId)
                                                    .contentType(MediaType.TEXT_HTML))
                                                    .andExpect(status().isOk())
-                                                   .andExpect(view().name("members/modify"))
                                                    .andReturn().getModelAndView().getModel().get("form");
-        return form;
+        //then
+        assertThat(form.getId()).isEqualTo(Long.parseLong(memberId));
+
     }
 
     @Test
     @Transactional
-    public void 회원수정_실패() throws Exception {
+    public void testModify() throws Exception {
         //given
-        String memberId = "100";
-        PageVO pageVO = performMembersList();
-        Member member = performMembersView(memberId, pageVO);
-        MemberForm form = performMembersModify(member.getId(), pageVO);
-        form.setName("홍길동");
-
+        String url = "/members/modify";
+        String memberId = "1";
+        String modifiedName = "홍길동";
         //when
-        this.mockMvc.perform(post("/members/modify")
-                    .param("form", String.valueOf(form))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk());
-        //when
-
+        String msg = (String) this.mockMvc.perform(post(url)
+                                             .param("id",memberId)
+                                             .param("name", modifiedName)
+                                             .param("birthday", "2022-09-09")
+                                             .param("phone", "010-1234-5678")
+                                             .param("zipcode", "06288")
+                                             .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                             .param("detail", "")
+                                             .param("email", "user102@gmail.com")
+                                             .param("userId", "kyh9236")
+                                             .param("password", "password12345@")
+                                             .param("password_confirm", "password12345@")
+                                             .param("gender", "male")
+                                             .contentType(MediaType.APPLICATION_JSON)
+                                             .with(csrf()))
+                                             .andExpect(status().is3xxRedirection())
+                                             .andReturn()
+                                             .getFlashMap()
+                                             .get("msg");
         //then
+        assertThat(msg).isEqualTo("success");
     }
     
     @Test
     @Transactional
-    public void 회원수정_성공(){
-        //given
-        
-        //when
-        
-        //then
-    }
-    
-    @Test
-    @Transactional
-    public void 회원삭제_실패(){
-        //given
-        
-        //when
-        
-        //then
-    }
-    
-    @Test
-    @Transactional
-    public void 회원삭제_성공(){
-        //given
-        
-        //when
-        
-        //then
-    }
-    
-    @Test
-    @Transactional
-    public void 회원다수삭제_실패(){
+    public void testDelete(){
         //given
         
         //when
@@ -222,16 +184,13 @@ public class MemberControllerTest {
 
     @Test
     @Transactional
-    public void 회원다수삭제_성공(){
+    public void testDeletes(){
         //given
         
         //when
         
         //then
     }
-
-
-
 
 
 }
