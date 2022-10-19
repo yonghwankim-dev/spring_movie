@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = "screenSeats")
 public class Screen {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +33,7 @@ public class Screen {
     private int round;                      // 상영회차
 
     @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL)
-    private List<ScreenSeat> screenSeats = new ArrayList<>();
+    private List<ScreenSeat> screenSeats;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
@@ -61,6 +62,17 @@ public class Screen {
                 .theater(form.getTheater())
                 .round(form.getRound())
                 .build();
+        return screen;
+    }
+
+    public static Screen createScreen(LocalDateTime startDateTime, int round, Movie movie, Theater theater){
+        Screen screen = Screen.builder()
+                              .startDateTime(LocalDateTime.now())
+                              .round(round)
+                              .screenSeats(new ArrayList<>())
+                              .build();
+        screen.setMovie(movie);
+        screen.setTheater(theater);
         return screen;
     }
 

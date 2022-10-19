@@ -31,14 +31,11 @@ public class ScreenServiceTest {
         //given
         Long movieId = 1L;
         Long theaterId = 1L;
+        int round = 1;
+        LocalDateTime startDateTime = LocalDateTime.now();
         Movie movie = movieService.findById(movieId).get();
         Theater theater = theaterService.findById(theaterId).get();
-        Screen screen = Screen.builder()
-                              .startDateTime(LocalDateTime.now())
-                              .round(1)
-                              .movie(movie)
-                              .theater(theater)
-                              .build();
+        Screen screen = Screen.createScreen(startDateTime, round, movie, theater);
         //when
         Screen savedScreen = screenService.save(screen);
         Screen findScreen = screenService.findById(savedScreen.getId()).get();

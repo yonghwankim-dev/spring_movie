@@ -24,6 +24,9 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
+import static kr.yh.movie.domain.Screen.*;
+import static kr.yh.movie.util.RedirectAttributeUtil.*;
+
 @Controller
 @RequestMapping("/screens")
 @SessionAttributes({"cinemaId"})
@@ -38,7 +41,7 @@ public class ScreenController {
     public String list(@ModelAttribute("pageVO") PageVO pageVO, Model model){
         Pageable page = pageVO.makePageable(0, "id");
         Page<Screen> result = screenService.findAll(screenService.makePredicates(pageVO.getType(), pageVO.getKeyword()), page);
-        model.addAttribute("result", new PageMarker<Screen>(result));
+        model.addAttribute("result", new PageMarker<>(result));
         return "screens/list";
     }
 
@@ -56,16 +59,7 @@ public class ScreenController {
     }
 
     @PostMapping("/add")
-    public String add(Long movieId,
-                      Long theaterId,
-                      @Valid @ModelAttribute ScreenForm screenForm,
-                      Errors errors,
-                      Model model) {
-        Movie movie = movieService.findById(movieId).get();
-        Theater theater = theaterService.findById(theaterId).get();
-        screenForm.setMovie(movie);
-        screenForm.setTheater(theater);
-        log.info("screenForm : " + screenForm);
+    public String add(@Valid @ModelAttribute ScreenForm form, Errors errors, Model model) {
         if(errors.hasErrors()){
             Map<String, String> validatorResult = screenService.validateHandling(errors);
             for(String key : validatorResult.keySet()){
@@ -74,8 +68,13 @@ public class ScreenController {
             return "screens/add";
         }
 
-        Screen screen = Screen.createScreen(screenForm);
-        screenService.save(screen);
+        Movie movie = movieService.findById(form.getMovieId()).get();
+        Theater theater = theaterService.findById(form.getTheaterId()).get();
+
+        screenService.save(createScreen(form.getStartDateTime(),
+                                        form.getRound(),
+                                        movie,
+                                        theater));
         return "redirect:/screens/list";
     }
 
@@ -100,15 +99,11 @@ public class ScreenController {
     }
 
     @PostMapping("/modify")
-    public String modify(Long movieId,
-                         Long theaterId,
-                         @Valid ScreenForm form,
+    public String modify(@Valid ScreenForm form,
                          PageVO pageVO,
                          RedirectAttributes rttr){
-        Movie movie = movieService.findById(movieId).get();
-        Theater theater = theaterService.findById(theaterId).get();
-        form.setMovie(movie);
-        form.setTheater(theater);
+        Movie movie = movieService.findById(form.getMovieId()).get();
+        Theater theater = theaterService.findById(form.getTheaterId()).get();
 
         screenService.findById(form.getId()).ifPresent(origin->{
             origin.changeInfo(form);
@@ -116,7 +111,7 @@ public class ScreenController {
             rttr.addFlashAttribute("msg", "success");
             rttr.addAttribute("id", origin.getId());
         });
-        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
+        addAttributesPage(pageVO, rttr);
         return "redirect:/screens/view";
     }
 
@@ -124,7 +119,7 @@ public class ScreenController {
     public String delete(Long id, PageVO pageVO, RedirectAttributes rttr){
         screenService.deleteById(id);
         rttr.addFlashAttribute("msg", "success");
-        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
+        addAttributesPage(pageVO, rttr);
         return "redirect:/screens/list";
     }
 
@@ -132,7 +127,7 @@ public class ScreenController {
     public String deletes(@RequestParam(value = "checks") List<Long> ids, PageVO pageVO, RedirectAttributes rttr){
         screenService.deleteAllById(ids);
         rttr.addFlashAttribute("msg", "success");
-        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
+        addAttributesPage(pageVO, rttr);
         return "redirect:/screens/list";
     }
 }

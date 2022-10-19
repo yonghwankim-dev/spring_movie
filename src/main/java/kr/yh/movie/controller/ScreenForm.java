@@ -26,14 +26,14 @@ public class ScreenForm {
     @Min(value = 1, message = "회차를 입력해주세요")
     @Max(value = 100, message = "최대회차는 100까지입니다.")
     private int round;
-    private Movie movie;
-    private Theater theater;
+    private Long movieId;
+    private Long theaterId;
 
     public ScreenForm(Screen screen){
         this.id             = screen.getId();
         this.startDateTime  = screen.getStartDateTime();
         this.round          = screen.getRound();
-        this.movie          = screen.getMovie();
-        this.theater        = screen.getTheater();
+        this.movieId        = screen.getMovie().getId();
+        this.theaterId      = screen.getTheater().getId();
     }
 }

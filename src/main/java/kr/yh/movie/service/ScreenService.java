@@ -47,8 +47,11 @@ public class ScreenService {
 
     @Transactional
     public <S extends Screen> S save(S entity) {
-        screenSeatService.saveAll(createScreenSeats(entity));
-        return screenRepository.save(entity);
+        Screen savedScreen = screenRepository.save(entity);
+        log.info("savedScreen screenSeats : " + savedScreen.getScreenSeats());
+        log.info("entity : " + entity);
+        screenSeatService.saveAll(createScreenSeats(savedScreen));
+        return (S) savedScreen;
     }
 
     private List<ScreenSeat> createScreenSeats(Screen screen){
