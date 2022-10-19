@@ -163,5 +163,20 @@ public class CinemaControllerTest {
         //then
         assertThat(msg).isEqualTo("success");
     }
+    
+    @Test
+    public void testHome() throws Exception {
+        //given
+        String url = "/cinemas/home";
+        String cinemaId = "1";
+        //when
+        Cinema foundCinema = (Cinema) this.mockMvc.perform(get(url)
+                                                  .param("cinemaId", cinemaId)
+                                                  .contentType(TEXT_HTML))
+                                                  .andExpect(status().isOk())
+                                                  .andReturn().getModelAndView().getModel().get("vo");
+        //then
+        assertThat(foundCinema.getId()).isEqualTo(Long.parseLong(cinemaId));
+    }
 
 }
