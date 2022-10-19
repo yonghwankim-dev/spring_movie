@@ -19,6 +19,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -131,7 +132,7 @@ public class TheaterService {
     }
 
     @Query("SELECT t FROM Theater t WHERE t.cinema.id = :cinemaId")
-    public Iterable<Theater> findAllByCinemaId(Long cinemaId) {
+    public List<Theater> findAllByCinemaId(Long cinemaId) {
         return repo.findAllByCinemaId(cinemaId);
     }
 

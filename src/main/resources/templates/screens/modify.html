@@ -20,7 +20,7 @@
                         <th:block th:each="movie : ${movies}">
                             <option th:text="${movie.name}"
                                     th:value="${movie.id}"
-                                    th:selected="${movie.name eq form.movie.name}">
+                                    th:selected="${movie.id eq form.movieId}">
                             </option>
                         </th:block>
                     </select>
@@ -32,7 +32,7 @@
                         <th:block th:each="theater : ${theaters}">
                             <option th:text="${theater.name}"
                                     th:value="${theater.id}"
-                                    th:selected="${theater.name eq form.theater.name}">
+                                    th:selected="${theater.id eq form.theaterId}">
                             </option>
                         </th:block>
                     </select>

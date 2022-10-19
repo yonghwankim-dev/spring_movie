@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public interface TheaterRepository extends CrudRepository<Theater, Long>, QuerydslPredicateExecutor<Theater> {
     @Query("SELECT t FROM Theater t WHERE t.cinema.id = :cinemaId")
-    Iterable<Theater> findAllByCinemaId(@Param("cinemaId") Long cinemaId);
+    List<Theater> findAllByCinemaId(@Param("cinemaId") Long cinemaId);
 
     default Predicate makePredicates(String type, String keyword, Long cinemaId){
         BooleanBuilder builder = new BooleanBuilder();

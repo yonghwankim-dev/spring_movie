@@ -105,4 +105,26 @@ public class ScreenControllerTest {
         //then
         assertThat(screen.getId()).isEqualTo(3L);
     }
+
+    @Test
+    public void testModifyForm() throws Exception {
+        //given
+        String url = "/screens/modify";
+        String screenId = "3";
+        String cinemaId = "1";
+        //when
+        Map<String, Object> model = this.mockMvc.perform(get(url)
+                                                .param("screenId", screenId)
+                                                .param("cinemaId", cinemaId)
+                                                .contentType(MediaType.TEXT_HTML))
+                                                .andExpect(status().isOk())
+                                                .andReturn().getModelAndView().getModel();
+        ScreenForm form = (ScreenForm) model.get("form");
+        List<Movie> movies = (List<Movie>) model.get("movies");
+        List<Theater> theaters = (List<Theater>) model.get("theaters");
+        //then
+        assertThat(form).isNotNull();
+        assertThat(movies).isNotNull();
+        assertThat(theaters).isNotNull();
+    }
 }

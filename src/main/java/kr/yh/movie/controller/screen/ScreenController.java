@@ -84,14 +84,14 @@ public class ScreenController {
     }
 
     @GetMapping("/modify")
-    public String modifyForm(Long id,
+    public String modifyForm(Long screenId,
                              @ModelAttribute("cinemaId") Long cinemaId,
                              @ModelAttribute("pageVO") PageVO pageVO,
                              Model model){
         List<Movie> movies = (List<Movie>) movieService.findAll();
-        List<Theater> theaters = (List<Theater>) theaterService.findAllByCinemaId(cinemaId);
+        List<Theater> theaters = theaterService.findAllByCinemaId(cinemaId);
 
-        screenService.findById(id).ifPresent(vo->model.addAttribute("form", new ScreenForm(vo)));
+        screenService.findById(screenId).ifPresent(vo->model.addAttribute("form", new ScreenForm(vo)));
         model.addAttribute("movies", movies);
         model.addAttribute("theaters", theaters);
         return "screens/modify";
