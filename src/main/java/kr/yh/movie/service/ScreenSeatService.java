@@ -9,6 +9,7 @@ import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -122,5 +124,10 @@ public class ScreenSeatService {
 
     public <S extends ScreenSeat, R> R findBy(Predicate predicate, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return screenSeatRepository.findBy(predicate, queryFunction);
+    }
+
+    @Query("SELECT s FROM ScreenSeat s WHERE s.screen.id = :screenId")
+    public List<ScreenSeat> findAllByScreenId(Long screenId) {
+        return screenSeatRepository.findAllByScreenId(screenId);
     }
 }

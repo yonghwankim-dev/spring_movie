@@ -6,8 +6,14 @@ import kr.yh.movie.domain.QScreenSeat;
 import kr.yh.movie.domain.ReservationStatus;
 import kr.yh.movie.domain.ScreenSeat;
 import kr.yh.movie.domain.ScreenSeatStatus;
+import kr.yh.movie.domain.member.Member;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface ScreenSeatRepository extends CrudRepository<ScreenSeat, Long>, QuerydslPredicateExecutor<ScreenSeat> {
     default Predicate makePredicates(String type, String keyword, Long screenId){
@@ -30,4 +36,7 @@ public interface ScreenSeatRepository extends CrudRepository<ScreenSeat, Long>, 
 
         return builder;
     }
+
+    @Query("SELECT s FROM ScreenSeat s WHERE s.screen.id = :screenId")
+    List<ScreenSeat> findAllByScreenId(@Param("screenId") Long screenId);
 }
