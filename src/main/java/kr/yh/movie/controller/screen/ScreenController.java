@@ -27,7 +27,6 @@ import static kr.yh.movie.util.RedirectAttributeUtil.*;
 
 @Controller
 @RequestMapping("/screens")
-@SessionAttributes({"cinemaId"})
 @RequiredArgsConstructor
 @Log
 public class ScreenController {

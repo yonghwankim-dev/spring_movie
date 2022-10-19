@@ -1,6 +1,9 @@
 package kr.yh.movie.controller;
 
+import kr.yh.movie.controller.screen.ScreenForm;
+import kr.yh.movie.domain.Movie;
 import kr.yh.movie.domain.Screen;
+import kr.yh.movie.domain.Theater;
 import kr.yh.movie.vo.PageMarker;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
@@ -38,5 +42,26 @@ public class ScreenControllerTest {
                                     .andReturn().getModelAndView().getModel().get("result");
         //then
         assertThat(result).isNotNull();
+    }
+    
+    @Test
+    public void testAddForm() throws Exception {
+        //given
+        String url = "/screens/add";
+        String cinemaId = "1";
+        //when
+        Map<String, Object> model = this.mockMvc.perform(get(url)
+                                                .param("cinemaId", cinemaId)
+                                                .contentType(MediaType.TEXT_HTML))
+                                                .andExpect(status().isOk())
+                                                .andReturn().getModelAndView().getModel();
+
+        ScreenForm form = (ScreenForm) model.get("form");
+        List<Movie> movies = (List<Movie>) model.get("movies");
+        List<Theater> theaters = (List<Theater>) model.get("theaters");
+        //then
+        assertThat(form).isNotNull();
+        assertThat(movies).isNotNull();
+        assertThat(theaters).isNotNull();
     }
 }
