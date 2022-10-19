@@ -29,22 +29,6 @@ import java.util.function.Function;
 public class MemberService{
     private final MemberRepository memberRepository;
 
-    // 회원가입
-    @Transactional
-    public void signUp(Member member){
-        memberRepository.save(member);
-    }
-
-    // 회원가입시 유효성 체크
-    public Map<String, String> validateHandling(Errors errors) {
-        Map<String, String> validatorResult = new HashMap<>();
-        for(FieldError error : errors.getFieldErrors()){
-            String validKeyName = String.format("valid_%s", error.getField());
-            validatorResult.put(validKeyName, error.getDefaultMessage());
-        }
-        return validatorResult;
-    }
-
     @Query("SELECT m FROM Member m WHERE m.userId = :userId")
     public Optional<Member> findByUserId(String userId) {
         return memberRepository.findByUserId(userId);

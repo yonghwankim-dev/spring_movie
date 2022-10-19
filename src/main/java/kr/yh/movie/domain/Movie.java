@@ -1,11 +1,7 @@
 package kr.yh.movie.domain;
 
-import kr.yh.movie.controller.MemberForm;
 import kr.yh.movie.controller.MovieForm;
-import kr.yh.movie.domain.member.Member;
 import lombok.*;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;

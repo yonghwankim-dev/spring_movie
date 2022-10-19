@@ -1,8 +1,6 @@
 package kr.yh.movie.validator;
 
-import kr.yh.movie.controller.MemberForm;
-import kr.yh.movie.repository.MemberRepository;
-import lombok.AllArgsConstructor;
+import kr.yh.movie.controller.member.MemberForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

@@ -1,6 +1,6 @@
 package kr.yh.movie.validator;
 
-import kr.yh.movie.controller.MemberForm;
+import kr.yh.movie.controller.member.MemberForm;
 import kr.yh.movie.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;

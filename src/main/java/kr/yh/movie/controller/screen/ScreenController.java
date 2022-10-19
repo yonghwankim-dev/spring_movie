@@ -6,6 +6,7 @@ import kr.yh.movie.domain.Theater;
 import kr.yh.movie.service.MovieService;
 import kr.yh.movie.service.ScreenService;
 import kr.yh.movie.service.TheaterService;
+import kr.yh.movie.validator.DomainValidator;
 import kr.yh.movie.vo.PageMarker;
 import kr.yh.movie.vo.PageVO;
 import lombok.RequiredArgsConstructor;
@@ -61,7 +62,7 @@ public class ScreenController {
                       Errors errors,
                       Model model,
                       RedirectAttributes rttr) {
-        if(ScreenValidator.validate(errors, model)){
+        if(DomainValidator.validate(errors, model)){
             return "screens/add";
         }
 
@@ -102,7 +103,7 @@ public class ScreenController {
                          Errors errors,
                          Model model,
                          RedirectAttributes rttr){
-        if(ScreenValidator.validate(errors, model)){
+        if(DomainValidator.validate(errors, model)){
             return "screens/modify";
         }
 

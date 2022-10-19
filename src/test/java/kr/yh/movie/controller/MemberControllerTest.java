@@ -1,20 +1,17 @@
 package kr.yh.movie.controller;
 
+import kr.yh.movie.controller.member.MemberForm;
 import kr.yh.movie.domain.member.Member;
+import kr.yh.movie.vo.PageMarker;
 import kr.yh.movie.vo.PageVO;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.FlashMap;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.core.StringContains.containsString;
@@ -32,36 +29,93 @@ public class MemberControllerTest {
     MockMvc mockMvc;
 
     @Test
-    public void 회원목록() throws Exception {
+    public void testList() throws Exception {
         //given
+        String url = "/members/list";
 
         //when
-        this.mockMvc.perform(get("/members/list")
-                    .contentType(MediaType.TEXT_HTML))
-                    .andExpect(status().isOk())
+        PageMarker<Page<Member>> result = (PageMarker<Page<Member>>) this.mockMvc.perform(get(url)
+                                                                         .contentType(MediaType.TEXT_HTML))
+                                                                         .andExpect(status().isOk())
+                                                                         .andReturn()
+                                                                         .getModelAndView()
+                                                                         .getModel()
+                                                                         .get("result");
+        //then
+        assertThat(result).isNotNull();
+    }
+
+    @Test
+    public void testAddForm() throws Exception{
+        //given
+        String url = "/members/add";
+        //when
+        MemberForm form = (MemberForm) this.mockMvc.perform(get(url)
+                                                   .contentType(MediaType.TEXT_HTML))
+                                                   .andExpect(status().isOk())
+                                                   .andReturn().getModelAndView().getModel().get("form");
+        //then
+        assertThat(form).isNotNull();
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_duplicateUserId() throws Exception{
+        //given
+        String url = "/members/add";
+
+        //when
+        this.mockMvc.perform(post(url)
+                    .param("name","김용환")
+                    .param("birthday","2022-09-09")
+                    .param("phone","010-1234-5678")
+                    .param("zipcode", "06288")
+                    .param("street","서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                    .param("detail","")
+                    .param("email","user1@gmail.com")
+                    .param("userId","user1")
+                    .param("password","password12345@")
+                    .param("password_confirm","password12345@")
+                    .param("gender", "male"))
+                    .andExpect(status().is4xxClientError())
                     .andDo(print());
         //then
     }
 
+    @Test
+    @Transactional
+    public void testAdd_success() throws Exception{
+        //given
+        String url = "/members/add";
+        //when
+        Member savedMember = (Member) this.mockMvc.perform(post(url)
+                                                  .param("name", "김용환")
+                                                  .param("birthday", "2022-09-09")
+                                                  .param("phone", "010-1234-5678")
+                                                  .param("zipcode", "06288")
+                                                  .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                  .param("detail", "")
+                                                  .param("email", "user102@gmail.com")
+                                                  .param("userId", "kyh9236")
+                                                  .param("password", "password12345@")
+                                                  .param("password_confirm", "password12345@")
+                                                  .param("gender", "male")
+                                                  .contentType(MediaType.APPLICATION_JSON)
+                                                  .with(csrf()))
+                                                  .andExpect(status().is3xxRedirection())
+                                                  .andReturn()
+                                                  .getFlashMap()
+                                                  .get("savedMember");
+        //then
+        assertThat(savedMember.getName()).isEqualTo("김용환");
+    }
+
 
     @Test
-    public void 회원상세정보() throws Exception {
+    public void testView() throws Exception {
         //given
-        PageVO pageVO = (PageVO) this.mockMvc.perform(get("/members/list")
-                                             .contentType(MediaType.TEXT_HTML))
-                                             .andExpect(status().isOk())
-                                             .andReturn().getModelAndView().getModel().get("pageVO");
-
         //when
-        Member member = (Member) this.mockMvc.perform(get("/members/view")
-                                       .sessionAttr("pageVO", pageVO)
-                                       .param("id", "100")
-                                       .contentType(MediaType.TEXT_HTML))
-                                       .andExpect(status().isOk())
-                                       .andExpect(view().name("members/view"))
-                                       .andReturn().getModelAndView().getModel().get("member");
         //then
-        assertThat(member.getId()).isEqualTo(100);
     }
     
     @Test
@@ -176,52 +230,7 @@ public class MemberControllerTest {
         //then
     }
 
-    @Test
-    public void 회원가입폼() throws Exception{
-        this.mockMvc.perform(get("/members/add"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("_csrf")))
-                    .andDo(print());
-    }
 
-    @Test
-    @Transactional
-    public void 회원가입_실패() throws Exception{
-        this.mockMvc.perform(post("/members/add")
-                .param("name","김용환")
-                .param("birthday","2022-09-09")
-                .param("phone","010-1234-5678")
-                .param("zipcode", "06288")
-                .param("street","서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
-                .param("detail","")
-                .param("email","user1@gmail.com")
-                .param("userId","user1")
-                .param("password","password12345@")
-                .param("password_confirm","password12345@")
-                .param("gender", "male")
-        ).andExpect(status().is4xxClientError())
-         .andDo(print());
-    }
-    
-    @Test
-    @Transactional
-    public void 회원가입_성공() throws Exception{
-        this.mockMvc.perform(post("/members/add")
-                .param("name","김용환")
-                .param("birthday","2022-09-09")
-                .param("phone","010-1234-5678")
-                .param("zipcode", "06288")
-                .param("street","서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
-                .param("detail","")
-                .param("email","user102@gmail.com")
-                .param("userId","kyh9236")
-                .param("password","password12345@")
-                .param("password_confirm","password12345@")
-                .param("gender", "male")
-                .with(csrf())
-        ).andExpect(status().is3xxRedirection())
-         .andDo(print());
-    }
 
 
 

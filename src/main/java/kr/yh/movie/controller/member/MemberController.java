@@ -1,11 +1,8 @@
-package kr.yh.movie.controller;
+package kr.yh.movie.controller.member;
 
 import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.service.MemberService;
-import kr.yh.movie.validator.CheckEmailValidator;
-import kr.yh.movie.validator.CheckPasswordEqualValidator;
-import kr.yh.movie.validator.CheckPhoneValidator;
-import kr.yh.movie.validator.CheckUserIdValidator;
+import kr.yh.movie.validator.*;
 import kr.yh.movie.vo.PageMarker;
 import kr.yh.movie.vo.PageVO;
 import lombok.RequiredArgsConstructor;
@@ -55,22 +52,21 @@ public class MemberController {
 
     @GetMapping("/add")
     public String addForm(Model model){
-        model.addAttribute("memberForm", new MemberForm());
+        model.addAttribute("form", new MemberForm());
         return "members/add";
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute MemberForm memberForm, Errors errors, Model model){
-        if(errors.hasErrors()){
-            Map<String, String> validatorResult = memberService.validateHandling(errors);
-            for(String key : validatorResult.keySet()){
-                model.addAttribute(key, validatorResult.get(key));
-            }
+    public String add(@Valid @ModelAttribute MemberForm form,
+                      Errors errors,
+                      Model model,
+                      RedirectAttributes rttr){
+        if(DomainValidator.validate(errors, model)){
             return "members/add";
         }
 
-        Member member = Member.createMember(memberForm);
-        memberService.signUp(member);
+        Member savedMember = memberService.save(Member.member(form));
+        rttr.addFlashAttribute("savedMember", savedMember);
         return "redirect:/";
     }
 

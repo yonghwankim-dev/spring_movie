@@ -1,4 +1,4 @@
-package kr.yh.movie.controller;
+package kr.yh.movie.controller.member;
 
 import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.domain.member.MemberRole;

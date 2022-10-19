@@ -1,9 +1,6 @@
-package kr.yh.movie.controller.screen;
+package kr.yh.movie.validator;
 
 
-import groovy.lang.Singleton;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -12,9 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class ScreenValidator {
+public class DomainValidator {
 
-    private ScreenValidator(){
+    private DomainValidator(){
 
     }
 

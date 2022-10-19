@@ -1,6 +1,6 @@
 package kr.yh.movie.domain.member;
 
-import kr.yh.movie.controller.MemberForm;
+import kr.yh.movie.controller.member.MemberForm;
 import kr.yh.movie.domain.Reservation;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -66,7 +66,7 @@ public class Member implements UserDetails {
     private final List<MemberRole> roles = new ArrayList<>();
 
     //== 생성 로직 ==//
-    public static Member createMember(MemberForm form){
+    public static Member member(MemberForm form){
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Member member = Member.builder()
                               .name(form.getName())
