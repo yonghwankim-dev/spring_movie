@@ -3,6 +3,9 @@ package kr.yh.movie.service;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import kr.yh.movie.domain.Screen;
+import kr.yh.movie.domain.ScreenSeat;
+import kr.yh.movie.domain.ScreenSeatStatus;
+import kr.yh.movie.domain.Seat;
 import kr.yh.movie.repository.ScreenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -15,10 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
+
+import static kr.yh.movie.domain.ScreenSeatStatus.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,6 +30,7 @@ import java.util.function.Function;
 public class ScreenService {
     private final ScreenRepository screenRepository;
     private final ScreenSeatService screenSeatService;
+    private final SeatService seatService;
 
     public Predicate makePredicates(String type, String keyword) {
         return screenRepository.makePredicates(type, keyword);
@@ -43,7 +47,24 @@ public class ScreenService {
 
     @Transactional
     public Long register(Screen screen) {
-        return null;
+        screenSeatService.saveAll(createScreenSeats(screen));
+        Screen savedScreen = save(screen);
+        return savedScreen.getId();
+    }
+
+    private List<ScreenSeat> createScreenSeats(Screen screen){
+        List<ScreenSeat> screenSeats = new ArrayList<>();
+        List<Seat> seats = seatService.findAllByTheaterId(screen.getTheater().getId());
+
+        for(Seat seat : seats){
+            ScreenSeat screenSeat = ScreenSeat.builder()
+                                              .status(EMPTY)
+                                              .screen(screen)
+                                              .seat(seat)
+                                              .build();
+            screenSeats.add(screenSeat);
+        }
+        return screenSeats;
     }
 
     @Transactional
