@@ -15,12 +15,15 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -63,5 +66,28 @@ public class ScreenControllerTest {
         assertThat(form).isNotNull();
         assertThat(movies).isNotNull();
         assertThat(theaters).isNotNull();
+    }
+    
+    @Test
+    @Transactional
+    public void testAdd() throws Exception {
+        //given
+        String url = "/screens/add";
+        String startDateTime = LocalDateTime.now().toString();
+        String round = "1";
+        String movieId = "1";
+        String theaterId = "1";
+
+        //when
+        Screen savedScreen = (Screen) this.mockMvc.perform(post(url)
+                                                  .param("startDateTime", startDateTime)
+                                                  .param("round", round)
+                                                  .param("movieId", movieId)
+                                                  .param("theaterId", theaterId)
+                                                  .with(csrf()))
+                                                  .andExpect(status().is3xxRedirection())
+                                                  .andReturn().getFlashMap().get("savedScreen");
+        //then
+        assertThat(savedScreen).isNotNull();
     }
 }

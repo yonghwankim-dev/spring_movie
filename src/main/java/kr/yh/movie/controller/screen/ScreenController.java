@@ -56,17 +56,18 @@ public class ScreenController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute ScreenForm form, Errors errors, Model model) {
+    public String add(@Valid @ModelAttribute ScreenForm form, Errors errors, Model model, RedirectAttributes rttr) {
         if(ScreenValidator.validate(errors, model)){
             return "screens/add";
         }
 
         Movie movie = movieService.findById(form.getMovieId()).get();
         Theater theater = theaterService.findById(form.getTheaterId()).get();
-        screenService.save(createScreen(form.getStartDateTime(),
-                                        form.getRound(),
-                                        movie,
-                                        theater));
+        Screen savedScreen = screenService.save(createScreen(form.getStartDateTime(),
+                                                             form.getRound(),
+                                                             movie,
+                                                             theater));
+        rttr.addFlashAttribute("savedScreen", savedScreen);
         return "redirect:/screens/list";
     }
 
