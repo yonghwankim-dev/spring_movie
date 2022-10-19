@@ -58,12 +58,22 @@ public class CinemaControllerTest {
     }
     
     @Test
-    public void testAdd(){
+    @Transactional
+    public void testAdd() throws Exception {
         //given
-        
+        String url = "/cinemas/add";
+        String name = "강남";
+        String loc  = "서울";
         //when
-        
+        Cinema savedCinema = (Cinema) this.mockMvc.perform(post(url)
+                                                  .param("name", name)
+                                                  .param("loc", loc)
+                                                  .contentType(MediaType.APPLICATION_JSON)
+                                                  .with(csrf()))
+                                                  .andExpect(status().is3xxRedirection())
+                                                  .andReturn().getFlashMap().get("savedCinema");
         //then
+        assertThat(savedCinema.getName()).isEqualTo("강남");
     }
     
     @Test

@@ -3,6 +3,7 @@ package kr.yh.movie.controller.cinema;
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.service.CinemaService;
 import kr.yh.movie.util.RedirectAttributeUtil;
+import kr.yh.movie.validator.DomainValidator;
 import kr.yh.movie.vo.PageMarker;
 import kr.yh.movie.vo.PageVO;
 import lombok.RequiredArgsConstructor;
@@ -43,20 +44,17 @@ public class CinemaController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute CinemaForm cinemaForm, Errors errors, Model model) {
-        log.info("cinema add post" + cinemaForm);
-        if(errors.hasErrors()){
-            // 유효성 통과 못한 필드와 메시지를 핸들링
-            Map<String, String> validatorResult = cinemaService.validateHandling(errors);
-            for(String key : validatorResult.keySet()){
-                model.addAttribute(key, validatorResult.get(key));
-            }
-            // 회원가입 페이지로 다시 리턴
+    public String add(@Valid @ModelAttribute CinemaForm cinemaForm,
+                      Errors errors,
+                      Model model,
+                      RedirectAttributes rttr) {
+        if(DomainValidator.validate(errors, model)){
             return "cinemas/add";
         }
 
         Cinema cinema = Cinema.createCinema(cinemaForm);
-        cinemaService.save(cinema);
+        Cinema savedCinema = cinemaService.save(cinema);
+        rttr.addFlashAttribute("savedCinema", savedCinema);
         return "redirect:/cinemas/list";
     }
 
