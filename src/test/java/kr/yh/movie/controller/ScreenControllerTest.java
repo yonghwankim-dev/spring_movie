@@ -160,4 +160,39 @@ public class ScreenControllerTest {
         assertThat(foundScreen.getId()).isEqualTo(Long.parseLong(screenId));
         assertThat(foundScreen.getRound()).isEqualTo(Integer.parseInt(round));
     }
+
+    @Test
+    @Transactional
+    public void testDelete() throws Exception {
+        //given
+        String url = "/screens/delete";
+        String screenId = "3";
+
+        //when
+        String msg = (String) this.mockMvc.perform(post(url)
+                                          .param("screenId", screenId)
+                                          .contentType(MediaType.APPLICATION_JSON)
+                                          .with(csrf()))
+                                          .andExpect(status().is3xxRedirection())
+                                          .andReturn().getFlashMap().get("msg");
+        //then
+        assertThat(msg).isEqualTo("success");
+    }
+
+    @Test
+    @Transactional
+    public void testDeletes() throws Exception {
+        //given
+        String url = "/screens/deletes";
+        String[] screenIds = {"3"};
+        //when
+        String msg = (String) this.mockMvc.perform(post(url)
+                                          .param("checks", screenIds)
+                                          .contentType(MediaType.APPLICATION_JSON)
+                                          .with(csrf()))
+                                          .andExpect(status().is3xxRedirection())
+                                          .andReturn().getFlashMap().get("msg");
+        //then
+        assertThat(msg).isEqualTo("success");
+    }
 }

@@ -120,18 +120,16 @@ public class ScreenController {
     }
 
     @PostMapping("/delete")
-    public String delete(Long id, PageVO pageVO, RedirectAttributes rttr){
-        screenService.deleteById(id);
+    public String delete(Long screenId, RedirectAttributes rttr){
+        screenService.deleteById(screenId);
         rttr.addFlashAttribute("msg", "success");
-        addAttributesPage(pageVO, rttr);
         return "redirect:/screens/list";
     }
 
     @PostMapping("/deletes")
-    public String deletes(@RequestParam(value = "checks") List<Long> ids, PageVO pageVO, RedirectAttributes rttr){
-        screenService.deleteAllById(ids);
+    public String deletes(@RequestParam(value = "checks") List<Long> screenIds, RedirectAttributes rttr){
+        screenService.deleteAllById(screenIds);
         rttr.addFlashAttribute("msg", "success");
-        addAttributesPage(pageVO, rttr);
         return "redirect:/screens/list";
     }
 }
