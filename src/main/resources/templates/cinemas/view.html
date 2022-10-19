@@ -7,7 +7,7 @@
         <div>
             <div class="form-group">
                 <label>아이디번호</label>
-                <input class="form-control" name="id" th:value="${vo.id}" readonly>
+                <input class="form-control" name="cinemaId" th:value="${vo.id}" readonly>
             </div>
 
             <div class="form-group">
@@ -28,7 +28,7 @@
                                  size=${pageVO.size},
                                  type=${pageVO.type},
                                  keyword=${pageVO.keyword},
-                                 id=${vo.id})}" class="btn btn-warning">수정/삭제</a>
+                                 cinemaId=${vo.id})}" class="btn btn-warning">수정/삭제</a>
 
             <a th:href="@{list(page=${pageVO.page},
                                size=${pageVO.size},

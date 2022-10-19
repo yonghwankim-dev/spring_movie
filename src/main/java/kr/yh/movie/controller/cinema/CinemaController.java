@@ -68,9 +68,9 @@ public class CinemaController {
     }
 
     @GetMapping("/modify")
-    public String modifyForm(Long cienamId,
+    public String modifyForm(Long cinemaId,
                              Model model){
-        cinemaService.findById(cienamId)
+        cinemaService.findById(cinemaId)
                      .ifPresent(vo->model.addAttribute("form", new CinemaForm(vo)));
         return "cinemas/modify";
     }
@@ -90,9 +90,9 @@ public class CinemaController {
     }
 
     @PostMapping("/delete")
-    public String delete(Long cinemaId,
+    public String delete(Long id,
                          RedirectAttributes rttr){
-        cinemaService.deleteById(cinemaId);
+        cinemaService.deleteById(id);
         rttr.addFlashAttribute("msg", "success");
         return "redirect:/cinemas/list";
     }

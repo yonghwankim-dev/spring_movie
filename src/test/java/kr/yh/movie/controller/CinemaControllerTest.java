@@ -138,7 +138,7 @@ public class CinemaControllerTest {
         String cinemaId = "1";
         //when
         String msg = (String) this.mockMvc.perform(post(url)
-                                          .param("cinemaId", cinemaId)
+                                          .param("id", cinemaId)
                                           .contentType(APPLICATION_JSON)
                                           .with(csrf()))
                                           .andExpect(status().is3xxRedirection())
@@ -148,11 +148,20 @@ public class CinemaControllerTest {
     }
     
     @Test
-    public void testDeletes(){
+    @Transactional
+    public void testDeletes() throws Exception {
         //given
-        
+        String url = "/cinemas/deletes";
+        String[] cinemaIds = {"1"};
         //when
-        
+        String msg = (String) this.mockMvc.perform(post(url)
+                                          .param("checks", cinemaIds)
+                                          .contentType(APPLICATION_JSON)
+                                          .with(csrf()))
+                                          .andExpect(status().is3xxRedirection())
+                                          .andReturn().getFlashMap().get("msg");
         //then
+        assertThat(msg).isEqualTo("success");
     }
+
 }
