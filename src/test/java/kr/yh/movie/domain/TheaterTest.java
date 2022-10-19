@@ -1,4 +1,4 @@
-package kr.yh.movie.domain.theater;
+package kr.yh.movie.domain;
 
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Theater;

@@ -10,18 +10,4 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class ReservationTest {
-
-    @Autowired
-    private MemberService memberService;
-
-    @Test
-    public void createReservation(){
-        //given
-        Member member = memberService.findById(1L).get();
-        Person person = new Person(0,2,0);
-
-        //when
-//        Reservation.createReservation(member, person, )
-        //then
-    }
 }

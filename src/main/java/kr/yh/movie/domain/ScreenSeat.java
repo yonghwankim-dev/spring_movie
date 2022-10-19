@@ -61,21 +61,6 @@ public class ScreenSeat {
         return screenSeat;
     }
 
-    public static List<ScreenSeat> createScreenSeats(Screen screen, List<Seat> seats){
-        List<ScreenSeat> result = new ArrayList<>();
-
-        seats.forEach(seat->{
-            ScreenSeat screenSeat = ScreenSeat.builder()
-                                              .status(ScreenSeatStatus.EMPTY)
-                                              .build();
-            screenSeat.setScreen(screen);
-            screenSeat.setSeat(seat);
-            result.add(screenSeat);
-        });
-
-        return result;
-    }
-
     //== 수정 로직 ==//
     public void changeInfo(ScreenSeatForm form){
         this.status      = form.getStatus();

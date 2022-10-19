@@ -1,5 +1,9 @@
-package kr.yh.movie.domain.member;
+package kr.yh.movie.domain;
 
+import kr.yh.movie.domain.member.Address;
+import kr.yh.movie.domain.member.Member;
+import kr.yh.movie.domain.member.MemberRole;
+import kr.yh.movie.domain.member.MemberRoleName;
 import kr.yh.movie.repository.MemberRepository;
 import kr.yh.movie.service.MemberService;
 import org.junit.jupiter.api.Test;

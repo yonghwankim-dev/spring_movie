@@ -1,4 +1,4 @@
-package kr.yh.movie.domain.movie;
+package kr.yh.movie.domain;
 
 import kr.yh.movie.domain.Movie;
 import kr.yh.movie.service.MovieService;

@@ -46,10 +46,9 @@ public class ScreenService {
     }
 
     @Transactional
-    public Long register(Screen screen) {
-        screenSeatService.saveAll(createScreenSeats(screen));
-        Screen savedScreen = save(screen);
-        return savedScreen.getId();
+    public <S extends Screen> S save(S entity) {
+        screenSeatService.saveAll(createScreenSeats(entity));
+        return screenRepository.save(entity);
     }
 
     private List<ScreenSeat> createScreenSeats(Screen screen){
@@ -57,19 +56,12 @@ public class ScreenService {
         List<Seat> seats = seatService.findAllByTheaterId(screen.getTheater().getId());
 
         for(Seat seat : seats){
-            ScreenSeat screenSeat = ScreenSeat.builder()
-                                              .status(EMPTY)
-                                              .screen(screen)
-                                              .seat(seat)
-                                              .build();
+            ScreenSeat screenSeat = ScreenSeat.builder().status(EMPTY).build();
+            screenSeat.setScreen(screen);
+            screenSeat.setSeat(seat);
             screenSeats.add(screenSeat);
         }
         return screenSeats;
-    }
-
-    @Transactional
-    public <S extends Screen> S save(S entity) {
-        return screenRepository.save(entity);
     }
 
     @Transactional
