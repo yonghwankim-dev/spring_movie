@@ -207,6 +207,4 @@ public class MemberControllerTest {
         //then
         assertThat(msg).isEqualTo("success");
     }
-
-
 }

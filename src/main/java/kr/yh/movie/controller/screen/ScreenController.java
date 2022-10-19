@@ -46,7 +46,6 @@ public class ScreenController {
 
     @GetMapping("/add")
     public String addForm(@ModelAttribute("cinemaId") Long cinemaId,
-                          @ModelAttribute("pageVO")PageVO pageVO,
                           Model model){
         List<Movie> movies = (List<Movie>) movieService.findAll();
         List<Theater> theaters = (List<Theater>) theaterService.findAllByCinemaId(cinemaId);
@@ -87,7 +86,6 @@ public class ScreenController {
     @GetMapping("/modify")
     public String modifyForm(Long screenId,
                              @ModelAttribute("cinemaId") Long cinemaId,
-                             @ModelAttribute("pageVO") PageVO pageVO,
                              Model model){
         List<Movie> movies = (List<Movie>) movieService.findAll();
         List<Theater> theaters = theaterService.findAllByCinemaId(cinemaId);
