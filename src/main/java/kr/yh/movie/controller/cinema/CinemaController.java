@@ -90,30 +90,18 @@ public class CinemaController {
     }
 
     @PostMapping("/delete")
-    public String delete(Long id, PageVO pageVO, RedirectAttributes rttr){
-        log.info("DELETE ID : " + id);
-
-        cinemaService.deleteById(id);
-
+    public String delete(Long cinemaId,
+                         RedirectAttributes rttr){
+        cinemaService.deleteById(cinemaId);
         rttr.addFlashAttribute("msg", "success");
-
-        // 페이징과 검색했던 결과로 이동하는 경우
-        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
-
         return "redirect:/cinemas/list";
     }
 
     @PostMapping("/deletes")
-    public String deletes(@RequestParam(value = "checks") List<Long> ids, PageVO pageVO, RedirectAttributes rttr){
-        log.info("DELETE IDS : " + ids);
-
-        cinemaService.deleteAllById(ids);
-
+    public String deletes(@RequestParam(value = "checks") List<Long> cinemaIds,
+                          RedirectAttributes rttr){
+        cinemaService.deleteAllById(cinemaIds);
         rttr.addFlashAttribute("msg", "success");
-
-        // 페이징과 검색했던 결과로 이동하는 경우
-        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
-
         return "redirect:/cinemas/list";
     }
 

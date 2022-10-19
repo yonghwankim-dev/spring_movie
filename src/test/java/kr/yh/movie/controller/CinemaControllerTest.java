@@ -129,14 +129,22 @@ public class CinemaControllerTest {
         //then
         assertThat(modifiedCinema.getName()).isEqualTo(modifiedName);
     }
-    
+
     @Test
-    public void testDelete(){
+    @Transactional
+    public void testDelete() throws Exception {
         //given
-        
+        String url = "/cinemas/delete";
+        String cinemaId = "1";
         //when
-        
+        String msg = (String) this.mockMvc.perform(post(url)
+                                          .param("cinemaId", cinemaId)
+                                          .contentType(APPLICATION_JSON)
+                                          .with(csrf()))
+                                          .andExpect(status().is3xxRedirection())
+                                          .andReturn().getFlashMap().get("msg");
         //then
+        assertThat(msg).isEqualTo("success");
     }
     
     @Test
