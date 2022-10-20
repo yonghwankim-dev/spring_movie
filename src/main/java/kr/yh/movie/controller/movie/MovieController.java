@@ -67,28 +67,28 @@ public class MovieController {
     }
 
     @GetMapping("/modify")
-    public String modifyForm(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
-        log.info("MODIFY FORM ID: " + id);
-
-        movieService.findById(id).ifPresent(vo->model.addAttribute("form", new MovieForm(vo)));
+    public String modifyForm(Long movieId,
+                             Model model){
+        movieService.findById(movieId)
+                    .ifPresent(vo->model.addAttribute("form", new MovieForm(vo)));
         return "movies/modify";
     }
 
     @PostMapping("/modify")
-    public String modify(MovieForm form, PageVO pageVO, RedirectAttributes rttr){
-        log.info("Modify movie form : " + form);
-
+    public String modify(@Valid MovieForm form,
+                         Errors errors,
+                         Model model,
+                         RedirectAttributes rttr){
+        if(DomainValidator.validate(errors, model)){
+            return "movies/modify";
+        }
         movieService.findById(form.getId()).ifPresent(origin->{
             origin.changeInfo(form);
-            log.info("after origin.changeInfo : " + origin);
-            movieService.save(origin);
+            Movie modifiedMovie = movieService.save(origin);
+            rttr.addFlashAttribute("modifiedMovie", modifiedMovie);
             rttr.addFlashAttribute("msg", "success");
             rttr.addAttribute("id", origin.getId());
         });
-
-        // 페이징과 검색했던 결과로 이동하는 경우
-        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
-
         return "redirect:/movies/view";
     }
 

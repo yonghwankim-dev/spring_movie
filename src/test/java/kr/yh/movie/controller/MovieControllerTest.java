@@ -97,21 +97,41 @@ public class MovieControllerTest {
     }
     
     @Test
-    public void testModifyForm(){
+    public void testModifyForm() throws Exception {
         //given
-        
+        String url = "/movies/modify";
+        String movieId = "1";
         //when
-        
+        MovieForm form = (MovieForm) this.mockMvc.perform(get(url)
+                                                 .param("movieId", movieId)
+                                                 .contentType(TEXT_HTML))
+                                                 .andExpect(status().isOk())
+                                                 .andReturn().getModelAndView().getModel().get("form");
         //then
+        assertThat(form.getId()).isEqualTo(Long.parseLong(movieId));
     }
     
     @Test
-    public void testModify(){
+    @Transactional
+    public void testModify() throws Exception {
         //given
-        
+        String url = "/movies/modify";
+        String movieId = "1";
+        String name = "공조";
+        String filmRating = "15";
+        String runtime = "120";
         //when
-        
+        Movie modifiedMovie = (Movie) this.mockMvc.perform(post(url)
+                                                  .param("id", movieId)
+                                                  .param("name", name)
+                                                  .param("filmRating", filmRating)
+                                                  .param("runtime", runtime)
+                                                  .contentType(APPLICATION_JSON)
+                                                  .with(csrf()))
+                                                  .andExpect(status().is3xxRedirection())
+                                                  .andReturn().getFlashMap().get("modifiedMovie");
         //then
+        assertThat(modifiedMovie.getId()).isEqualTo(Long.parseLong(movieId));
     }
     
     @Test
