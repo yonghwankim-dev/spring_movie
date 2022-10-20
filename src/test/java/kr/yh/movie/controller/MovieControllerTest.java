@@ -1,6 +1,7 @@
 package kr.yh.movie.controller;
 
 
+import kr.yh.movie.controller.movie.MovieForm;
 import kr.yh.movie.domain.Movie;
 import kr.yh.movie.service.MovieService;
 import kr.yh.movie.vo.PageMarker;
@@ -47,30 +48,52 @@ public class MovieControllerTest {
     }
     
     @Test
-    public void testAddForm(){
+    public void testAddForm() throws Exception {
         //given
-        
+        String url = "/movies/add";
         //when
-        
+        MovieForm form = (MovieForm) this.mockMvc.perform(get(url)
+                                                 .contentType(TEXT_HTML))
+                                                 .andExpect(status().isOk())
+                                                 .andReturn().getModelAndView().getModel().get("form");
         //then
+        assertThat(form).isNotNull();
     }
     
     @Test
-    public void testAdd(){
+    @Transactional
+    public void testAdd() throws Exception {
         //given
-        
+        String url = "/movies/add";
+        String name = "공조";
+        String filmRating = "15";
+        String runtime = "120";
         //when
-        
+        Movie movie = (Movie) this.mockMvc.perform(post(url)
+                                          .param("name", name)
+                                          .param("filmRating", filmRating)
+                                          .param("runtime", runtime)
+                                          .contentType(APPLICATION_JSON)
+                                          .with(csrf()))
+                                          .andExpect(status().is3xxRedirection())
+                                          .andReturn().getFlashMap().get("movie");
         //then
+        assertThat(movie.getName()).isEqualTo(name);
     }
     
     @Test
-    public void testView(){
+    public void testView() throws Exception {
         //given
-        
+        String url = "/movies/view";
+        String movieId = "1";
         //when
-        
+        Movie movie = (Movie) this.mockMvc.perform(get(url)
+                                          .param("movieId", movieId)
+                                          .contentType(TEXT_HTML))
+                                          .andExpect(status().isOk())
+                                          .andReturn().getModelAndView().getModel().get("vo");
         //then
+        assertThat(movie.getId()).isEqualTo(Long.parseLong(movieId));
     }
     
     @Test

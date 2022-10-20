@@ -3,6 +3,7 @@ package kr.yh.movie.controller.movie;
 import kr.yh.movie.domain.Movie;
 import kr.yh.movie.service.MovieService;
 import kr.yh.movie.util.RedirectAttributeUtil;
+import kr.yh.movie.validator.DomainValidator;
 import kr.yh.movie.vo.PageMarker;
 import kr.yh.movie.vo.PageVO;
 import lombok.RequiredArgsConstructor;
@@ -36,35 +37,32 @@ public class MovieController {
     }
 
     @GetMapping("/add")
-    public String addForm(@ModelAttribute("pageVO")PageVO pageVO, Model model){
-        log.info("movie add get");
+    public String addForm(Model model){
         model.addAttribute("form", new MovieForm());
         return "movies/add";
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute MovieForm movieForm, Errors errors, Model model) {
-        log.info("movie add post" + movieForm);
-        if(errors.hasErrors()){
-            // 유효성 통과 못한 필드와 메시지를 핸들링
-            Map<String, String> validatorResult = movieService.validateHandling(errors);
-            for(String key : validatorResult.keySet()){
-                model.addAttribute(key, validatorResult.get(key));
-            }
-            // 회원가입 페이지로 다시 리턴
+    public String add(@Valid @ModelAttribute MovieForm form,
+                      Errors errors,
+                      Model model,
+                      RedirectAttributes rttr) {
+        if(DomainValidator.validate(errors, model)){
             return "movies/add";
         }
 
-        Movie movie = Movie.createMovie(movieForm);
+        Movie movie = Movie.createMovie(form);
         movieService.save(movie);
+        rttr.addFlashAttribute("movie", movie);
         return "redirect:/movies/list";
     }
 
     @GetMapping("/view")
-    public String view(Long id, @ModelAttribute("pageVO") PageVO pageVO, Model model){
-        log.info("Movie Id : " + id);
-
-        movieService.findById(id).ifPresent(vo->model.addAttribute("vo", vo));
+    public String view(Long movieId,
+                       @ModelAttribute("pageVO") PageVO pageVO,
+                       Model model){
+        movieService.findById(movieId)
+                    .ifPresent(vo->model.addAttribute("vo", vo));
         return "movies/view";
     }
 
