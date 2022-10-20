@@ -93,31 +93,17 @@ public class MovieController {
     }
 
     @PostMapping("/delete")
-    public String delete(Long id, PageVO pageVO, RedirectAttributes rttr){
-        log.info("DELETE ID : " + id);
-
-        movieService.deleteById(id);
-
+    public String delete(Long movieId,
+                         RedirectAttributes rttr){
+        movieService.deleteById(movieId);
         rttr.addFlashAttribute("msg", "success");
-
-        // 페이징과 검색했던 결과로 이동하는 경우
-        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
-
         return "redirect:/movies/list";
     }
 
     @PostMapping("/deletes")
-    public String deletes(@RequestParam(value = "checks") List<Long> ids, PageVO pageVO, RedirectAttributes rttr){
-        log.info("DELETE IDS : " + ids);
-
-        movieService.deleteAllById(ids);
-
+    public String deletes(@RequestParam(value = "checks") List<Long> movieIds, RedirectAttributes rttr){
+        movieService.deleteAllById(movieIds);
         rttr.addFlashAttribute("msg", "success");
-
-        // 페이징과 검색했던 결과로 이동하는 경우
-        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
-
         return "redirect:/movies/list";
     }
-
 }

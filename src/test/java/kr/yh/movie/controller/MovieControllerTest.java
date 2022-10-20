@@ -135,20 +135,36 @@ public class MovieControllerTest {
     }
     
     @Test
-    public void testDelete(){
+    @Transactional
+    public void testDelete() throws Exception {
         //given
-        
+        String url = "/movies/delete";
+        String movieId = "1";
         //when
-        
+        String msg = (String) this.mockMvc.perform(post(url)
+                                          .param("movieId", movieId)
+                                          .contentType(APPLICATION_JSON)
+                                          .with(csrf()))
+                                          .andExpect(status().is3xxRedirection())
+                                          .andReturn().getFlashMap().get("msg");
         //then
+        assertThat(msg).isEqualTo("success");
     }
     
     @Test
-    public void testDeletes(){
+    @Transactional
+    public void testDeletes() throws Exception {
         //given
-        
+        String url = "/movies/deletes";
+        String[] movieIds = {"1"};
         //when
-
+        String msg = (String) this.mockMvc.perform(post(url)
+                                          .param("checks", movieIds)
+                                          .contentType(APPLICATION_JSON)
+                                          .with(csrf()))
+                                          .andExpect(status().is3xxRedirection())
+                                          .andReturn().getFlashMap().get("msg");
         //then
+        assertThat(msg).isEqualTo("success");
     }
 }
