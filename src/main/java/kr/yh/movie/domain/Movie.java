@@ -1,6 +1,6 @@
 package kr.yh.movie.domain;
 
-import kr.yh.movie.controller.MovieForm;
+import kr.yh.movie.controller.movie.MovieForm;
 import lombok.*;
 
 import javax.persistence.*;
