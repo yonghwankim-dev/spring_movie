@@ -53,7 +53,7 @@ public class ScreenControllerTest {
         String cinemaId = "1";
         //when
         Map<String, Object> model = this.mockMvc.perform(get(url)
-                                                .param("cinemaId", cinemaId)
+                                                .sessionAttr("cinemaId", cinemaId)
                                                 .contentType(MediaType.TEXT_HTML))
                                                 .andExpect(status().isOk())
                                                 .andReturn().getModelAndView().getModel();
@@ -114,7 +114,7 @@ public class ScreenControllerTest {
         //when
         Map<String, Object> model = this.mockMvc.perform(get(url)
                                                 .param("screenId", screenId)
-                                                .param("cinemaId", cinemaId)
+                                                .sessionAttr("cinemaId", cinemaId)
                                                 .contentType(MediaType.TEXT_HTML))
                                                 .andExpect(status().isOk())
                                                 .andReturn().getModelAndView().getModel();
@@ -165,7 +165,7 @@ public class ScreenControllerTest {
 
         //when
         String msg = (String) this.mockMvc.perform(post(url)
-                                          .param("screenId", screenId)
+                                          .param("id", screenId)
                                           .contentType(MediaType.APPLICATION_JSON)
                                           .with(csrf()))
                                           .andExpect(status().is3xxRedirection())

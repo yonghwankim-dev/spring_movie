@@ -35,7 +35,7 @@ public class TheaterControllerTest {
         String cinemaId = "1";
         //when
         PageMarker<Page<Theater>> result = (PageMarker<Page<Theater>>) this.mockMvc.perform(get(url)
-                                                                                   .param("cinemaId", cinemaId)
+                                                                                   .sessionAttr("cinemaId", cinemaId)
                                                                                    .contentType(TEXT_HTML))
                                                                                    .andExpect(status().isOk())
                                                                                    .andReturn()
@@ -53,7 +53,7 @@ public class TheaterControllerTest {
         String cinemaId = "1";
         //when
         TheaterForm form = (TheaterForm) this.mockMvc.perform(get(url)
-                                                     .param("cinemaId", cinemaId)
+                                                     .sessionAttr("cinemaId", cinemaId)
                                                      .contentType(TEXT_HTML))
                                                      .andExpect(status().isOk())
                                                      .andReturn().getModelAndView().getModel().get("form");
@@ -88,7 +88,7 @@ public class TheaterControllerTest {
         String theaterId = "1";
         //when
         Theater theater = (Theater) this.mockMvc.perform(get(url)
-                                                .param("cinemaId", cinemaId)
+                                                .sessionAttr("cinemaId", cinemaId)
                                                 .param("theaterId", theaterId)
                                                 .contentType(TEXT_HTML))
                                                 .andExpect(status().isOk())
@@ -105,7 +105,7 @@ public class TheaterControllerTest {
         String theaterId = "1";
         //when
         TheaterForm form = (TheaterForm) this.mockMvc.perform(get(url)
-                                                     .param("cinemaId", cinemaId)
+                                                     .sessionAttr("cinemaId", cinemaId)
                                                      .param("theaterId", theaterId))
                                                      .andExpect(status().isOk())
                                                      .andReturn().getModelAndView().getModel().get("form");
@@ -143,8 +143,8 @@ public class TheaterControllerTest {
         String theaterId = "1";
         //when
         String msg = (String) this.mockMvc.perform(post(url)
-                                          .param("cinemaId", cinemaId)
-                                          .param("theaterId", theaterId)
+                                          .sessionAttr("cinemaId", cinemaId)
+                                          .param("id", theaterId)
                                           .contentType(APPLICATION_JSON)
                                           .with(csrf()))
                                           .andExpect(status().is3xxRedirection())
@@ -162,7 +162,7 @@ public class TheaterControllerTest {
         String[] theaterIds = {"1"};
         //when
         String msg = (String) this.mockMvc.perform(post(url)
-                                          .param("cinemaId", cinemaId)
+                                          .sessionAttr("cinemaId", cinemaId)
                                           .param("checks", theaterIds)
                                           .contentType(APPLICATION_JSON)
                                           .with(csrf()))

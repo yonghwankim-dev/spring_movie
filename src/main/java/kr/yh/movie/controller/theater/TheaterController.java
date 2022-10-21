@@ -28,6 +28,7 @@ import static kr.yh.movie.domain.Theater.*;
 
 @Controller
 @RequestMapping("/theaters")
+@SessionAttributes("cinemaId")
 @RequiredArgsConstructor
 @Log
 public class TheaterController {
@@ -67,7 +68,6 @@ public class TheaterController {
         Theater savedTheater = theaterService.save(theater);
 
         rttr.addFlashAttribute("savedTheater", savedTheater);
-        rttr.addAttribute("cinemaId", form.getCinemaId());
         return "redirect:/theaters/list";
     }
 
@@ -91,39 +91,38 @@ public class TheaterController {
     }
 
     @PostMapping("/modify")
-    public String modify(TheaterForm form,
+    public String modify(@Valid TheaterForm form,
+                         Errors errors,
+                         Model model,
                          RedirectAttributes rttr){
-        Cinema cinema = cinemaService.findById(form.getCinemaId()).get();
+        if(DomainValidator.validate(errors, model)){
+            return "theaters/modify";
+        }
 
+        Cinema cinema = cinemaService.findById(form.getCinemaId()).get();
         theaterService.findById(form.getId()).ifPresent(origin->{
             origin.changeInfo(form, cinema);
             Theater modifiedTheater = theaterService.save(origin);
             rttr.addFlashAttribute("modifiedTheater", modifiedTheater);
             rttr.addFlashAttribute("msg", "success");
-            rttr.addAttribute("id", origin.getId());
+            rttr.addAttribute("theaterId", origin.getId());
         });
-
-        rttr.addFlashAttribute("cinemaId", form.getCinemaId());
         return "redirect:/theaters/view";
     }
 
     @PostMapping("/delete")
-    public String delete(@ModelAttribute("cinemaId") Long cinemaId,
-                         Long theaterId,
+    public String delete(TheaterForm form,
                          RedirectAttributes rttr){
-        theaterService.deleteById(theaterId);
+        theaterService.deleteById(form.getId());
         rttr.addFlashAttribute("msg", "success");
-        rttr.addFlashAttribute("cinemaId", cinemaId);
         return "redirect:/theaters/list";
     }
 
     @PostMapping("/deletes")
-    public String deletes(@ModelAttribute("cinemaId") Long cinemaId,
-                          @RequestParam(value = "checks") List<Long> theaterIds,
+    public String deletes(@RequestParam(value = "checks") List<Long> theaterIds,
                           RedirectAttributes rttr){
         theaterService.deleteAllById(theaterIds);
         rttr.addFlashAttribute("msg", "success");
-        rttr.addFlashAttribute("cinemaId", cinemaId);
         return "redirect:/theaters/list";
     }
 }

@@ -3,6 +3,7 @@ package kr.yh.movie.controller.theater;
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Theater;
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;

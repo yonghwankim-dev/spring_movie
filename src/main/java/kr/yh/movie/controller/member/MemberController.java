@@ -88,28 +88,30 @@ public class MemberController {
     }
 
     @PostMapping("/modify")
-    public String modify(MemberForm form, RedirectAttributes rttr){
-        memberService.findById(form.getId()).ifPresent(origin->{
+    public String modify(MemberForm form,
+                         RedirectAttributes rttr){
+        memberService.findById(form.getId())
+                     .ifPresent(origin->{
             origin.changeInfo(form);
             memberService.save(origin);
             rttr.addFlashAttribute("msg", "success");
-            rttr.addAttribute("id", origin.getId());
+            rttr.addAttribute("memberId", origin.getId());
         });
         return "redirect:/members/view";
     }
 
     @PostMapping("/delete")
-    public String delete(Long memberId,
+    public String delete(MemberForm form,
                          RedirectAttributes rttr){
-        memberService.deleteById(memberId);
+        memberService.deleteById(form.getId());
         rttr.addFlashAttribute("msg", "success");
         return "redirect:/members/list";
     }
 
     @PostMapping("/deletes")
-    public String deletes(@RequestParam(value = "checks") List<Long> memberIds, RedirectAttributes rttr){
+    public String deletes(@RequestParam(value = "checks") List<Long> memberIds,
+                          RedirectAttributes rttr){
         memberService.deleteAllById(memberIds);
-
         rttr.addFlashAttribute("msg", "success");
         return "redirect:/members/list";
     }

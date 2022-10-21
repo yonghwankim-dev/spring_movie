@@ -8,7 +8,7 @@
         <div>
             <div class="form-group">
                 <label>아이디번호</label>
-                <input class="form-control" name="id" th:value="${member.id}" readonly>
+                <input class="form-control" name="memberId" th:value="${member.id}" readonly>
             </div>
 
             <div class="form-group">
@@ -53,13 +53,12 @@
                                  size=${pageVO.size},
                                  type=${pageVO.type},
                                  keyword=${pageVO.keyword},
-                                 id=${member.id})}" class="btn btn-warning">수정/삭제</a>
+                                 memberId=${member.id})}" class="btn btn-warning">수정/삭제</a>
 
             <a th:href="@{list(page=${pageVO.page},
                                size=${pageVO.size},
                                type=${pageVO.type},
-                               keyword=${pageVO.keyword},
-                               member=${member.id})}" class="btn btn-primary">목록으로</a>
+                               keyword=${pageVO.keyword})}" class="btn btn-primary">목록으로</a>
         </div>
 
     </main>

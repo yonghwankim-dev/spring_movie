@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -83,16 +84,16 @@ public class CinemaController {
             cinemaService.save(origin);
             rttr.addFlashAttribute("modifiedCinema", origin);
             rttr.addFlashAttribute("msg", "success");
-            rttr.addAttribute("id", origin.getId());
+            rttr.addAttribute("cinemaId", origin.getId());
         });
 
         return "redirect:/cinemas/view";
     }
 
     @PostMapping("/delete")
-    public String delete(Long id,
+    public String delete(CinemaForm form,
                          RedirectAttributes rttr){
-        cinemaService.deleteById(id);
+        cinemaService.deleteById(form.getId());
         rttr.addFlashAttribute("msg", "success");
         return "redirect:/cinemas/list";
     }

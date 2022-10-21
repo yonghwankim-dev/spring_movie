@@ -128,7 +128,7 @@
 
                 // form 태그의 action을 게시물 조회가 가능한 링크로 변경함
                 formObj.attr("action", "/members/view");
-                formObj.append("<input type='hidden' name='id' value='" + memberId + "'>");
+                formObj.append("<input type='hidden' name='memberId' value='" + memberId + "'>");
                 formObj.submit();
             });
         });

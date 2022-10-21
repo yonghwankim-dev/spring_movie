@@ -43,7 +43,7 @@ public class MovieController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute MovieForm form,
+    public String add(@Valid MovieForm form,
                       Errors errors,
                       Model model,
                       RedirectAttributes rttr) {
@@ -87,21 +87,22 @@ public class MovieController {
             Movie modifiedMovie = movieService.save(origin);
             rttr.addFlashAttribute("modifiedMovie", modifiedMovie);
             rttr.addFlashAttribute("msg", "success");
-            rttr.addAttribute("id", origin.getId());
+            rttr.addAttribute("movieId", origin.getId());
         });
         return "redirect:/movies/view";
     }
 
     @PostMapping("/delete")
-    public String delete(Long movieId,
+    public String delete(MovieForm form,
                          RedirectAttributes rttr){
-        movieService.deleteById(movieId);
+        movieService.deleteById(form.getId());
         rttr.addFlashAttribute("msg", "success");
         return "redirect:/movies/list";
     }
 
     @PostMapping("/deletes")
-    public String deletes(@RequestParam(value = "checks") List<Long> movieIds, RedirectAttributes rttr){
+    public String deletes(@RequestParam(value = "checks") List<Long> movieIds,
+                          RedirectAttributes rttr){
         movieService.deleteAllById(movieIds);
         rttr.addFlashAttribute("msg", "success");
         return "redirect:/movies/list";

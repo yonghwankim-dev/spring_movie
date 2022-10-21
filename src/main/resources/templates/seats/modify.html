@@ -24,7 +24,11 @@
                     <input class="form-control" th:field="*{seat_col}" th:value="${form.seat_col}">
                 </div>
 
-                <input type="hidden" name="theaterId" th:value="${form.theaterId}">
+                <div class="form-group">
+                    <label>상영관번호</label>
+                    <input class="form-control" th:field="*{theaterId}" th:value="${form.theaterId}" readonly>
+                </div>
+
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
             </form>
         </div>

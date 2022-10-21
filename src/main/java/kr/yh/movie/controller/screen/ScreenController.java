@@ -28,6 +28,7 @@ import static kr.yh.movie.util.RedirectAttributeUtil.*;
 
 @Controller
 @RequestMapping("/screens")
+@SessionAttributes("cinemaId")
 @RequiredArgsConstructor
 @Log
 public class ScreenController {
@@ -48,7 +49,7 @@ public class ScreenController {
     public String addForm(@ModelAttribute("cinemaId") Long cinemaId,
                           Model model){
         List<Movie> movies = (List<Movie>) movieService.findAll();
-        List<Theater> theaters = (List<Theater>) theaterService.findAllByCinemaId(cinemaId);
+        List<Theater> theaters = theaterService.findAllByCinemaId(cinemaId);
 
         model.addAttribute("form", new ScreenForm());
         model.addAttribute("movies", movies);
@@ -57,7 +58,7 @@ public class ScreenController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute ScreenForm form,
+    public String add(@Valid ScreenForm form,
                       Errors errors,
                       Model model,
                       RedirectAttributes rttr) {
@@ -84,8 +85,8 @@ public class ScreenController {
     }
 
     @GetMapping("/modify")
-    public String modifyForm(Long screenId,
-                             @ModelAttribute("cinemaId") Long cinemaId,
+    public String modifyForm(@ModelAttribute("cinemaId") Long cinemaId,
+                             Long screenId,
                              Model model){
         List<Movie> movies = (List<Movie>) movieService.findAll();
         List<Theater> theaters = theaterService.findAllByCinemaId(cinemaId);
@@ -119,14 +120,16 @@ public class ScreenController {
     }
 
     @PostMapping("/delete")
-    public String delete(Long screenId, RedirectAttributes rttr){
-        screenService.deleteById(screenId);
+    public String delete(ScreenForm form,
+                         RedirectAttributes rttr){
+        screenService.deleteById(form.getId());
         rttr.addFlashAttribute("msg", "success");
         return "redirect:/screens/list";
     }
 
     @PostMapping("/deletes")
-    public String deletes(@RequestParam(value = "checks") List<Long> screenIds, RedirectAttributes rttr){
+    public String deletes(@RequestParam(value = "checks") List<Long> screenIds,
+                          RedirectAttributes rttr){
         screenService.deleteAllById(screenIds);
         rttr.addFlashAttribute("msg", "success");
         return "redirect:/screens/list";

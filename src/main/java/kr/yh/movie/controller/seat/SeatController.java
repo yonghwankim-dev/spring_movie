@@ -68,7 +68,7 @@ public class SeatController {
     }
 
     @GetMapping("/view")
-    public String view(@ModelAttribute("seatId") Long seatId,
+    public String view(Long seatId,
                        @ModelAttribute("pageVO") PageVO pageVO,
                        Model model){
         seatService.findById(seatId)
@@ -77,8 +77,7 @@ public class SeatController {
     }
 
     @GetMapping("/modify")
-    public String modifyForm(@ModelAttribute("seatId") Long seatId,
-                             @ModelAttribute("pageVO") PageVO pageVO,
+    public String modifyForm(Long seatId,
                              Model model){
         seatService.findById(seatId)
                    .ifPresent(vo->model.addAttribute("form", new SeatForm(vo)));
@@ -108,12 +107,11 @@ public class SeatController {
     }
 
     @PostMapping("/delete")
-    public String delete(Long theaterId,
-                         Long seatId,
+    public String delete(SeatForm form,
                          RedirectAttributes rttr){
-        seatService.deleteById(seatId);
+        seatService.deleteById(form.getId());
         rttr.addFlashAttribute("msg", "success");
-        rttr.addAttribute("theaterId", theaterId);
+        rttr.addAttribute("theaterId", form.getTheaterId());
         return "redirect:/seats/list";
     }
 

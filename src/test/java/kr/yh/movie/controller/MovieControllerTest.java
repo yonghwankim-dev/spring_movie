@@ -142,7 +142,7 @@ public class MovieControllerTest {
         String movieId = "1";
         //when
         String msg = (String) this.mockMvc.perform(post(url)
-                                          .param("movieId", movieId)
+                                          .param("id", movieId)
                                           .contentType(APPLICATION_JSON)
                                           .with(csrf()))
                                           .andExpect(status().is3xxRedirection())

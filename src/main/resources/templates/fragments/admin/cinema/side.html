@@ -6,7 +6,7 @@
     <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/cinemas/view(id=${cinemaId})}">
+                <a class="nav-link" th:href="@{/cinemas/view(cinemaId=${cinemaId})}">
                     <i class="fa-solid fa-arrow-left-long"></i>
                     뒤로가기
                 </a>
@@ -18,19 +18,19 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/theaters/list(cinemaId=${cinemaId})}">
+                <a class="nav-link" th:href="@{/theaters/list}">
                     <i class="fa-solid fa-chair"></i>
                     상영관관리
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/screens/list(cinemaId=${cinemaId})}">
+                <a class="nav-link" th:href="@{/screens/list}">
                     <i class="fa-solid fa-video"></i>
                     상영관리
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/reservations/list(cinemaId=${cinemaId})}">
+                <a class="nav-link" th:href="@{/reservations/list}">
                     <i class="fa-solid fa-ticket"></i>
                     예약관리
                 </a>

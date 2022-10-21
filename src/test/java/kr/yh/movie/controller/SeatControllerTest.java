@@ -148,7 +148,7 @@ public class SeatControllerTest {
         //when
         String msg = (String) this.mockMvc.perform(post(url)
                                           .param("theaterId", theaterId)
-                                          .param("seatId", seatId)
+                                          .param("id", seatId)
                                           .contentType(APPLICATION_JSON)
                                           .with(csrf()))
                                           .andExpect(status().is3xxRedirection())

@@ -180,7 +180,7 @@ public class MemberControllerTest {
         String memberId = "1";
         //when
         String msg = (String) this.mockMvc.perform(post(url)
-                                          .param("memberId", memberId)
+                                          .param("id", memberId)
                                           .contentType(MediaType.APPLICATION_JSON)
                                           .with(csrf()))
                                           .andExpect(status().is3xxRedirection())
