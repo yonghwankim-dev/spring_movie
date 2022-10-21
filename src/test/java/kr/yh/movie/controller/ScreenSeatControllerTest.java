@@ -1,5 +1,6 @@
 package kr.yh.movie.controller;
 
+import kr.yh.movie.domain.Screen;
 import kr.yh.movie.domain.ScreenSeat;
 import kr.yh.movie.service.SeatService;
 import kr.yh.movie.vo.PageMarker;
@@ -46,30 +47,51 @@ public class ScreenSeatControllerTest {
     }
     
     @Test
-    public void testView(){
+    public void testView() throws Exception {
         //given
         String url = "/screenSeats/view";
-
+        String screenSeatId = "1";
         //when
-        
+        ScreenSeat screenSeat = (ScreenSeat) this.mockMvc.perform(get(url)
+                                                         .param("screenSeatId", screenSeatId)
+                                                         .contentType(TEXT_HTML))
+                                                         .andExpect(status().isOk())
+                                                         .andReturn().getModelAndView().getModel().get("vo");
         //then
+        assertThat(screenSeat.getId()).isEqualTo(Long.parseLong(screenSeatId));
     }
     
     @Test
-    public void testDelete(){
+    @Transactional
+    public void testDelete() throws Exception {
         //given
-        
+        String url = "/screenSeats/delete";
+        String screenSeatId = "1";
         //when
-        
+        String msg = (String) this.mockMvc.perform(post(url)
+                                          .param("screenSeatId", screenSeatId)
+                                          .contentType(APPLICATION_JSON)
+                                          .with(csrf()))
+                                          .andExpect(status().is3xxRedirection())
+                                          .andReturn().getFlashMap().get("msg");
         //then
+        assertThat(msg).isEqualTo("success");
     }
     
     @Test
-    public void testDeletes(){
+    @Transactional
+    public void testDeletes() throws Exception {
         //given
-        
+        String url = "/screenSeats/deletes";
+        String[] screenSeatIds = {"1"};
         //when
-        
+        String msg = (String) this.mockMvc.perform(post(url)
+                                          .param("checks", screenSeatIds)
+                                          .contentType(APPLICATION_JSON)
+                                          .with(csrf()))
+                                          .andExpect(status().is3xxRedirection())
+                                          .andReturn().getFlashMap().get("msg");
         //then
+        assertThat(msg).isEqualTo("success");
     }
 }
