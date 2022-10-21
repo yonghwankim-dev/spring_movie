@@ -109,9 +109,9 @@ public class SeatController {
 
     @PostMapping("/delete")
     public String delete(Long theaterId,
-                         SeatForm form,
+                         Long seatId,
                          RedirectAttributes rttr){
-        seatService.deleteById(form.getId());
+        seatService.deleteById(seatId);
         rttr.addFlashAttribute("msg", "success");
         rttr.addAttribute("theaterId", theaterId);
         return "redirect:/seats/list";

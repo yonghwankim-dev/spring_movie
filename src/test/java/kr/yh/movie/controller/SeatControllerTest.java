@@ -140,21 +140,39 @@ public class SeatControllerTest {
 
     @Test
     @Transactional
-    public void testDelete(){
+    public void testDelete() throws Exception {
         //given
-
+        String url = "/seats/delete";
+        String theaterId = "1";
+        String seatId = "1";
         //when
-
+        String msg = (String) this.mockMvc.perform(post(url)
+                                          .param("theaterId", theaterId)
+                                          .param("seatId", seatId)
+                                          .contentType(APPLICATION_JSON)
+                                          .with(csrf()))
+                                          .andExpect(status().is3xxRedirection())
+                                          .andReturn().getFlashMap().get("msg");
         //then
+        assertThat(msg).isEqualTo("success");
     }
 
     @Test
     @Transactional
-    public void testDeletes(){
+    public void testDeletes() throws Exception {
         //given
-
+        String url = "/seats/deletes";
+        String theaterId = "1";
+        String[] seatIds = {"1"};
         //when
-
+        String msg = (String) this.mockMvc.perform(post(url)
+                                          .param("theaterId", theaterId)
+                                          .param("checks", seatIds)
+                                          .contentType(APPLICATION_JSON)
+                                          .with(csrf()))
+                                          .andExpect(status().is3xxRedirection())
+                                          .andReturn().getFlashMap().get("msg");
         //then
+        assertThat(msg).isEqualTo("success");
     }
 }
