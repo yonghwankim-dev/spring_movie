@@ -33,15 +33,6 @@ public class SeatService {
     private final TheaterService theaterService;
     private final SeatRepository repo;
 
-    public Map<String, String> validateHandling(Errors errors) {
-        Map<String, String> validatorResult = new HashMap<>();
-        for(FieldError error : errors.getFieldErrors()){
-            String validKeyName = String.format("valid_%s", error.getField());
-            validatorResult.put(validKeyName, error.getDefaultMessage());
-        }
-        return validatorResult;
-    }
-
     @Transactional
     public <S extends Seat> S save(S entity) {
         return repo.save(entity);

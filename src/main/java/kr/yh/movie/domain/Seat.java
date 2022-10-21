@@ -1,6 +1,6 @@
 package kr.yh.movie.domain;
 
-import kr.yh.movie.controller.SeatForm;
+import kr.yh.movie.controller.seat.SeatForm;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,18 +35,19 @@ public class Seat {
     }
 
     //== 생성 로직 ==//
-    public static Seat createSeat(SeatForm form){
+    public static Seat createSeat(SeatForm form, Theater theater){
         Seat seat = Seat.builder()
                         .seat_row(form.getSeat_row())
                         .seat_col(form.getSeat_col())
-                        .theater(form.getTheater())
                         .build();
+        seat.setTheater(theater);
         return seat;
     }
 
     //== 수정 로직 ==//
-    public void changeInfo(SeatForm form){
+    public void changeInfo(SeatForm form, Theater theater){
         this.seat_row = form.getSeat_row();
         this.seat_col = form.getSeat_col();
+        setTheater(theater);
     }
 }

@@ -1,11 +1,11 @@
-package kr.yh.movie.controller;
+package kr.yh.movie.controller.seat;
 
 import kr.yh.movie.domain.Seat;
 import kr.yh.movie.domain.Theater;
 import kr.yh.movie.service.SeatService;
 import kr.yh.movie.service.TheaterService;
 import kr.yh.movie.util.RedirectAttributeUtil;
-import kr.yh.movie.util.SeatUtil;
+import kr.yh.movie.validator.DomainValidator;
 import kr.yh.movie.vo.PageMarker;
 import kr.yh.movie.vo.PageVO;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static kr.yh.movie.domain.Seat.*;
+
 @Controller
 @RequestMapping("/seats")
-@SessionAttributes("cinemaId")
 @RequiredArgsConstructor
 @Log
 public class SeatController {
@@ -36,8 +36,6 @@ public class SeatController {
     public String list(@ModelAttribute("theaterId") Long theaterId,
                        @ModelAttribute("pageVO") PageVO pageVO,
                        Model model){
-        log.info("seat list");
-
         Pageable page = pageVO.makePageable(0, "id");
         Page<Seat> result = seatService.findAll(seatService.makePredicates(pageVO.getType(), pageVO.getKeyword(), theaterId), page);
         model.addAttribute("result", new PageMarker<>(result));
@@ -55,21 +53,16 @@ public class SeatController {
 
     @PostMapping("/add")
     public String add(Long theaterId,
-                      @Valid @ModelAttribute SeatForm seatForm,
+                      @Valid @ModelAttribute SeatForm form,
                       Errors errors,
                       Model model,
                       RedirectAttributes rttr) {
-        log.info("seat add" + seatForm);
-        if(errors.hasErrors()){
-            // 유효성 통과 못한 필드와 메시지를 핸들링
-            Map<String, String> validatorResult = seatService.validateHandling(errors);
-            for(String key : validatorResult.keySet()){
-                model.addAttribute(key, validatorResult.get(key));
-            }
+        if(DomainValidator.validate(errors, model)){
             return "seats/add";
         }
-        theaterService.findById(theaterId).ifPresent(vo->seatForm.setTheater(vo));
-        Seat seat = Seat.createSeat(seatForm);
+
+        Theater theater = theaterService.findById(theaterId).get();
+        Seat seat = createSeat(form, theater);
         seatService.save(seat);
 
         rttr.addAttribute("theaterId", theaterId);
@@ -98,53 +91,38 @@ public class SeatController {
     @PostMapping("/modify")
     public String modify(SeatForm form,
                          Long theaterId,
-                         PageVO pageVO,
                          RedirectAttributes rttr){
         log.info("modify : " + form);
-
-        theaterService.findById(theaterId).ifPresent(vo->form.setTheater(vo));
+        Theater theater = theaterService.findById(theaterId).get();
         seatService.findById(form.getId()).ifPresent(origin->{
-            origin.changeInfo(form);
-            seatService.save(origin);
+            origin.changeInfo(form, theater);
+            Seat modifiedSeat = seatService.save(origin);
+            rttr.addFlashAttribute("modifiedSeat", modifiedSeat);
             rttr.addFlashAttribute("msg", "success");
             rttr.addAttribute("id", origin.getId());
         });
 
-        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
         rttr.addAttribute("theaterId", theaterId);
         return "redirect:/seats/list";
     }
 
     @PostMapping("/delete")
-    public String delete(SeatForm form,
-                         @ModelAttribute("theaterId") Long theaterId,
-                         RedirectAttributes rttr,
-                         Model model){
-        log.info("DELETE SEAT, seatId=" + form.getId());
+    public String delete(Long theaterId,
+                         SeatForm form,
+                         RedirectAttributes rttr){
         seatService.deleteById(form.getId());
-
         rttr.addFlashAttribute("msg", "success");
-
-        // 페이징과 검색했던 결과로 이동하는 경우
         rttr.addAttribute("theaterId", theaterId);
         return "redirect:/seats/list";
     }
 
     @PostMapping("/deletes")
-    public String deletes(@ModelAttribute("theaterId") Long theaterId,
-                          @RequestParam(value = "checks") List<Long> ids,
-                          PageVO pageVO,
+    public String deletes(Long theaterId,
+                          @RequestParam(value = "checks") List<Long> seatIds,
                           RedirectAttributes rttr){
-        log.info("DELETE IDS : " + ids);
-
-        seatService.deleteAllById(ids);
-
+        seatService.deleteAllById(seatIds);
         rttr.addFlashAttribute("msg", "success");
-
-        // 페이징과 검색했던 결과로 이동하는 경우
         rttr.addAttribute("theaterId", theaterId);
-        RedirectAttributeUtil.addAttributesPage(pageVO, rttr);
-
         return "redirect:/seats/list";
     }
 }
