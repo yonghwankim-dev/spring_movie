@@ -1,5 +1,6 @@
 package kr.yh.movie.controller;
 
+import kr.yh.movie.controller.seat.SeatForm;
 import kr.yh.movie.domain.Seat;
 import kr.yh.movie.service.SeatService;
 import kr.yh.movie.service.TheaterService;
@@ -49,32 +50,54 @@ public class SeatControllerTest {
     }
 
     @Test
-    public void testAddForm(){
+    public void testAddForm() throws Exception {
         //given
         String url = "/seats/add";
-
+        String theaterId = "1";
         //when
-
+        SeatForm form = (SeatForm) this.mockMvc.perform(get(url)
+                                               .param("theaterId", theaterId)
+                                               .contentType(TEXT_HTML))
+                                               .andExpect(status().isOk())
+                                               .andReturn().getModelAndView().getModel().get("form");
         //then
+        assertThat(form).isNotNull();
     }
 
     @Test
     @Transactional
-    public void testAdd(){
+    public void testAdd() throws Exception {
         //given
-
+        String url = "/seats/add";
+        String seat_row = "A";
+        String seat_col = "1";
+        String theaterId = "1";
         //when
-
+        Seat savedSeat = (Seat) this.mockMvc.perform(post(url)
+                                            .param("seat_row", seat_row)
+                                            .param("seat_col", seat_col)
+                                            .param("theaterId", theaterId)
+                                            .contentType(APPLICATION_JSON)
+                                            .with(csrf()))
+                                            .andExpect(status().is3xxRedirection())
+                                            .andReturn().getFlashMap().get("savedSeat");
         //then
+        assertThat(savedSeat).isNotNull();
     }
 
     @Test
-    public void testView(){
+    public void testView() throws Exception {
         //given
-
+        String url = "/seats/view";
+        String seatId = "1";
         //when
-
+        Seat seat = (Seat) this.mockMvc.perform(get(url)
+                                       .param("seatId", seatId)
+                                       .contentType(TEXT_HTML))
+                                       .andExpect(status().isOk())
+                                       .andReturn().getModelAndView().getModel().get("vo");
         //then
+        assertThat(seat.getId()).isEqualTo(Long.parseLong(seatId));
     }
 
     @Test

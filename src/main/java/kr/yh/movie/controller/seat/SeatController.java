@@ -44,16 +44,13 @@ public class SeatController {
 
     @GetMapping("/add")
     public String addForm(@ModelAttribute("theaterId") Long theaterId,
-                          @ModelAttribute("pageVO") PageVO pageVO,
                           Model model){
-        log.info("addForm");
         model.addAttribute("form", new SeatForm());
         return "seats/add";
     }
 
     @PostMapping("/add")
-    public String add(Long theaterId,
-                      @Valid @ModelAttribute SeatForm form,
+    public String add(@Valid SeatForm form,
                       Errors errors,
                       Model model,
                       RedirectAttributes rttr) {
@@ -61,11 +58,12 @@ public class SeatController {
             return "seats/add";
         }
 
-        Theater theater = theaterService.findById(theaterId).get();
+        Theater theater = theaterService.findById(form.getTheaterId()).get();
         Seat seat = createSeat(form, theater);
-        seatService.save(seat);
+        Seat savedSeat = seatService.save(seat);
 
-        rttr.addAttribute("theaterId", theaterId);
+        rttr.addFlashAttribute("savedSeat", savedSeat);
+        rttr.addAttribute("theaterId", form.getTheaterId());
         return "redirect:/seats/list";
     }
 
@@ -73,8 +71,8 @@ public class SeatController {
     public String view(@ModelAttribute("seatId") Long seatId,
                        @ModelAttribute("pageVO") PageVO pageVO,
                        Model model){
-        log.info("view, seatId=" + seatId);
-        seatService.findById(seatId).ifPresent(vo->model.addAttribute("vo", vo));
+        seatService.findById(seatId)
+                   .ifPresent(vo->model.addAttribute("vo", vo));
         return "seats/view";
     }
 
