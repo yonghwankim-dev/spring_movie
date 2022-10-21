@@ -101,12 +101,18 @@ public class SeatControllerTest {
     }
 
     @Test
-    public void testModifyForm(){
+    public void testModifyForm() throws Exception {
         //given
-
+        String url = "/seats/modify";
+        String seatId = "1";
         //when
-
+        SeatForm form = (SeatForm) this.mockMvc.perform(get(url)
+                                               .param("seatId", seatId)
+                                               .contentType(TEXT_HTML))
+                                               .andExpect(status().isOk())
+                                               .andReturn().getModelAndView().getModel().get("form");
         //then
+        assertThat(form.getId()).isEqualTo(Long.parseLong(seatId));
     }
 
     @Test

@@ -80,9 +80,8 @@ public class SeatController {
     public String modifyForm(@ModelAttribute("seatId") Long seatId,
                              @ModelAttribute("pageVO") PageVO pageVO,
                              Model model){
-        log.info("modifyForm");
-        seatService.findById(seatId).ifPresent(vo->model.addAttribute("form", new SeatForm(vo)));
-
+        seatService.findById(seatId)
+                   .ifPresent(vo->model.addAttribute("form", new SeatForm(vo)));
         return "seats/modify";
     }
 
