@@ -1,6 +1,6 @@
 package kr.yh.movie.domain;
 
-import kr.yh.movie.controller.TheaterForm;
+import kr.yh.movie.controller.theater.TheaterForm;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,21 +32,24 @@ public class Theater {
     //== 연관 관계 메서드 ==//
     public void setCinema(Cinema cinema){
         this.cinema = cinema;
+        if(cinema.getTheaters().contains(this)){
+            cinema.getTheaters().remove(this);
+        }
         cinema.getTheaters().add(this);
     }
 
     //== 생성 로직 ==//
-    public static Theater createTheater(TheaterForm form){
+    public static Theater createTheater(TheaterForm form, Cinema cinema){
         Theater theater = Theater.builder()
                                  .name(form.getName())
-                                 .cinema(form.getCinema())
                                  .build();
+        theater.setCinema(cinema);
         return theater;
     }
 
     //== 수정 로직 ==//
-    public void changeInfo(TheaterForm form){
-        this.name       = form.getName();
-        this.cinema     = form.getCinema();
+    public void changeInfo(TheaterForm form, Cinema cinema){
+        this.name = form.getName();
+        setCinema(cinema);
     }
 }

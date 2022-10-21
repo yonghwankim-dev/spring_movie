@@ -27,10 +27,7 @@
         <!-- 추가 버튼 -->
         <div class="d-flex justify-content-end">
             <a href="#" class="btn btn-warning addBtn">추가</a>
-            <a th:href="@{list(page=${pageVO.page},
-                               size=${pageVO.size},
-                               type=${pageVO.type},
-                               keyword=${pageVO.keyword})}" class="btn btn-primary">취소</a>
+            <a th:href="@{list}" class="btn btn-primary">취소</a>
         </div>
 
     </main>

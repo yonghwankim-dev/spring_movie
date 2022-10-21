@@ -31,15 +31,6 @@ import java.util.function.Function;
 public class TheaterService {
     private final TheaterRepository repo;
 
-    public Map<String, String> validateHandling(Errors errors) {
-        Map<String, String> validatorResult = new HashMap<>();
-        for(FieldError error : errors.getFieldErrors()){
-            String validKeyName = String.format("valid_%s", error.getField());
-            validatorResult.put(validKeyName, error.getDefaultMessage());
-        }
-        return validatorResult;
-    }
-
     @Transactional
     public <S extends Theater> S save(S entity) {
         return repo.save(entity);

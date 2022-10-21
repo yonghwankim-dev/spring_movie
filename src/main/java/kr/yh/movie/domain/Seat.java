@@ -1,7 +1,6 @@
 package kr.yh.movie.domain;
 
 import kr.yh.movie.controller.SeatForm;
-import kr.yh.movie.controller.TheaterForm;
 import lombok.*;
 
 import javax.persistence.*;
