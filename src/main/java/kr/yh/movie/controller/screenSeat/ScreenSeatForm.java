@@ -1,4 +1,4 @@
-package kr.yh.movie.controller;
+package kr.yh.movie.controller.screenSeat;
 
 import kr.yh.movie.domain.*;
 import lombok.*;
