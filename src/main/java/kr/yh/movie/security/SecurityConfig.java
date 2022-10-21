@@ -42,7 +42,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests() // 권한요청 처리 설정 메서드
-            .antMatchers("/**").permitAll()
+            .antMatchers("/").permitAll()
             .antMatchers("/login").permitAll()
             .antMatchers("/members/**").permitAll()
             .antMatchers("/cinemas/**").permitAll()
