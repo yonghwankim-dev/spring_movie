@@ -117,12 +117,25 @@ public class SeatControllerTest {
 
     @Test
     @Transactional
-    public void testModify(){
+    public void testModify() throws Exception {
         //given
-
+        String url = "/seats/modify";
+        String seatId = "1";
+        String seat_row = "B";
+        String seat_col = "1";
+        String theaterId = "1";
         //when
-
+        Seat modifiedSeat = (Seat) this.mockMvc.perform(post(url)
+                                               .param("id", seatId)
+                                               .param("seat_row", seat_row)
+                                               .param("seat_col", seat_col)
+                                               .param("theaterId", theaterId)
+                                               .contentType(APPLICATION_JSON)
+                                               .with(csrf()))
+                                               .andExpect(status().is3xxRedirection())
+                                               .andReturn().getFlashMap().get("modifiedSeat");
         //then
+        assertThat(modifiedSeat.getSeat_row()).isEqualTo(seat_row);
     }
 
     @Test

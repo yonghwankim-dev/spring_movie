@@ -86,20 +86,24 @@ public class SeatController {
     }
 
     @PostMapping("/modify")
-    public String modify(SeatForm form,
-                         Long theaterId,
+    public String modify(@Valid SeatForm form,
+                         Errors errors,
+                         Model model,
                          RedirectAttributes rttr){
-        log.info("modify : " + form);
-        Theater theater = theaterService.findById(theaterId).get();
+        if(DomainValidator.validate(errors, model)){
+            return "seats/modify";
+        }
+
+        Theater theater = theaterService.findById(form.getTheaterId()).get();
         seatService.findById(form.getId()).ifPresent(origin->{
             origin.changeInfo(form, theater);
             Seat modifiedSeat = seatService.save(origin);
             rttr.addFlashAttribute("modifiedSeat", modifiedSeat);
             rttr.addFlashAttribute("msg", "success");
-            rttr.addAttribute("id", origin.getId());
+            rttr.addAttribute("seatId", origin.getId());
         });
 
-        rttr.addAttribute("theaterId", theaterId);
+        rttr.addAttribute("theaterId", form.getTheaterId());
         return "redirect:/seats/list";
     }
 
