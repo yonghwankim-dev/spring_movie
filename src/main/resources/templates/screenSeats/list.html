@@ -36,9 +36,10 @@
                     <td><input type="checkbox" name="checks" th:value="${vo.id}"/></td>
                     <td><a  th:href="${vo.id}" th:text="${vo.id}" class="voLink"></a></td>
                     <td th:text="${vo.status}"></td>
-                    <td th:text="${vo.reservation.member.name}"></td>
+                    <td th:if="${vo.reservation != null}" th:text="${vo.reservation.member.name}"></td>
+                    <td th:if="${vo.reservation == null}" th:text="${''}"></td>
                     <td th:text="${vo.screen.id}"></td>
-                    <td th:text="${vo.seat.seat_row}${vo.seat.seat_col}"></td>
+                    <td th:text="${vo.seat.seat_row + vo.seat.seat_col}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -68,6 +69,8 @@
             <input type="hidden" name="type" th:value="${pageVO.type}">                 <!-- 검색 타입 -->
             <input type="hidden" name="keyword" th:value="${pageVO.keyword}">           <!-- 검색 내용 -->
             <input type="hidden" name="checks">                                         <!-- 선택한 체크박스들-->
+
+            <input type="hidden" name="screenId" th:value="${screenId}">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         </form>
     </main>
@@ -126,7 +129,7 @@
 
                 // form 태그의 action을 게시물 조회가 가능한 링크로 변경함
                 formObj.attr("action", "/screenSeats/view");
-                formObj.append("<input type='hidden' name='id' value='" + id + "'>");
+                formObj.append("<input type='hidden' name='screenSeatId' value='" + id + "'>");
                 formObj.submit();
             });
         });

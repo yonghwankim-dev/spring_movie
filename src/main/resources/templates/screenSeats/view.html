@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/admin/cinema/layout}">
+
+<div class="container-fluid" layout:fragment="content">
+    <main role="main" class="col-md-9 col-lg-10 ml-sm-auto px-md-4" th:fragment="screenSeatList">
+        <h2>상영좌석 상세 정보</h2>
+        <div>
+            <div class="form-group">
+                <label>아이디번호</label>
+                <input class="form-control" name="screenSeatId" th:value="${vo.id}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>상태</label>
+                <input class="form-control" th:value="${vo.status}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>예약자명</label>
+                <input class="form-control" th:if="${vo.reservation != null}" th:value="${vo.reservation.member.name}" readonly>
+                <input class="form-control" th:if="${vo.reservation == null}" th:value="${''}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>상영번호</label>
+                <input class="form-control" th:value="${vo.screen.id}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>좌석번호</label>
+                <input class="form-control" th:value="${vo.seat.seat_row + vo.seat.seat_col}" readonly>
+            </div>
+        </div>
+
+        <!-- 수정/삭제 버튼 -->
+        <div class="d-flex justify-content-end">
+            <a th:href="@{list(page=${pageVO.page},
+                               size=${pageVO.size},
+                               type=${pageVO.type},
+                               keyword=${pageVO.keyword},
+                               screenId=${vo.screen.id})}" class="btn btn-primary">목록으로</a>
+        </div>
+
+    </main>
+</div>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+    </script>
+</th:block>

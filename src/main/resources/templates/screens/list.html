@@ -131,9 +131,8 @@
                 e.preventDefault(); // a 태그의 기본 동작을 막음
                 const id = $(this).attr("href");
 
-                // form 태그의 action을 게시물 조회가 가능한 링크로 변경함
                 formObj.attr("action", "/screens/view");
-                formObj.append("<input type='hidden' name='id' value='" + id + "'>");
+                formObj.append("<input type='hidden' name='screenId' value='" + id + "'>");
                 formObj.submit();
             });
         });

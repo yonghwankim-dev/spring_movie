@@ -1,4 +1,4 @@
-package kr.yh.movie.controller;
+package kr.yh.movie.controller.login;
 
 import lombok.Getter;
 import lombok.Setter;

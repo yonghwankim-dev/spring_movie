@@ -27,7 +27,7 @@ public class ScreenSeatController {
     private final ScreenSeatService service;
     
     @GetMapping("/list")
-    public String list(Long screenId,
+    public String list(@ModelAttribute("screenId") Long screenId,
                        @ModelAttribute("pageVO") PageVO pageVO,
                        Model model){
         Pageable page = pageVO.makePageable(0, "id");

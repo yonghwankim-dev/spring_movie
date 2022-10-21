@@ -24,7 +24,7 @@ public class LoginControllerTest {
     MockMvc mockMvc;
 
     @Test
-    public void 로그인폼() throws Exception{
+    public void testLoginForm() throws Exception{
         this.mockMvc.perform(get("/login"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("_csrf")))
@@ -32,7 +32,7 @@ public class LoginControllerTest {
     }
     
     @Test
-    public void 로그인_실패() throws Exception{
+    public void testLogin_fail() throws Exception{
         this.mockMvc.perform(post("/login")
                         .param("userId","user1")
                         .param("password","user1")
@@ -42,7 +42,7 @@ public class LoginControllerTest {
     }
     
     @Test
-    public void 로그인_성공() throws Exception{
+    public void testLogin_success() throws Exception{
         this.mockMvc.perform(post("/login")
                         .param("userId","user1")
                         .param("password","pw1")
@@ -50,6 +50,5 @@ public class LoginControllerTest {
         ).andExpect(status().is3xxRedirection())
         .andDo(print());
     }
-
 
 }
