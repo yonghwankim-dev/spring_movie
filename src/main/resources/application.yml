@@ -4,7 +4,6 @@ spring:
       application-mysql.yml
 #      application-h2.yml
 
-
   thymeleaf:
     cache: false
 
@@ -14,7 +13,6 @@ logging:
     org.hibernate.type : trace
     org.springframework.web : debug
     org.springframework.security: debug
-
 
 server:
   compression:

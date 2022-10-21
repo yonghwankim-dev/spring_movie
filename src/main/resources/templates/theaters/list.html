@@ -125,7 +125,7 @@
 
                 // form 태그의 action을 게시물 조회가 가능한 링크로 변경함
                 formObj.attr("action", "/theaters/view");
-                formObj.append("<input type='hidden' name='id' value='" + id + "'>");
+                formObj.append("<input type='hidden' name='theaterId' value='" + id + "'>");
                 formObj.submit();
             });
         });

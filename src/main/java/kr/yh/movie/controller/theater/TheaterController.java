@@ -64,29 +64,25 @@ public class TheaterController {
 
         Cinema cinema = cinemaService.findById(form.getCinemaId()).get();
         Theater theater = createTheater(form, cinema);
-        theaterService.save(theater);
+        Theater savedTheater = theaterService.save(theater);
 
+        rttr.addFlashAttribute("savedTheater", savedTheater);
         rttr.addAttribute("cinemaId", form.getCinemaId());
         return "redirect:/theaters/list";
     }
 
     @GetMapping("/view")
-    public String view(@ModelAttribute Long cinemaId,
+    public String view(@ModelAttribute("cinemaId") Long cinemaId,
                        Long theaterId,
                        @ModelAttribute("pageVO") PageVO pageVO,
                        Model model){
-        Pageable page = pageVO.makePageable(0, "id");
-        Page<Seat> result = seatService.findAll(seatService.makePredicates(pageVO.getType(), pageVO.getKeyword(), theaterId), page);
-        model.addAttribute("result", new PageMarker<>(result));
-
-        theaterService.findById(theaterId).ifPresent(vo->model.addAttribute("vo", vo));
+        theaterService.findById(theaterId)
+                      .ifPresent(vo->model.addAttribute("vo", vo));
         return "theaters/view";
     }
 
-
-
     @GetMapping("/modify")
-    public String modifyForm(@ModelAttribute Long cinemaId,
+    public String modifyForm(@ModelAttribute("cinemaId") Long cinemaId,
                              Long theaterId,
                              Model model){
         theaterService.findById(theaterId)
@@ -95,10 +91,9 @@ public class TheaterController {
     }
 
     @PostMapping("/modify")
-    public String modify(Long cinemaId,
-                         TheaterForm form,
+    public String modify(TheaterForm form,
                          RedirectAttributes rttr){
-        Cinema cinema = cinemaService.findById(cinemaId).get();
+        Cinema cinema = cinemaService.findById(form.getCinemaId()).get();
 
         theaterService.findById(form.getId()).ifPresent(origin->{
             origin.changeInfo(form, cinema);
@@ -108,12 +103,12 @@ public class TheaterController {
             rttr.addAttribute("id", origin.getId());
         });
 
-        rttr.addFlashAttribute("cinemaId", cinemaId);
+        rttr.addFlashAttribute("cinemaId", form.getCinemaId());
         return "redirect:/theaters/view";
     }
 
     @PostMapping("/delete")
-    public String delete(Long cinemaId,
+    public String delete(@ModelAttribute("cinemaId") Long cinemaId,
                          Long theaterId,
                          RedirectAttributes rttr){
         theaterService.deleteById(theaterId);
@@ -123,10 +118,10 @@ public class TheaterController {
     }
 
     @PostMapping("/deletes")
-    public String deletes(Long cinemaId,
-                          @RequestParam(value = "checks") List<Long> ids,
+    public String deletes(@ModelAttribute("cinemaId") Long cinemaId,
+                          @RequestParam(value = "checks") List<Long> theaterIds,
                           RedirectAttributes rttr){
-        theaterService.deleteAllById(ids);
+        theaterService.deleteAllById(theaterIds);
         rttr.addFlashAttribute("msg", "success");
         rttr.addFlashAttribute("cinemaId", cinemaId);
         return "redirect:/theaters/list";
