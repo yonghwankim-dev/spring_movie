@@ -130,4 +130,9 @@ public class ScreenSeatService {
     public List<ScreenSeat> findAllByScreenId(Long screenId) {
         return screenSeatRepository.findAllByScreenId(screenId);
     }
+
+    @Query("SELECT s FROM ScreenSeat s WHERE s.screen.id = :screenId AND s.id = (SELECT MIN(id) FROM ScreenSeat)")
+    public ScreenSeat findFirstByScreenId(Long screenId) {
+        return screenSeatRepository.findFirstByScreenId(screenId);
+    }
 }

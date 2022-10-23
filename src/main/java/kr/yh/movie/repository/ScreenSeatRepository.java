@@ -39,4 +39,7 @@ public interface ScreenSeatRepository extends CrudRepository<ScreenSeat, Long>, 
 
     @Query("SELECT s FROM ScreenSeat s WHERE s.screen.id = :screenId")
     List<ScreenSeat> findAllByScreenId(@Param("screenId") Long screenId);
+
+    @Query("SELECT s FROM ScreenSeat s WHERE s.screen.id = :screenId AND s.id = (SELECT MIN(id) FROM ScreenSeat)")
+    ScreenSeat findFirstByScreenId(@Param("screenId") Long screenId);
 }

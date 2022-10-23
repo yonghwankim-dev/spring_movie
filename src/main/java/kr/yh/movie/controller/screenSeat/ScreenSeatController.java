@@ -46,9 +46,9 @@ public class ScreenSeatController {
     }
 
     @PostMapping("/delete")
-    public String delete(Long screenSeatId,
+    public String delete(ScreenSeatForm form,
                          RedirectAttributes rttr){
-        service.deleteById(screenSeatId);
+        service.deleteById(form.getId());
         rttr.addFlashAttribute("msg", "success");
         return "redirect:/screenSeats/list";
     }

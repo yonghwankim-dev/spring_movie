@@ -2,8 +2,12 @@ package kr.yh.movie.controller;
 
 import kr.yh.movie.domain.Screen;
 import kr.yh.movie.domain.ScreenSeat;
+import kr.yh.movie.service.ScreenSeatService;
+import kr.yh.movie.service.ScreenService;
 import kr.yh.movie.service.SeatService;
 import kr.yh.movie.vo.PageMarker;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,13 +30,25 @@ public class ScreenSeatControllerTest {
     @Autowired
     SeatService seatService;
     @Autowired
+    ScreenService screenService;
+    @Autowired
+    ScreenSeatService screenSeatService;
+    @Autowired
     MockMvc mockMvc;
-    
+
+    String screenId;
+    String screenSeatId;
+
+    @BeforeEach
+    public void setup(){
+        screenId = String.valueOf(screenService.findFirstByScreenId().getId());
+        screenSeatId = String.valueOf(screenSeatService.findFirstByScreenId(Long.parseLong(screenId)).getId());
+    }
+
     @Test
     public void testList() throws Exception {
         //given
         String url = "/screenSeats/list";
-        String screenId = "1";
         //when
         PageMarker<Page<ScreenSeat>> result = (PageMarker<Page<ScreenSeat>>) this.mockMvc.perform(get(url)
                                                                                          .param("screenId", screenId)
@@ -50,7 +66,7 @@ public class ScreenSeatControllerTest {
     public void testView() throws Exception {
         //given
         String url = "/screenSeats/view";
-        String screenSeatId = "1";
+
         //when
         ScreenSeat screenSeat = (ScreenSeat) this.mockMvc.perform(get(url)
                                                          .param("screenSeatId", screenSeatId)
@@ -66,10 +82,9 @@ public class ScreenSeatControllerTest {
     public void testDelete() throws Exception {
         //given
         String url = "/screenSeats/delete";
-        String screenSeatId = "1";
         //when
         String msg = (String) this.mockMvc.perform(post(url)
-                                          .param("screenSeatId", screenSeatId)
+                                          .param("id", screenSeatId)
                                           .contentType(APPLICATION_JSON)
                                           .with(csrf()))
                                           .andExpect(status().is3xxRedirection())
@@ -83,7 +98,7 @@ public class ScreenSeatControllerTest {
     public void testDeletes() throws Exception {
         //given
         String url = "/screenSeats/deletes";
-        String[] screenSeatIds = {"1"};
+        String[] screenSeatIds = {screenSeatId};
         //when
         String msg = (String) this.mockMvc.perform(post(url)
                                           .param("checks", screenSeatIds)

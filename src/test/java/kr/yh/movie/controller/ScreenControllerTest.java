@@ -5,6 +5,8 @@ import kr.yh.movie.domain.Movie;
 import kr.yh.movie.domain.Screen;
 import kr.yh.movie.domain.Theater;
 import kr.yh.movie.service.ScreenService;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -32,6 +34,13 @@ public class ScreenControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    String screenId;
+
+    @BeforeEach
+    public void setup(){
+        screenId = String.valueOf(screenService.findFirstByScreenId().getId());
+    }
 
     @Test
     public void testList() throws Exception {
@@ -94,7 +103,7 @@ public class ScreenControllerTest {
     public void testView() throws Exception {
         //given
         String url = "/screens/view";
-        String screenId = "3";
+        
         //when
         Screen screen = (Screen) this.mockMvc.perform(get(url)
                                              .param("screenId", screenId)
@@ -102,14 +111,14 @@ public class ScreenControllerTest {
                                              .andExpect(status().isOk())
                                              .andReturn().getModelAndView().getModel().get("vo");
         //then
-        assertThat(screen.getId()).isEqualTo(3L);
+        assertThat(screen.getId()).isEqualTo(Long.parseLong(screenId));
     }
 
     @Test
     public void testModifyForm() throws Exception {
         //given
         String url = "/screens/modify";
-        String screenId = "3";
+        
         String cinemaId = "1";
         //when
         Map<String, Object> model = this.mockMvc.perform(get(url)
@@ -132,7 +141,7 @@ public class ScreenControllerTest {
     public void testModify() throws Exception {
         //given
         String url = "/screens/modify";
-        String screenId = "3";
+        
         String movieId = "1";
         String theaterId = "1";
         String round = "2";
@@ -161,7 +170,7 @@ public class ScreenControllerTest {
     public void testDelete() throws Exception {
         //given
         String url = "/screens/delete";
-        String screenId = "3";
+        
 
         //when
         String msg = (String) this.mockMvc.perform(post(url)
@@ -179,7 +188,7 @@ public class ScreenControllerTest {
     public void testDeletes() throws Exception {
         //given
         String url = "/screens/deletes";
-        String[] screenIds = {"3"};
+        String[] screenIds = {screenId};
         //when
         String msg = (String) this.mockMvc.perform(post(url)
                                           .param("checks", screenIds)
