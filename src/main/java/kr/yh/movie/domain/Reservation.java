@@ -60,6 +60,7 @@ public class Reservation {
                                              .reservedPrice(getTotalPriceForPerson(person))
                                              .reservedDateTime(LocalDateTime.now())
                                              .status(ReservationStatus.RESERVED)
+                                             .screenSeats(new ArrayList<>())
                                              .build();
 
         reservation.setMember(member);

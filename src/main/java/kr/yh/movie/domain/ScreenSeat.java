@@ -49,12 +49,13 @@ public class ScreenSeat {
     //== 생성 로직 ==//
     public static ScreenSeat createScreenSeat(ScreenSeatForm form){
         ScreenSeat screenSeat = ScreenSeat.builder()
-                .id(form.getId())
-                .status(form.getStatus())
-                .reservation(form.getReservation())
-                .screen(form.getScreen())
-                .seat(form.getSeat())
-                .build();
+                                          .id(form.getId())
+                                          .status(form.getStatus())
+                                          .build();
+
+        screenSeat.setReservation(form.getReservation());
+        screenSeat.setScreen(form.getScreen());
+        screenSeat.setSeat(form.getSeat());
         return screenSeat;
     }
 
