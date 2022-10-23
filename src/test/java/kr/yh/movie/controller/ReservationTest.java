@@ -4,6 +4,7 @@ import kr.yh.movie.domain.Reservation;
 import kr.yh.movie.service.ReservationService;
 import kr.yh.movie.service.TheaterService;
 import kr.yh.movie.vo.PageMarker;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,6 +29,13 @@ public class ReservationTest {
     @Autowired
     MockMvc mockMvc;
 
+    private String reservationId;
+
+    @BeforeEach
+    public void setup(){
+        reservationId = "3";
+    }
+
     @Test
     public void testList() throws Exception {
         //given
@@ -49,8 +57,8 @@ public class ReservationTest {
     @Test
     public void testView() throws Exception {
         //given
-        String url = "reservations/view";
-        String reservationId = "1";
+        String url = "/reservations/view";
+
         //when
         Reservation reservation = (Reservation) this.mockMvc.perform(get(url)
                                                             .param("reservationId", reservationId)

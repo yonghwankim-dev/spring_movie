@@ -6,8 +6,12 @@ import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.QCinema;
 import kr.yh.movie.domain.QReservation;
 import kr.yh.movie.domain.Reservation;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
+import java.util.Optional;
 
 public interface ReservationRepository extends CrudRepository<Reservation, Long>, QuerydslPredicateExecutor<Reservation> {
     default Predicate makePredicates(String type, String keyword, Long cinemaId){
@@ -17,10 +21,7 @@ public interface ReservationRepository extends CrudRepository<Reservation, Long>
         // type if ~ else
 
         // id > 0
-        builder.and(reservation.screenSeats.get(0)
-                               .screen
-                               .theater
-                               .cinema.id.gt(cinemaId));
+        builder.and(reservation.id.gt(0));
 
         if(type == null){
             return builder;
@@ -28,4 +29,7 @@ public interface ReservationRepository extends CrudRepository<Reservation, Long>
 
         return builder;
     }
+
+    @Query("SELECT r FROM Reservation r WHERE r.member.id = :memberId")
+    Optional<Reservation> findByMemberId(@Param("memberId") Long memberId);
 }

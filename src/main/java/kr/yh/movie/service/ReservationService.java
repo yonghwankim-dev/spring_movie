@@ -11,6 +11,7 @@ import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -111,5 +112,10 @@ public class ReservationService {
 
     public <S extends Reservation, R> R findBy(Predicate predicate, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return reservationRepository.findBy(predicate, queryFunction);
+    }
+
+    @Query("SELECT r FROM Reservation r WHERE r.member.id = :memberId")
+    public Optional<Reservation> findByMemberId(Long memberId) {
+        return reservationRepository.findByMemberId(memberId);
     }
 }
