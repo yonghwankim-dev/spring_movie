@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/admin/cinema/layout}"
+      th:with="cinemaId=${session.cinemaId}">
+
+<div class="container-fluid" layout:fragment="content">
+    <main role="main" class="col-md-9 col-lg-10 ml-sm-auto px-md-4">
+        <h2>예매 상세 정보</h2>
+        <div>
+            <div class="form-group">
+                <label>아이디번호</label>
+                <input class="form-control" name="theaterId" th:value="${vo.id}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>예매가격</label>
+                <input class="form-control" th:value="${vo.reservedPrice}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>청소년</label>
+                <input class="form-control" th:value="${vo.person.teenager}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>성인</label>
+                <input class="form-control" th:value="${vo.person.adult}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>노약자</label>
+                <input class="form-control" th:value="${vo.person.senior}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>예매일자</label>
+                <input class="form-control" th:value="${vo.reservedDateTime}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>예매싱태</label>
+                <input class="form-control" th:value="${vo.status.name()}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>예매좌석</label>
+                <span th:each="screenSeat : ${vo.screenSeats}"
+                    th:text="${screenSeat.seat.seat_row + screenSeat.seat.seat_col}"/>
+            </div>
+
+            <div class="form-group">
+                <label>예매회원명</label>
+                <input class="form-control" th:value="${vo.member.name}" readonly>
+            </div>
+        </div>
+
+        <!-- 수정/삭제 버튼 -->
+        <div class="d-flex justify-content-end">
+            <a th:href="@{list(page=${pageVO.page},
+                               size=${pageVO.size},
+                               type=${pageVO.type},
+                               keyword=${pageVO.keyword})}" class="btn btn-primary">목록으로</a>
+        </div>
+    </main>
+</div>
