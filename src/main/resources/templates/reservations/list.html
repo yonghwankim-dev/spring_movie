@@ -43,7 +43,7 @@
                     <td th:text="${vo.person.teenager}"></td>
                     <td th:text="${vo.person.adult}"></td>
                     <td th:text="${vo.person.senior}"></td>
-                    <td th:text="${vo.reservedDateTime}"></td>
+                    <td th:text="${#temporals.format(vo.reservedDateTime, 'yyyy-MM-dd HH:mm')}"></td>
                     <td th:text="${vo.status.name()}"></td>
                     <td>
                         <a th:each="screenSeat : ${vo.screenSeats}"

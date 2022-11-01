@@ -30,10 +30,12 @@ public class ReservationService {
         return reservationRepository.makePredicates(type, keyword, cinemaId);
     }
 
+    @Transactional
     public <S extends Reservation> S save(S entity) {
         return reservationRepository.save(entity);
     }
 
+    @Transactional
     public <S extends Reservation> Iterable<S> saveAll(Iterable<S> entities) {
         return reservationRepository.saveAll(entities);
     }
@@ -58,22 +60,27 @@ public class ReservationService {
         return reservationRepository.count();
     }
 
+    @Transactional
     public void deleteById(Long aLong) {
         reservationRepository.deleteById(aLong);
     }
 
+    @Transactional
     public void delete(Reservation entity) {
         reservationRepository.delete(entity);
     }
 
+    @Transactional
     public void deleteAllById(Iterable<? extends Long> longs) {
         reservationRepository.deleteAllById(longs);
     }
 
+    @Transactional
     public void deleteAll(Iterable<? extends Reservation> entities) {
         reservationRepository.deleteAll(entities);
     }
 
+    @Transactional
     public void deleteAll() {
         reservationRepository.deleteAll();
     }

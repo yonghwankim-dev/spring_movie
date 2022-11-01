@@ -14,14 +14,14 @@ public class Address {
     private String street;      // 주소
     private String detail;      // 상세주소
 
-    @Override
-    public String toString() {
-        return String.format("%s %s %s", zipcode, street, detail);
-    }
-
     public void changeInfo(String zipcode, String street, String detail){
         this.zipcode = zipcode;
         this.street  = street;
         this.detail  = detail;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s %s", zipcode, street, detail);
     }
 }

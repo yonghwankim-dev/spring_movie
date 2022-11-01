@@ -17,6 +17,7 @@ public class Theater {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "theater_id")
     private Long id;
+
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)

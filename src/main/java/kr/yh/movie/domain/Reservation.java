@@ -22,6 +22,7 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id")
     private Long id;
+
     @Column(name = "reserved_price")
     private int reservedPrice;
 
@@ -30,6 +31,7 @@ public class Reservation {
 
     @Column(name = "reserved_datetime")
     private LocalDateTime reservedDateTime;
+
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
@@ -76,7 +78,6 @@ public class Reservation {
     }
 
     //== 비즈니스 로직 ==//
-    // 예매취소
     public void cancel(){
         if(isExpiredReservation()){
             throw new IllegalStateException("이미 만료된 예매입니다.");
@@ -91,11 +92,9 @@ public class Reservation {
     }
 
     //== 조회 로직 ==//
-    // 예매가 만료되었는지 조회
     private boolean isExpiredReservation(){
         return status == ReservationStatus.EXPIRED;
     }
-    // 예매가 취소되었는지 조회
     private boolean isCanceledReservation(){
         return status == ReservationStatus.CANCEL;
     }

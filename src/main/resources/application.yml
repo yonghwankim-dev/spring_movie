@@ -1,9 +1,6 @@
 spring:
-  config:
-    import:
-      application-mysql.yml
-#      application-h2.yml
-
+  profiles:
+    active: mysql
   thymeleaf:
     cache: false
 
@@ -13,7 +10,13 @@ logging:
     org.hibernate.type : trace
     org.springframework.web : debug
     org.springframework.security: debug
-
-server:
-  compression:
-    enabled: true # 응답 압축 활성화
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+---
+spring:
+  config:
+    activate:
+      on-profile: test
