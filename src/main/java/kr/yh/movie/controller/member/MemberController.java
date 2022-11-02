@@ -30,14 +30,15 @@ public class MemberController {
     private final CheckPhoneValidator checkPhoneValidator;
     private final CheckEmailValidator checkEmailValidator;
     private final CheckPasswordEqualValidator checkPasswordEqualValidator;
+    private final CheckBirthdayValidator checkBirthdayValidator;
 
-    // 커스텀 유효성 검증을 위해 추가
     @InitBinder
     public void validatorBinder(WebDataBinder binder){
         binder.addValidators(checkUserIdValidator);
         binder.addValidators(checkPhoneValidator);
         binder.addValidators(checkEmailValidator);
         binder.addValidators(checkPasswordEqualValidator);
+        binder.addValidators(checkBirthdayValidator);
     }
 
     @GetMapping("/list")
@@ -57,11 +58,12 @@ public class MemberController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute MemberDTO memberDTO,
+    public String add(@Valid @ModelAttribute("form") MemberDTO memberDTO,
                       Errors errors,
                       Model model,
                       RedirectAttributes rttr){
         if(DomainValidator.validate(errors, model)){
+            log.info("birthday error : " + errors.getFieldError("birthday").getDefaultMessage());
             return "members/add";
         }
 
