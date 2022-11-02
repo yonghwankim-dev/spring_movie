@@ -1,8 +1,8 @@
 spring:
-  profiles:
-    active: mysql
   thymeleaf:
     cache: false
+  config:
+    import: application-mysql.yml
 
 logging:
   level:
@@ -10,13 +10,3 @@ logging:
     org.hibernate.type : trace
     org.springframework.web : debug
     org.springframework.security: debug
----
-spring:
-  config:
-    activate:
-      on-profile: prod
----
-spring:
-  config:
-    activate:
-      on-profile: test

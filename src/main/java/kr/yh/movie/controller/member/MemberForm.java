@@ -1,9 +1,8 @@
 package kr.yh.movie.controller.member;
 
 import kr.yh.movie.domain.member.Member;
-import kr.yh.movie.domain.member.MemberRole;
+import kr.yh.movie.domain.member.MemberRoleName;
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
@@ -41,18 +40,21 @@ public class MemberForm {
     private String password_confirm;
     @NotEmpty(message = "성별을 선택해주세요")
     private String gender;
+    @NotEmpty(message = "역할을 선택해주세요")
+    private MemberRoleName roleName;
 
     public MemberForm(Member member){
-        this.id       = member.getId();
-        this.name     = member.getName();
+        this.id = member.getId();
+        this.name = member.getName();
         this.birthday = member.getBirthday();
-        this.phone    = member.getPhone();
-        this.zipcode  = member.getAddress().getZipcode();
-        this.street   = member.getAddress().getStreet();
-        this.detail   = member.getAddress().getDetail();
-        this.email    = member.getEmail();
-        this.userId   = member.getUserId();
+        this.phone = member.getPhone();
+        this.zipcode = member.getAddress().getZipcode();
+        this.street = member.getAddress().getStreet();
+        this.detail = member.getAddress().getDetail();
+        this.email = member.getEmail();
+        this.userId = member.getUserId();
         this.password = member.getPassword();
-        this.gender   = member.getGender();
+        this.gender = member.getGender();
+        this.roleName = member.getRoleName();
     }
 }

@@ -41,6 +41,8 @@ public class Member implements UserDetails {
     private String userId;	    // 회원아이디
     private String password;	// 회원비밀번호
     private String gender;		// 회원성별
+    @Enumerated(EnumType.STRING)
+    private MemberRoleName roleName;
 
     @CreationTimestamp
     private LocalDateTime regDate;
@@ -51,9 +53,6 @@ public class Member implements UserDetails {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private final List<Reservation> reservations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private final List<MemberRole> roles = new ArrayList<>();
 
     //== 생성 로직 ==//
     public static Member member(MemberForm form){
@@ -67,26 +66,30 @@ public class Member implements UserDetails {
                               .userId(form.getUserId())
                               .password(passwordEncoder.encode(form.getPassword()))
                               .gender(form.getGender())
+                              .roleName(form.getRoleName())
                               .build();
         return member;
     }
 
     //== 수정 로직 ==//
     public void changeInfo(MemberForm form){
-        this.name     = form.getName();
-        this.phone    = form.getPhone();
+        this.id = form.getId();
+        this.name = form.getName();
+        this.birthday = form.getBirthday();
+        this.phone = form.getPhone();
         this.address.changeInfo(form.getZipcode(), form.getStreet(), form.getDetail());
-        this.email    = form.getEmail();
-        this.userId   = form.getUserId();
+        this.email = form.getEmail();
+        this.userId = form.getUserId();
+        this.password = form.getPassword();
+        this.gender = form.getGender();
+        this.roleName = form.getRoleName();
     }
 
     // 계정이 갖고 있는 권한 목록은 리턴
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(()->{
-            return "계정별 등록할 권한";
-        });
+        grantedAuthorities.add(()-> "계정별 등록할 권한");
         return grantedAuthorities;
     }
 
