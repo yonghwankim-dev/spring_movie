@@ -19,7 +19,7 @@ public class CheckBirthdayValidator extends AbstractValidator<MemberDTO>{
         if(dto.getBirthday() == null){
             errors.rejectValue("birthday", "NotEmpty", "필수 정보입니다.");
         }else if(dto.getBirthday().isAfter(today)){
-            errors.rejectValue("birthday", "생년월일 오류", "태어난 연도는 현재 일자 이전내에 입력 해주세요");
+            errors.rejectValue("birthday", "TodayIsAfter", "태어난 연도는 현재 일자 이전내에 입력 해주세요");
         }
     }
 }

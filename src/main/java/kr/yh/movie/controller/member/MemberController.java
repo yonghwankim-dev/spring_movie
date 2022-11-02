@@ -26,19 +26,15 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
-    private final CheckUserIdValidator checkUserIdValidator;
-    private final CheckPhoneValidator checkPhoneValidator;
-    private final CheckEmailValidator checkEmailValidator;
-    private final CheckPasswordEqualValidator checkPasswordEqualValidator;
-    private final CheckBirthdayValidator checkBirthdayValidator;
+    private final MemberValidator memberValidator;
 
     @InitBinder
     public void validatorBinder(WebDataBinder binder){
-        binder.addValidators(checkUserIdValidator);
-        binder.addValidators(checkPhoneValidator);
-        binder.addValidators(checkEmailValidator);
-        binder.addValidators(checkPasswordEqualValidator);
-        binder.addValidators(checkBirthdayValidator);
+        binder.addValidators(memberValidator.getCheckUserIdValidator());
+        binder.addValidators(memberValidator.getCheckPhoneValidator());
+        binder.addValidators(memberValidator.getCheckEmailValidator());
+        binder.addValidators(memberValidator.getCheckPasswordEqualValidator());
+        binder.addValidators(memberValidator.getCheckBirthdayValidator());
     }
 
     @GetMapping("/list")
