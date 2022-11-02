@@ -1,9 +1,8 @@
 package kr.yh.movie.domain;
 
-import kr.yh.movie.controller.member.MemberForm;
+import kr.yh.movie.controller.member.MemberDTO;
 import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.service.MemberService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -35,7 +33,7 @@ public class MemberTest {
     public void testMember(){
         //given
         Member member = memberService.findById(id).get();
-        MemberForm form = new MemberForm(member);
+        MemberDTO form = new MemberDTO(member);
         //when
         Member createdMember = Member.member(form);
         //then
@@ -43,10 +41,24 @@ public class MemberTest {
     }
 
     @Test
+    public void testOf(){
+        //given
+        // entity -> dto
+        MemberDTO memberDto = MemberDTO.of(memberService.findById(id).get());
+        //when
+        Member member = Member.of(memberDto);
+        //then
+        assertThat(member.getId()).isEqualTo(memberDto.getId());
+        assertThat(member.getAddress().getZipcode()).isEqualTo(memberDto.getZipcode());
+        assertThat(member.getAddress().getStreet()).isEqualTo(memberDto.getStreet());
+        assertThat(member.getAddress().getDetail()).isEqualTo(memberDto.getDetail());
+    }
+
+    @Test
     public void testChangeInfo(){
         //given
         Member member = memberService.findById(1L).get();
-        MemberForm form = new MemberForm(member);
+        MemberDTO form = MemberDTO.of(member);
         //when
         form.setName("홍길동");
         member.changeInfo(form);

@@ -18,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/members")
@@ -44,7 +43,8 @@ public class MemberController {
     @GetMapping("/list")
     public String list(PageVO pageVO, Model model){
         Pageable page = pageVO.makePageable(0, "id");
-        Page<Member> result = memberService.findAll(memberService.makePredicates(pageVO.getType(), pageVO.getKeyword()), page);
+        Page<MemberDTO> result = memberService.findAll(memberService.makePredicates(pageVO.getType(), pageVO.getKeyword()), page)
+                                              .map(MemberDTO::of);
         model.addAttribute("result", new PageMarker<>(result));
         model.addAttribute("pageVO", pageVO);
         return "members/list";
@@ -52,12 +52,12 @@ public class MemberController {
 
     @GetMapping("/add")
     public String addForm(Model model){
-        model.addAttribute("form", new MemberForm());
+        model.addAttribute("form", MemberDTO.createMemberDTO());
         return "members/add";
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute MemberForm form,
+    public String add(@Valid @ModelAttribute MemberDTO memberDTO,
                       Errors errors,
                       Model model,
                       RedirectAttributes rttr){
@@ -65,8 +65,9 @@ public class MemberController {
             return "members/add";
         }
 
-        Member savedMember = memberService.save(Member.member(form));
-        rttr.addFlashAttribute("savedMember", savedMember);
+        Member savedMember = memberService.save(Member.of(memberDTO));
+        MemberDTO savedMemberDto = MemberDTO.of(savedMember);
+        rttr.addFlashAttribute("savedMember", savedMemberDto);
         return "redirect:/";
     }
 
@@ -75,7 +76,8 @@ public class MemberController {
                        @ModelAttribute("pageVO") PageVO pageVO,
                        Model model){
         memberService.findById(memberId)
-                     .ifPresent(member->model.addAttribute("member", member));
+                     .ifPresent(member->
+                             model.addAttribute("member", MemberDTO.of(member)));
         return "members/view";
     }
 
@@ -83,12 +85,13 @@ public class MemberController {
     public String modifyForm(Long memberId,
                              Model model){
         memberService.findById(memberId)
-                     .ifPresent(member->model.addAttribute("form", new MemberForm(member)));
+                     .ifPresent(member->
+                             model.addAttribute("form", MemberDTO.of(member)));
         return "members/modify";
     }
 
     @PostMapping("/modify")
-    public String modify(MemberForm form,
+    public String modify(MemberDTO form,
                          RedirectAttributes rttr){
         memberService.findById(form.getId())
                      .ifPresent(origin->{
@@ -101,7 +104,7 @@ public class MemberController {
     }
 
     @PostMapping("/delete")
-    public String delete(MemberForm form,
+    public String delete(MemberDTO form,
                          RedirectAttributes rttr){
         memberService.deleteById(form.getId());
         rttr.addFlashAttribute("msg", "success");

@@ -1,9 +1,8 @@
 package kr.yh.movie.controller;
 
-import kr.yh.movie.controller.member.MemberForm;
+import kr.yh.movie.controller.member.MemberDTO;
 import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.vo.PageMarker;
-import kr.yh.movie.vo.PageVO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -50,7 +48,7 @@ public class MemberControllerTest {
         //given
         String url = "/members/add";
         //when
-        MemberForm form = (MemberForm) this.mockMvc.perform(get(url)
+        MemberDTO form = (MemberDTO) this.mockMvc.perform(get(url)
                                                    .contentType(MediaType.TEXT_HTML))
                                                    .andExpect(status().isOk())
                                                    .andReturn().getModelAndView().getModel().get("form");
@@ -88,7 +86,7 @@ public class MemberControllerTest {
         //given
         String url = "/members/add";
         //when
-        Member savedMember = (Member) this.mockMvc.perform(post(url)
+        MemberDTO savedMember = (MemberDTO) this.mockMvc.perform(post(url)
                                                   .param("name", "김용환")
                                                   .param("birthday", "2022-09-09")
                                                   .param("phone", "010-1234-5678")
@@ -116,7 +114,7 @@ public class MemberControllerTest {
         String url = "/members/view";
         String memberId = "1";
         //when
-        Member member = (Member) this.mockMvc.perform(get(url)
+        MemberDTO member = (MemberDTO) this.mockMvc.perform(get(url)
                                              .param("memberId", memberId)
                                              .contentType(MediaType.TEXT_HTML))
                                              .andExpect(status().isOk())
@@ -131,7 +129,7 @@ public class MemberControllerTest {
         String url = "/members/modify";
         String memberId = "1";
         //when
-        MemberForm form = (MemberForm) this.mockMvc.perform(get(url)
+        MemberDTO form = (MemberDTO) this.mockMvc.perform(get(url)
                                                    .param("memberId", memberId)
                                                    .contentType(MediaType.TEXT_HTML))
                                                    .andExpect(status().isOk())

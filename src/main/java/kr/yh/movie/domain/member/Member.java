@@ -1,14 +1,20 @@
 package kr.yh.movie.domain.member;
 
-import kr.yh.movie.controller.member.MemberForm;
+import kr.yh.movie.controller.member.MemberDTO;
 import kr.yh.movie.domain.Reservation;
+import kr.yh.movie.util.ModelMapperUtils;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.config.Configuration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,32 +23,39 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static kr.yh.movie.util.ModelMapperUtils.*;
+import static org.modelmapper.config.Configuration.AccessLevel.*;
+
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "member_id")
-@ToString(exclude = {"reservations", "roles"})
+@ToString(exclude = {"reservations"})
 @Builder
 public class Member implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
-    private String name;		// 회원이름
-    private LocalDate birthday;	// 회원생년월일
+    private String name;
+    private LocalDate birthday;
     @Column(name = "phone", unique = true)
-    private String phone;		// 회원핸드폰번호
+    private String phone;
     @Embedded
-    private Address address;	// 회원주소
+    private Address address;
     @Column(name = "email", unique = true)
-    private String email;		// 회원이메일
+    private String email;
     @Column(name = "userId", unique = true)
-    private String userId;	    // 회원아이디
-    private String password;	// 회원비밀번호
-    private String gender;		// 회원성별
+    private String userId;
+    private String password;
+    private String gender;
     @Enumerated(EnumType.STRING)
-    private MemberRoleName roleName;
+    private MemberRole roleName;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private final List<Reservation> reservations = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime regDate;
@@ -51,11 +64,9 @@ public class Member implements UserDetails {
     @UpdateTimestamp
     private LocalDateTime lastUpdatedTime;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private final List<Reservation> reservations = new ArrayList<>();
 
     //== 생성 로직 ==//
-    public static Member member(MemberForm form){
+    public static Member member(MemberDTO form){
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Member member = Member.builder()
                               .name(form.getName())
@@ -71,8 +82,22 @@ public class Member implements UserDetails {
         return member;
     }
 
+    public static Member of(MemberDTO dto){
+        ModelMapper modelMapper = getModelMapper();
+        PropertyMap<MemberDTO, Member> addressMapping = new PropertyMap<>() {
+            @Override
+            protected void configure() {
+                map().getAddress().setZipcode(source.getZipcode());
+                map().getAddress().setStreet(source.getStreet());
+                map().getAddress().setDetail(source.getDetail());
+            }
+        };
+        modelMapper.addMappings(addressMapping);
+        return modelMapper.map(dto, Member.class);
+    }
+
     //== 수정 로직 ==//
-    public void changeInfo(MemberForm form){
+    public void changeInfo(MemberDTO form){
         this.id = form.getId();
         this.name = form.getName();
         this.birthday = form.getBirthday();

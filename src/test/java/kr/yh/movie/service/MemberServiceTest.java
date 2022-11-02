@@ -3,13 +3,12 @@ package kr.yh.movie.service;
 import kr.yh.movie.domain.Reservation;
 import kr.yh.movie.domain.member.Address;
 import kr.yh.movie.domain.member.Member;
-import kr.yh.movie.domain.member.MemberRoleName;
+import kr.yh.movie.domain.member.MemberRole;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -43,7 +42,7 @@ public class MemberServiceTest {
                     .userId("user"+i)
                     .password(passwordEncoder.encode("pw"+i))
                     .gender(getGender(i))
-                    .roleName(MemberRoleName.valueOf(getRole(i)))
+                    .roleName(MemberRole.valueOf(getRole(i)))
                     .build();
 
             memberService.save(member);

@@ -1,20 +1,39 @@
 package kr.yh.movie.controller.member;
 
+import kr.yh.movie.domain.Reservation;
+import kr.yh.movie.domain.member.Address;
 import kr.yh.movie.domain.member.Member;
-import kr.yh.movie.domain.member.MemberRoleName;
+import kr.yh.movie.domain.member.MemberRole;
+import kr.yh.movie.util.ModelMapperUtils;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.config.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import static kr.yh.movie.util.ModelMapperUtils.*;
+import static org.modelmapper.config.Configuration.AccessLevel.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @ToString
-public class MemberForm {
+public class MemberDTO {
     private Long id;
     @NotEmpty(message = "회원 이름을 입력해주세요")
     private String name;
@@ -38,12 +57,10 @@ public class MemberForm {
     private String password;
     @NotEmpty(message = "비밀번호를 입력해주세요")
     private String password_confirm;
-    @NotEmpty(message = "성별을 선택해주세요")
     private String gender;
-    @NotEmpty(message = "역할을 선택해주세요")
-    private MemberRoleName roleName;
+    private MemberRole roleName;
 
-    public MemberForm(Member member){
+    public MemberDTO(Member member){
         this.id = member.getId();
         this.name = member.getName();
         this.birthday = member.getBirthday();
@@ -56,5 +73,19 @@ public class MemberForm {
         this.password = member.getPassword();
         this.gender = member.getGender();
         this.roleName = member.getRoleName();
+    }
+
+    public static MemberDTO createMemberDTO(){
+        return new MemberDTO();
+    }
+
+    public static MemberDTO of(Member member){
+        ModelMapper modelMapper = getModelMapper();
+        modelMapper.typeMap(Member.class, MemberDTO.class).addMappings(mapper->{
+           mapper.map(src->src.getAddress().getZipcode(), MemberDTO::setZipcode);
+            mapper.map(src->src.getAddress().getStreet(), MemberDTO::setStreet);
+            mapper.map(src->src.getAddress().getDetail(), MemberDTO::setDetail);
+        });
+        return modelMapper.map(member, MemberDTO.class);
     }
 }

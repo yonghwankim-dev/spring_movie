@@ -1,7 +1,7 @@
 package kr.yh.movie.security;
 
 import kr.yh.movie.domain.member.Member;
-import kr.yh.movie.domain.member.MemberRoleName;
+import kr.yh.movie.domain.member.MemberRole;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +20,7 @@ public class SecurityUser extends User {
         this.member = member;
     }
 
-    private static List<GrantedAuthority> makeGrantedAuthority(MemberRoleName roleName){
+    private static List<GrantedAuthority> makeGrantedAuthority(MemberRole roleName){
         List<GrantedAuthority> list = new ArrayList<>();
         list.add(new SimpleGrantedAuthority(ROLE_PREFIX+roleName));
         return list;

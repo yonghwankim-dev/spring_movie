@@ -28,7 +28,7 @@
 
             <div class="form-group">
                 <label>주소</label>
-                <input class="form-control" name="address" th:value="${member.address}" readonly>
+                <input class="form-control" name="address" th:value="${member.zipcode + ' ' + member.street + ' ' + member.detail}" readonly>
             </div>
 
             <div class="form-group">
