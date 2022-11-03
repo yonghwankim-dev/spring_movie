@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class SeatUtil {
+public class SeatUtils {
     public static List<List<Seat>> to2DList(List<Seat> seats, int rows){
         List<List<Seat>> result = new ArrayList<>();
         IntStream.range(0,rows).forEach(i->result.add(new ArrayList<>()));

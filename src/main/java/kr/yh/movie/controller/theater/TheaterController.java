@@ -1,12 +1,10 @@
 package kr.yh.movie.controller.theater;
 
 import kr.yh.movie.domain.Cinema;
-import kr.yh.movie.domain.Seat;
 import kr.yh.movie.domain.Theater;
 import kr.yh.movie.service.CinemaService;
 import kr.yh.movie.service.SeatService;
 import kr.yh.movie.service.TheaterService;
-import kr.yh.movie.util.RedirectAttributeUtil;
 import kr.yh.movie.validator.DomainValidator;
 import kr.yh.movie.vo.PageMarker;
 import kr.yh.movie.vo.PageVO;
@@ -22,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 import static kr.yh.movie.domain.Theater.*;
 

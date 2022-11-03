@@ -2,7 +2,6 @@ package kr.yh.movie.controller.cinema;
 
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.service.CinemaService;
-import kr.yh.movie.util.RedirectAttributeUtil;
 import kr.yh.movie.validator.DomainValidator;
 import kr.yh.movie.vo.PageMarker;
 import kr.yh.movie.vo.PageVO;
@@ -14,12 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/cinemas")

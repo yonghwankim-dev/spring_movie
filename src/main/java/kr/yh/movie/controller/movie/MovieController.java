@@ -2,7 +2,6 @@ package kr.yh.movie.controller.movie;
 
 import kr.yh.movie.domain.Movie;
 import kr.yh.movie.service.MovieService;
-import kr.yh.movie.util.RedirectAttributeUtil;
 import kr.yh.movie.validator.DomainValidator;
 import kr.yh.movie.vo.PageMarker;
 import kr.yh.movie.vo.PageVO;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/movies")

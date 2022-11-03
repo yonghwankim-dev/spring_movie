@@ -59,7 +59,6 @@ public class MemberController {
                       Model model,
                       RedirectAttributes rttr){
         if(DomainValidator.validate(errors, model)){
-            log.info("birthday error : " + errors.getFieldError("birthday").getDefaultMessage());
             return "members/add";
         }
 

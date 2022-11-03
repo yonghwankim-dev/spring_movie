@@ -2,6 +2,7 @@ package kr.yh.movie.controller.member;
 
 import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.domain.member.MemberRole;
+import kr.yh.movie.util.MemberRegExpUtils;
 import lombok.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,8 +10,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
+import static kr.yh.movie.util.MemberRegExpUtils.*;
 import static kr.yh.movie.util.ModelMapperUtils.getModelMapper;
 
 @Getter
@@ -21,11 +24,13 @@ import static kr.yh.movie.util.ModelMapperUtils.getModelMapper;
 @ToString
 public class MemberDTO {
     private Long id;
-    @NotEmpty(message = "필수 정보입니다.")
+    @Pattern(regexp = NAME_FORMAT,
+                message = "한글 또는 영문을 입력해주세요")
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
-    @NotEmpty(message = "필수 정보입니다.")
+    @Pattern(regexp = PHONE_FORMAT,
+            message = "010-0000-0000 형식으로 입력해주세요")
     private String phone;
     @NotEmpty(message = "필수 정보입니다.")
     private String zipcode;
@@ -35,11 +40,10 @@ public class MemberDTO {
     @NotEmpty(message = "필수 정보입니다.")
     @Email(message = "이메일 주소를 다시 확인해주세요")
     private String email;
-    @NotEmpty(message = "필수 정보입니다.")
+    @Pattern(regexp = USERID_FORMAT, message = "영문자, 숫자 4~20자 이내 입력해주세요")
     private String userId;
-    @NotEmpty(message = "필수 정보입니다.")
-    @Pattern(regexp="(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}",
-            message = "비밀번호는 영문 대,소문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 8자 ~ 20자의 비밀번호여야 합니다.")
+    @Pattern(regexp = PASSWORD_FORMAT,
+            message = "비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 8자 ~ 20자의 비밀번호여야 합니다.")
     private String password;
     @NotEmpty(message = "필수 정보입니다.")
     private String password_confirm;
