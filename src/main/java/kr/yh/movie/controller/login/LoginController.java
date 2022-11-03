@@ -1,9 +1,7 @@
 package kr.yh.movie.controller.login;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,18 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/login")
-@RequiredArgsConstructor
-@Slf4j
+@Log
 public class LoginController {
     @GetMapping
-    public String createLoginForm(Model model,
-          @RequestParam(value = "error", required = false) @ModelAttribute String error,
-          @RequestParam(value = "exception", required = false) @ModelAttribute String exception){
-        return "login/createLoginForm";
-    }
-
-    @RequestMapping("/logout")
-    public void logout(){
-        log.info("logout");
-    }
+    public String loginForm(@RequestParam(value = "error", required = false, defaultValue = "")
+                            @ModelAttribute String error,
+                            @RequestParam(value = "exception", required = false, defaultValue = "")
+                            @ModelAttribute String exception){return "login/login";}
 }
