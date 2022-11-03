@@ -10,7 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
@@ -58,30 +61,6 @@ public class MemberControllerTest {
 
     @Test
     @Transactional
-    public void testAdd_fail_duplicateUserId() throws Exception{
-        //given
-        String url = "/members/add";
-
-        //when
-        this.mockMvc.perform(post(url)
-                    .param("name","김용환")
-                    .param("birthday","2022-09-09")
-                    .param("phone","010-1234-5678")
-                    .param("zipcode", "06288")
-                    .param("street","서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
-                    .param("detail","")
-                    .param("email","user1@gmail.com")
-                    .param("userId","user1")
-                    .param("password","password12345@")
-                    .param("password_confirm","password12345@")
-                    .param("gender", "male"))
-                    .andExpect(status().is4xxClientError())
-                    .andDo(print());
-        //then
-    }
-
-    @Test
-    @Transactional
     public void testAdd_success() throws Exception{
         //given
         String url = "/members/add";
@@ -106,6 +85,465 @@ public class MemberControllerTest {
                                                   .get("savedMember");
         //then
         assertThat(savedMember.getName()).isEqualTo("김용환");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_nameIsEmpty() throws Exception{
+        //given
+        String url = "/members/add";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "")
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", "010-1234-5678")
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", "user102@gmail.com")
+                                                .param("userId", "kyh9236")
+                                                .param("password", "password12345@")
+                                                .param("password_confirm", "password12345@")
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_name").toString();
+        //then
+        assertThat(actual).isEqualTo("한글 또는 영문을 입력해주세요");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_nameIsInvalidFormat() throws Exception{
+        //given
+        String url = "/members/add";
+        String invalidName = "김yong환";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", invalidName)
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", "010-1234-5678")
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", "user102@gmail.com")
+                                                .param("userId", "kyh9236")
+                                                .param("password", "password12345@")
+                                                .param("password_confirm", "password12345@")
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_name").toString();
+        //then
+        assertThat(actual).isEqualTo("한글 또는 영문을 입력해주세요");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_birthdayIsNull() throws Exception{
+        //given
+        String url = "/members/add";
+        String birthday = null;
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", birthday)
+                                                .param("phone", "010-1234-5678")
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", "user102@gmail.com")
+                                                .param("userId", "user101")
+                                                .param("password", "password12345@")
+                                                .param("password_confirm", "password12345@")
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_birthday").toString();
+        //then
+        assertThat(actual).isEqualTo("필수 정보입니다.");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_birthdayIsAfterToday() throws Exception{
+        //given
+        String url = "/members/add";
+        String tomorrow = LocalDate.now().plusDays(1).toString();
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", tomorrow)
+                                                .param("phone", "010-1234-5678")
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", "user102@gmail.com")
+                                                .param("userId", "user101")
+                                                .param("password", "password12345@")
+                                                .param("password_confirm", "password12345@")
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_birthday").toString();
+        //then
+        assertThat(actual).isEqualTo("태어난 연도는 현재 일자 이전내에 입력 해주세요");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_phoneIsEmpty() throws Exception{
+        //given
+        String url = "/members/add";
+        String emptyPhone = "";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", emptyPhone)
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", "user102@gmail.com")
+                                                .param("userId", "user101")
+                                                .param("password", "password12345@")
+                                                .param("password_confirm", "password12345@")
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_phone").toString();
+        //then
+        assertThat(actual).isEqualTo("010-0000-0000 형식으로 입력해주세요");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_phoneIsInvalidFormat() throws Exception{
+        //given
+        String url = "/members/add";
+        String invalidPhone = "010-999-9999";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", invalidPhone)
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", "user102@gmail.com")
+                                                .param("userId", "user101")
+                                                .param("password", "password12345@")
+                                                .param("password_confirm", "password12345@")
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_phone").toString();
+        //then
+        assertThat(actual).isEqualTo("010-0000-0000 형식으로 입력해주세요");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_phoneIsDuplicated() throws Exception{
+        //given
+        String url = "/members/add";
+        String duplicatedPhone = "010-6261-7437";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", duplicatedPhone)
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", "user102@gmail.com")
+                                                .param("userId", "user101")
+                                                .param("password", "password12345@")
+                                                .param("password_confirm", "password12345@")
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_phone").toString();
+        //then
+        assertThat(actual).isEqualTo("이미 사용중인 연락처 입니다.");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_zipcodeIsEmpty() throws Exception{
+        //given
+        String url = "/members/add";
+        String emptyZipcode = "";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", "010-9999-9999")
+                                                .param("zipcode", emptyZipcode)
+                                                .param("street", "")
+                                                .param("detail", "")
+                                                .param("email", "user102@gmail.com")
+                                                .param("userId", "user101")
+                                                .param("password", "password12345@")
+                                                .param("password_confirm", "password12345@")
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_zipcode").toString();
+        //then
+        assertThat(actual).isEqualTo("필수 정보입니다.");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_emailIsEmpty() throws Exception{
+        //given
+        String url = "/members/add";
+        String emptyEmail = "";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", "010-9999-9999")
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", emptyEmail)
+                                                .param("userId", "user101")
+                                                .param("password", "password12345@")
+                                                .param("password_confirm", "password12345@")
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_email").toString();
+        //then
+        assertThat(actual).isEqualTo("필수 정보입니다.");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_emailIsInvalidFormat() throws Exception{
+        //given
+        String url = "/members/add";
+        String invalidEmail = "user101gmail.com";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", "010-9999-9999")
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", invalidEmail)
+                                                .param("userId", "user101")
+                                                .param("password", "password12345@")
+                                                .param("password_confirm", "password12345@")
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_email").toString();
+        //then
+        assertThat(actual).isEqualTo("이메일 주소를 다시 확인해주세요");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_emailIsDuplicated() throws Exception{
+        //given
+        String url = "/members/add";
+        String duplicatedEmail = "user1@gmail.com";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", "010-9999-9999")
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", duplicatedEmail)
+                                                .param("userId", "user101")
+                                                .param("password", "password12345@")
+                                                .param("password_confirm", "password12345@")
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_email").toString();
+        //then
+        assertThat(actual).isEqualTo("이미 사용중인 이메일 입니다.");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_userIdIsEmpty() throws Exception{
+        //given
+        String url = "/members/add";
+        String emptyUserId = "";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", "010-1234-5678")
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", "user102@gmail.com")
+                                                .param("userId", emptyUserId)
+                                                .param("password", "password12345@")
+                                                .param("password_confirm", "password12345@")
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_userId").toString();
+        //then
+        assertThat(actual).isEqualTo("영문자, 숫자 4~20자 이내 입력해주세요");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_userIdIsInvalidFormat() throws Exception{
+        //given
+        String url = "/members/add";
+        String invalidFormatUserId = "user1aiowejfoajweofjiawoefjowje";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", "010-1234-5678")
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", "user102@gmail.com")
+                                                .param("userId", invalidFormatUserId)
+                                                .param("password", "password12345@")
+                                                .param("password_confirm", "password12345@")
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_userId").toString();
+        //then
+        assertThat(actual).isEqualTo("영문자, 숫자 4~20자 이내 입력해주세요");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_userIdIsDuplicate() throws Exception{
+        //given
+        String url = "/members/add";
+        String duplicatedUserId = "user1";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", "010-1234-5678")
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", "user102@gmail.com")
+                                                .param("userId", duplicatedUserId)
+                                                .param("password", "password12345@")
+                                                .param("password_confirm", "password12345@")
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_userId").toString();
+        //then
+        assertThat(actual).isEqualTo("이미 사용중인 아이디 입니다.");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_passwordIsEmpty() throws Exception{
+        //given
+        String url = "/members/add";
+        String emptyPassword = "";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", "010-1234-5678")
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", "user102@gmail.com")
+                                                .param("userId", "user101")
+                                                .param("password", emptyPassword)
+                                                .param("password_confirm", emptyPassword)
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_password").toString();
+        //then
+        assertThat(actual).isEqualTo("비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 8자 ~ 20자의 비밀번호여야 합니다.");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_passwordIsInvalidFormat() throws Exception{
+        //given
+        String url = "/members/add";
+        String invalidFormat = "awefoiajwefoijaweofjaowiefjoweijfowiejfowjief";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", "010-1234-5678")
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", "user102@gmail.com")
+                                                .param("userId", "user101")
+                                                .param("password", invalidFormat)
+                                                .param("password_confirm", invalidFormat)
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_password").toString();
+        //then
+        assertThat(actual).isEqualTo("비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 8자 ~ 20자의 비밀번호여야 합니다.");
+    }
+
+    @Test
+    @Transactional
+    public void testAdd_fail_passwordAndPasswordConfirmIsNotEqual() throws Exception{
+        //given
+        String url = "/members/add";
+        String password = "password12345@";
+        String password_confirm = "password12";
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post(url)
+                                                .param("name", "김용환")
+                                                .param("birthday", "2022-09-09")
+                                                .param("phone", "010-1234-5678")
+                                                .param("zipcode", "06288")
+                                                .param("street", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)")
+                                                .param("detail", "")
+                                                .param("email", "user102@gmail.com")
+                                                .param("userId", "user101")
+                                                .param("password", password)
+                                                .param("password_confirm", password_confirm)
+                                                .param("gender", "male")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .with(csrf()))
+                                                .andExpect(status().is2xxSuccessful());
+        String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_password_confirm").toString();
+        //then
+        assertThat(actual).isEqualTo("비밀번호가 일치하지 않습니다.");
     }
 
     @Test

@@ -31,7 +31,8 @@
 
                 <label th:for="street" style="width : 100px;">주소</label>
                 <input type="text" th:field="*{street}" readonly />
-                <input type="text" th:field="*{detail}"/>
+                <input type="text" th:field="*{detail}"/><br>
+                <p th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}" th:errorclass="text-danger"></p>
             </div>
         </div>
         <div class="form-group">
