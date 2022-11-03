@@ -2,19 +2,26 @@ package kr.yh.movie.controller.member;
 
 import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.service.MemberService;
-import kr.yh.movie.util.ModelMapperUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class MemberDTOTest {
     @Autowired
     private MemberService memberService;
+
+    @Test
+    public void testCreateMemberDTO(){
+        //given
+
+        //when
+        MemberDTO memberDTO = MemberDTO.createMemberDTO();
+        //then
+        assertThat(memberDTO).isNotNull();
+    }
 
     @Test
     public void testOf(){
@@ -24,5 +31,15 @@ public class MemberDTOTest {
         MemberDTO memberDto = MemberDTO.of(member);
         //then
         assertThat(memberDto.getId()).isEqualTo(member.getId());
+    }
+
+    @Test
+    public void testOf_MemberIsEmpty(){
+        //given
+        Member member = Member.builder().build();
+        //when
+        MemberDTO memberDTO = MemberDTO.of(member);
+        //then
+        assertThat(memberDTO).isNotNull();
     }
 }

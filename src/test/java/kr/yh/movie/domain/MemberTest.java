@@ -33,7 +33,7 @@ public class MemberTest {
     public void testMember(){
         //given
         Member member = memberService.findById(id).get();
-        MemberDTO form = new MemberDTO(member);
+        MemberDTO form = MemberDTO.of(member);
         //when
         Member createdMember = Member.member(form);
         //then
