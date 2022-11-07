@@ -16,7 +16,10 @@
                 <input class="form-control col-7" type="text" id="searchKeyword" placeholder="검색" th:value="${pageVO.keyword}"/>
                 <button id="searchBtn" class="btn btn-primary col-3">검색</button>
             </div>
-            <button id="deleteBtn" class="btn btn-primary">삭제</button>
+            <div>
+                <button id="addBtn" class="btn btn-primary">추가</button>
+                <button id="deleteBtn" class="btn btn-primary">삭제</button>
+            </div>
         </div>
 
         <!-- list -->
@@ -98,6 +101,13 @@
                 formObj.find("[name='page']").val("1");
                 formObj.submit();
             });
+
+            // 추가 버튼 클릭
+            $("#addBtn").click(function(e){
+                formObj.attr("action", "add");
+                formObj.attr("method", "get");
+                formObj.submit();
+            })
 
             // 삭제 버튼 클릭
             $("#deleteBtn").click(function(e){
