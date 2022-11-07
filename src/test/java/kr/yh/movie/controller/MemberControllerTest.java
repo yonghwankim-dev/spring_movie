@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
+import static kr.yh.movie.util.RegExpMsgUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -325,7 +326,7 @@ public class MemberControllerTest {
                                                 .andExpect(status().is2xxSuccessful());
         String actual = resultActions.andReturn().getModelAndView().getModel().get("valid_email").toString();
         //then
-        assertThat(actual).isEqualTo("필수 정보입니다.");
+        assertThat(actual).isEqualTo(ASSERTIVE_INFO_MSG);
     }
 
     @Test

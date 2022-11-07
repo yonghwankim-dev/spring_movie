@@ -66,33 +66,18 @@ public class Member implements UserDetails {
 
 
     //== 생성 로직 ==//
-    public static Member member(MemberDTO form){
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        Member member = Member.builder()
-                              .name(form.getName())
-                              .birthday(form.getBirthday())
-                              .phone(form.getPhone())
-                              .address(new Address(form.getZipcode(), form.getStreet(), form.getDetail()))
-                              .email(form.getEmail())
-                              .userId(form.getUserId())
-                              .password(passwordEncoder.encode(form.getPassword()))
-                              .gender(form.getGender())
-                              .roleName(form.getRoleName())
-                              .build();
-        return member;
-    }
-
     public static Member of(MemberDTO dto){
         ModelMapper modelMapper = getModelMapper();
-        PropertyMap<MemberDTO, Member> addressMapping = new PropertyMap<>() {
+
+        modelMapper.typeMap(MemberDTO.class, Member.class).addMappings(new PropertyMap<>() {
             @Override
             protected void configure() {
-                map().getAddress().setZipcode(source.getZipcode());
-                map().getAddress().setStreet(source.getStreet());
-                map().getAddress().setDetail(source.getDetail());
+                map().address.setZipcode(source.getZipcode());
+                map().address.setStreet(source.getStreet());
+                map().address.setDetail(source.getDetail());
             }
-        };
-        modelMapper.addMappings(addressMapping);
+        });
+
         return modelMapper.map(dto, Member.class);
     }
 

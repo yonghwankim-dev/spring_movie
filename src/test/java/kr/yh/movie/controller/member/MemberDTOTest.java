@@ -31,6 +31,16 @@ public class MemberDTOTest {
         MemberDTO memberDto = MemberDTO.of(member);
         //then
         assertThat(memberDto.getId()).isEqualTo(member.getId());
+        assertThat(memberDto.getName()).isEqualTo(member.getName());
+        assertThat(memberDto.getBirthday()).isEqualTo(member.getBirthday());
+        assertThat(memberDto.getPhone()).isEqualTo(member.getPhone());
+        assertThat(memberDto.getZipcode()).isEqualTo(member.getAddress().getZipcode());
+        assertThat(memberDto.getStreet()).isEqualTo(member.getAddress().getStreet());
+        assertThat(memberDto.getDetail()).isEqualTo(member.getAddress().getDetail());
+        assertThat(memberDto.getEmail()).isEqualTo(member.getEmail());
+        assertThat(memberDto.getUserId()).isEqualTo(member.getUserId());
+        assertThat(memberDto.getPassword()).isEqualTo(member.getPassword());
+        assertThat(memberDto.getGender()).isEqualTo(member.getGender());
     }
 
     @Test

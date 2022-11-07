@@ -30,17 +30,6 @@ public class MemberTest {
     }
 
     @Test
-    public void testMember(){
-        //given
-        Member member = memberService.findById(id).get();
-        MemberDTO form = MemberDTO.of(member);
-        //when
-        Member createdMember = Member.member(form);
-        //then
-        assertThat(createdMember).isEqualTo(member);
-    }
-
-    @Test
     public void testOf(){
         //given
         // entity -> dto
@@ -48,10 +37,17 @@ public class MemberTest {
         //when
         Member member = Member.of(memberDto);
         //then
-        assertThat(member.getId()).isEqualTo(memberDto.getId());
-        assertThat(member.getAddress().getZipcode()).isEqualTo(memberDto.getZipcode());
-        assertThat(member.getAddress().getStreet()).isEqualTo(memberDto.getStreet());
-        assertThat(member.getAddress().getDetail()).isEqualTo(memberDto.getDetail());
+        assertThat(memberDto.getId()).isEqualTo(member.getId());
+        assertThat(memberDto.getName()).isEqualTo(member.getName());
+        assertThat(memberDto.getBirthday()).isEqualTo(member.getBirthday());
+        assertThat(memberDto.getPhone()).isEqualTo(member.getPhone());
+        assertThat(memberDto.getZipcode()).isEqualTo(member.getAddress().getZipcode());
+        assertThat(memberDto.getStreet()).isEqualTo(member.getAddress().getStreet());
+        assertThat(memberDto.getDetail()).isEqualTo(member.getAddress().getDetail());
+        assertThat(memberDto.getEmail()).isEqualTo(member.getEmail());
+        assertThat(memberDto.getUserId()).isEqualTo(member.getUserId());
+        assertThat(memberDto.getPassword()).isEqualTo(member.getPassword());
+        assertThat(memberDto.getGender()).isEqualTo(member.getGender());
     }
 
     @Test
