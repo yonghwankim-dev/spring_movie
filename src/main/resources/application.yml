@@ -3,6 +3,14 @@ spring:
     cache: false
   config:
     import: application-mysql.yml
+  web:
+    resources:
+      chain:
+        enabled: true
+        strategy:
+          content:
+            enabled: true
+            paths: /**
 
 logging:
   level:

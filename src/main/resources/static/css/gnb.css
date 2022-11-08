@@ -1,0 +1,96 @@
+#header_section{
+    width: 100%;
+    height: 194px;
+}
+
+#gnb{
+    position: relative;
+    width: 980px;
+    height: 70px;
+    margin: 0 auto;
+    border-bottom: 1px solid #B2B2B2;
+}
+
+.logo{
+    position: absolute;
+    z-index: 1;
+    top: 18px;
+    left: 50%;
+    margin-left: -109px;
+    text-indent: -9999em;
+    background: url("../img/common/logo.png") no-repeat center center;
+}
+
+.logo a{
+    display: block;
+    width: 235px;
+    height: 37px;
+}
+
+.g_menu1{
+    margin-top: 20px;
+}
+
+.g_menu2{
+    position: absolute;
+    right: 0;
+    top: 83px;
+    margin-top: 0;
+}
+
+#nav {
+    width: 980px;
+    margin: 3px auto 0;
+    text-align: center;
+}
+
+#nav > ul > li {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#nav > ul > li > a {
+    display: block;
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 24px;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+}
+
+#nav > ul > li:hover .dropdown-content{
+    display: block;
+}
+
+#nav > ul > li > div {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    top: 114px;
+    height: 38px;
+    text-align: center;
+    opacity: 0.5;
+    background-color: rgba(0, 0, 0, .7);
+}
+
+#nav > ul > li > div > ul{
+    display: inline-block;
+}
+
+#nav > ul > li > div > ul > li{
+    float: left;
+    margin: 0 10px;
+}
+
+#nav > ul > li > div > ul > li > a {
+    display: block;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 5px;
+    color: #ffffff;
+    opacity: 0.5;
+}

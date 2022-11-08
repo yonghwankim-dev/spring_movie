@@ -1,11 +1,39 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<header class="d-flex justify-content-end py-1 mb-4 border-bottom" th:fragment="bodyHeader">
-    <div class="col-md-3 text-end">
-        <a class="btn btn-outline-primary me-2" th:href="@{/login}" sec:authorize="isAnonymous()">로그인</a>
-        <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" class="d-inline">
-            <button class="btn btn-outline-primary me-2" type="submit">로그아웃</button>
-        </form>
-        <a class="btn btn-primary" th:href="@{/members/add}">회원가입</a>
+<div id="header_section" th:fragment="bodyHeader">
+    <h1 class="logo">
+        <a class="text-dark text-decoration-none" th:href="@{/}">Yotte Movie</a>
+    </h1>
+    <header id="gnb">
+        <ul class="g_menu1 list-inline float-right">
+            <li class="list-inline-item">
+                <a class="text-dark text-decoration-none" th:href="@{/login}" sec:authorize="isAnonymous()">로그인</a>
+                <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" class="d-inline">
+                    <button class="btn btn-link text-dark" type="submit">로그아웃</button>
+                </form>
+            </li>
+        </ul>
+        <ul class="g_menu2 list-inline">
+            <li class="list-inline-item" sec:authorize="isAuthenticated()">
+                <a class="text-secondary text-decoration-none" th:href="@{/members/mymember}">마이</a>
+            </li>
+            <li class="list-inline-item">
+                <a class="text-secondary text-decoration-none" th:href="@{/members/add}">회원가입</a>
+            </li>
+        </ul>
+    </header>
+    <div id="nav">
+        <ul class="list-inline">
+            <li class="list-inline-item">
+                <a href="#" class="text-dark text-decoration-none">예매</a>
+                <div th:class="dropdown-content">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a href="#" title="예매하기" class="text-decoration-none">예매하기</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
     </div>
-</header>
+</div>
