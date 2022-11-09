@@ -1,0 +1,130 @@
+/* 인원/좌석 - 인원 선택 시작*/
+.wrap_reserve .section_step_con.active {
+    display: block;
+    overflow: inherit;
+    position: relative;
+    width: 1202px;
+    height: 100%;
+    margin-left: 78px;
+}
+
+.wrap_reserve .section_step_con {
+    overflow: hidden;
+    position: absolute;
+    height: 0;
+}
+
+.wrap_reserve .section_step_con .article.article_seat {
+    width: 1202px;
+}
+
+.wrap_reserve .section_step_con .article {
+    position: relative;
+    float: left;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: #FFF;
+}
+
+.wrap_reserve .section_step_con:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.select_num_people_wrap {
+    overflow: hidden;
+    height: 117px;
+    padding: 0 20px;
+    background-color: #FFF;
+}
+
+.select_num_people_wrap .movie_infor {
+    position: relative;
+    float: left;
+    width: 270px;
+    padding: 30px 0 0 54px;
+}
+
+
+
+.select_num_people_wrap .movie_infor .thm {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    top: 26px;
+    left: 0;
+    overflow: hidden;
+    width: 46px;
+    height: 65px;
+    border-radius: 4px;
+}
+
+.select_num_people_wrap .movie_infor .thm img {
+    width: 100%;
+}
+
+.select_num_people_wrap .movie_infor .group_infor .bx_tit {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.select_num_people_wrap .movie_infor .group_infor .bx_tit .ic_grade {
+    margin: -5px 4px 0 0;
+}
+
+.select_num_people_wrap .movie_infor .group_infor .bx_tit strong {
+    font-size: 17px;
+}
+
+.select_num_people_wrap .movie_infor .group_infor dl dt {
+    overflow: hidden;
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+.select_num_people_wrap .movie_infor .group_infor dl dd.sub_info1 .time {
+    position: relative;
+    padding-left: 9px;
+    margin-left: 10px;
+}
+
+.select_num_people_wrap .movie_infor .group_infor dl dd.sub_info1 .time:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 0;
+    width: 1px;
+    height: 10px;
+    background: #ddd;
+}
+
+.select_num_people_wrap .count_people {
+    float: right;
+    width: 825px;
+    margin-top: 36px;
+}
+
+.select_num_people_wrap .count_people > ul > li:first-child {
+    margin-left: 0;
+}
+
+.select_num_people_wrap .count_people > ul > li {
+    float: left;
+    margin-left: 20px;
+}
+
+.select_num_people_wrap .count_people > ul > li .tit {
+    margin-right: 8px;
+    font-size: 13px;
+}
+
+.select_num_people_wrap .count_people > ul > li .bx_num {
+    display: inline-block;
+    width: 100px;
+}
+
+/* 인원/좌석 - 인원 선택 종료*/

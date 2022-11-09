@@ -6,38 +6,9 @@
 <div class="container-fluid" layout:fragment="content">
     <div class="wrap_reserve">
         <h2 class="hidden">예매하기</h2>
-        <div class="section_step_tit">
-            <ul>
-                <li class="active step01">
-                    <a href="#reserveStep01">
-                        <strong class="tit">
-                            <span>01</span><br>상영시간
-                        </strong>
-                    </a>
-                </li>
-                <li class="disabled">
-                    <a style="cursor: default;">
-                        <strong class="tit">
-                            <span>02</span><br>인원/좌석
-                        </strong>
-                    </a>
-                </li>
-                <li class="disabled">
-                    <a style="cursor: default;">
-                        <strong class="tit">
-                            <span>03</span><br>결제
-                        </strong>
-                    </a>
-                </li>
-                <li class="disabled">
-                    <a style="cursor: default;">
-                        <strong class="tit">
-                            <span>04</span><br>결제완료
-                        </strong>
-                    </a>
-                </li>
-            </ul>
-        </div>
+
+        <div th:replace="ticket/personSeatHeader"/>
+
         <div id="reserveStep01" class="section_step_con step01 active">
             <h3 class="hidden">상영시간</h3>
             <div class="article article_cinema area__movingbar litype2">
@@ -1303,7 +1274,7 @@
                                                 <li>수퍼 4D</li>
                                             </ul>
                                             <ul class="list_time">
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>11:40</strong>
@@ -1315,7 +1286,7 @@
                                                         <dd class="hall">3관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>14:50</strong>
@@ -1327,7 +1298,7 @@
                                                         <dd class="hall">3관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>18:00</strong>
@@ -1339,7 +1310,7 @@
                                                         <dd class="hall">3관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>21:10</strong>
@@ -1358,7 +1329,7 @@
                                                 <li>2D</li>
                                             </ul>
                                             <ul class="list_time">
-                                                <li class="morning"><a href="#none" role="button"><span
+                                                <li class="morning"><a th:href="@{/ticket/depth2}" role="button"><span
                                                         class="txt_ntc ic">조조</span>
                                                     <dl>
                                                         <dt>상영시간</dt>
@@ -1371,7 +1342,7 @@
                                                         <dd class="hall">5관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class="morning"><a href="#none" role="button"><span
+                                                <li class="morning"><a th:href="@{/ticket/depth2}" role="button"><span
                                                         class="txt_ntc ic">조조</span>
                                                     <dl>
                                                         <dt>상영시간</dt>
@@ -1384,7 +1355,7 @@
                                                         <dd class="hall">1관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>10:20</strong>
@@ -1396,7 +1367,7 @@
                                                         <dd class="hall">6관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>12:10</strong>
@@ -1408,7 +1379,7 @@
                                                         <dd class="hall">5관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>12:50</strong>
@@ -1420,7 +1391,7 @@
                                                         <dd class="hall">1관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>13:30</strong>
@@ -1432,7 +1403,7 @@
                                                         <dd class="hall">6관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>14:10</strong>
@@ -1444,7 +1415,7 @@
                                                         <dd class="hall">2관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>15:20</strong>
@@ -1456,7 +1427,7 @@
                                                         <dd class="hall">5관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>16:00</strong>
@@ -1468,7 +1439,7 @@
                                                         <dd class="hall">1관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>16:40</strong>
@@ -1480,7 +1451,7 @@
                                                         <dd class="hall">6관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>18:30</strong>
@@ -1492,7 +1463,7 @@
                                                         <dd class="hall">5관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>19:10</strong>
@@ -1504,7 +1475,7 @@
                                                         <dd class="hall">1관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>19:50</strong>
@@ -1516,7 +1487,7 @@
                                                         <dd class="hall">6관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>21:40</strong>
@@ -1528,7 +1499,7 @@
                                                         <dd class="hall">5관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>22:20</strong>
@@ -1540,7 +1511,7 @@
                                                         <dd class="hall">1관</dd>
                                                     </dl>
                                                 </a></li>
-                                                <li class=""><a href="#none" role="button">
+                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
                                                     <dl>
                                                         <dt>상영시간</dt>
                                                         <dd class="time"><strong>23:00</strong>

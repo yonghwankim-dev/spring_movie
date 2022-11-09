@@ -112,3 +112,56 @@
 .owl-carousel .owl-dots {
     display: inline-block;
 }
+
+.select_num_people_wrap .count_people > ul > li .bx_num {
+    display: inline-block;
+    width: 100px;
+}
+
+.bx_num {
+    position: relative;
+    width: 105px;
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.bx_num .txt_num {
+    padding: 11px 0;
+    font-family: 'Roboto';
+    font-size: 15px;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.bx_num .btn_plus, .bx_num .btn_mins {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: no-repeat 50% 50%;
+    border: 0 none;
+    padding: 0 15px;
+    text-indent: -9999em;
+}
+
+.bx_num .btn_mins {
+    left: 0;
+    background-image: url("../images/icon/minus_12.png");
+}
+
+.bx_num .btn_plus {
+    right: 0;
+    background-image: url("../images/icon/plus_12.png");
+}
+
+
+
+

@@ -27,4 +27,12 @@ public class TicketControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("/ticket/depth1"));
     }
+
+    @Test
+    public void testDepth2() throws Exception {
+        this.mockMvc.perform(get("/ticket/depth2")
+                        .accept(TEXT_HTML))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/ticket/depth2"));
+    }
 }

@@ -15,4 +15,11 @@ public class TicketController {
         ModelAndView mav = new ModelAndView("/ticket/depth1");
         return mav;
     }
+
+    @GetMapping("/ticket/depth2")
+    public ModelAndView depth2(){
+        log.info("depth2");
+        ModelAndView mav = new ModelAndView("/ticket/depth2");
+        return mav;
+    }
 }
