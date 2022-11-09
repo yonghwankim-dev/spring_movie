@@ -1,3 +1,4 @@
+/* 상영시간 - 공통 시작 */
 .wrap_reserve{
     overflow: hidden;
     position: relative;
@@ -44,6 +45,7 @@
 .wrap_reserve .section_step_tit ul li.active > a {
     color: #FFF;
 }
+
 .wrap_reserve .section_step_tit ul li > a {
     display: block;
     height: 100%;
@@ -90,7 +92,9 @@
     position: absolute;
     height: 0;
 }
+/* 상영시간 - 공통 시작 */
 
+/* 상영시간 - 영화관 시작*/
 .wrap_reserve .section_step_con .article.article_cinema {
     width: 351px;
     border-bottom: 1px solid #DDD;
@@ -133,6 +137,7 @@
 .tab_wrap.outer {
     padding-top: 80px;
 }
+
 .tab_wrap {
     position: relative;
 }
@@ -140,13 +145,16 @@
 .wrap_reserve .section_step_con .article.article_cinema > .inner .tab_wrap.outer > li.active > .tab_tit {
     height: 61px;
 }
+
 .wrap_reserve .section_step_con .article.article_cinema > .inner .tab_wrap.outer > li > .tab_tit {
     height: 61px;
 }
+
 .tab_wrap.outer > li.active > .tab_tit {
     border-bottom: 2px solid #111;
     color: #000;
 }
+
 .tab_wrap.outer > li > .tab_tit {
     height: 50px;
     line-height: 50px;
@@ -154,9 +162,11 @@
     font-size: 15px;
     color: #7F7F7F;
 }
+
 .tab_wrap > li > .tab_tit {
     border: none;
 }
+
 .tab_wrap > li > .tab_tit {
     position: absolute;
     top: 0;
@@ -188,6 +198,7 @@
 .cinema_select_wrap > ul > li.depth1.active .depth2 {
     display: block;
 }
+
 .cinema_select_wrap > ul .depth2 {
     display: none;
     position: absolute;
@@ -198,12 +209,12 @@
     background-color: #F5F5F5;
 }
 
-
 .wrap_reserve .section_step_con .article.article_cinema .cinema_select_wrap {
     background-color: #F5F5F5;
 }
 
 .wrap_reserve .section_step_con .article.article_cinema > .inner .cinema_select_wrap > ul,
+
 .wrap_reserve .section_step_con .article.article_cinema > .inner .cinema_select_wrap > ul .depth2{
     height: 753px;
 }
@@ -237,10 +248,10 @@
     background: #FFF url("../img/common/check.png") no-repeat 150px 2px;
 }
 
-
 .cinema_select_wrap > ul > li.depth1.active > a {
     background-color: #F5F5F5;
 }
+
 .cinema_select_wrap > ul > li.depth1 > a {
     display: block;
     position: relative;
@@ -270,6 +281,7 @@
 .cinema_select_wrap .depth2 li {
     position: relative;
 }
+
 .cinema_select_wrap > ul li {
     border-bottom: 1px solid #EBEBEB;
 }
@@ -293,6 +305,7 @@
     margin-top: -2px;
     border: 0px solid #f00;
 }
+
 .area__movingbar.litype2 .tab_wrap.outer.actionmovingbar .wrap_nav_underline {
     position: absolute;
     top: 50px;
@@ -303,4 +316,8 @@
     margin-top: -2px;
     border: 0px solid #f00;
 }
+/* 상영시간 - 영화관 종료*/
 
+/* 상영시간 - 영화선택 시작 */
+
+/* 상영시간 - 영화선택 종료 */
