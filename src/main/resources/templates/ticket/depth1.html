@@ -4,5 +4,42 @@
       layout:decorate="~{fragments/layout}">
 
 <div class="container-fluid" layout:fragment="content">
-    <div class="wrap_reserve"></div>
+    <div class="wrap_reserve">
+        <h2 class="hidden">예매하기</h2>
+        <div class="section_step_tit">
+            <ul>
+                <li class="active step01">
+                    <a href="#reserveStep01">
+                        <strong class="tit">
+                            <span>01</span><br>상영시간
+                        </strong>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a style="cursor: default;">
+                        <strong class="tit">
+                            <span>02</span><br>인원/좌석
+                        </strong>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a style="cursor: default;">
+                        <strong class="tit">
+                            <span>03</span><br>결제
+                        </strong>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a style="cursor: default;">
+                        <strong class="tit">
+                            <span>04</span><br>결제완료
+                        </strong>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div id="reserveStep01" class="section_step_con step01 active">
+
+        </div>
+    </div>
 </div>

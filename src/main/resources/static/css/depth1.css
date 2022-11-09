@@ -4,5 +4,69 @@
     width: 1280px;
     height: 870px;
     margin: 0 auto;
-    background-color: red;
+    background-color: lightgray;
 }
+
+.wrap_reserve .section_step_tit {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 78px;
+}
+
+.wrap_reserve .section_step_tit ul {
+    height: 100%;
+}
+
+.wrap_reserve .section_step_tit ul li.active {
+    border-color: #FF243E;
+    border-bottom-color: #666;
+    background-color: #FF243E;
+}
+
+.wrap_reserve .section_step_tit ul li {
+    position: relative;
+    height: 25%;
+    box-sizing: border-box;
+    border: 1px solid #666;
+    border-top: none;
+    background-color: #FFF;
+    z-index: 10;
+}
+
+.wrap_reserve .section_step_tit ul li.active > a {
+    color: #FFF;
+}
+.wrap_reserve .section_step_tit ul li > a {
+    display: block;
+    height: 100%;
+    color: #666;
+}
+
+.wrap_reserve .section_step_tit ul li.active > a::before {
+    content: "현재 단계";
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    text-indent: -9999em;
+    overflow: hidden;
+}
+
+.wrap_reserve .section_step_tit ul li.active > a > strong {
+    font-size: 15px;
+}
+
+.wrap_reserve .section_step_tit ul li > a > strong {
+    display: block;
+    line-height: 1.5;
+    padding-top: 80px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.wrap_reserve .section_step_tit ul li > a > strong span {
+    font-family: 'Roboto';
+    font-size: 13px;
+}
+
