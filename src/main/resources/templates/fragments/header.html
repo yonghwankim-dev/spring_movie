@@ -8,12 +8,6 @@
   <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
   <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 
-  <!--   Bootstrap CSS -->
-  <link rel="stylesheet"
-        href="/dist/css/bootstrap.min.css"
-        crossorigin="anonymous">
-  <link rel="stylesheet" href="/examples/dashboard/dashboard.css" crossorigin="anonymous">
-
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery-3.6.1.js"
           integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
@@ -28,8 +22,14 @@
   <!-- font aswesome -->
   <script src="https://kit.fontawesome.com/5ec64ef296.js" crossorigin="anonymous"></script>
 
+  <!--   Bootstrap CSS -->
+  <link rel="stylesheet"
+        href="/dist/css/bootstrap.min.css"
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="/examples/dashboard/dashboard.css" crossorigin="anonymous">
+
   <!-- Custom CSS-->
-  <link th:href="@{/css/default.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/gnb.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/depth1.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/default.css}" rel="stylesheet" type="text/css">
 </head>
