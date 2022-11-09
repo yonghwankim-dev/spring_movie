@@ -1,0 +1,8 @@
+.wrap_reserve{
+    overflow: hidden;
+    position: relative;
+    width: 1280px;
+    height: 870px;
+    margin: 0 auto;
+    background-color: red;
+}

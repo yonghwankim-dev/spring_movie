@@ -11,6 +11,13 @@ spring:
           content:
             enabled: true
             paths: /**
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+
 
 logging:
   level:
@@ -18,3 +25,6 @@ logging:
     org.hibernate.type : trace
     org.springframework.web : debug
     org.springframework.security: debug
+
+
+

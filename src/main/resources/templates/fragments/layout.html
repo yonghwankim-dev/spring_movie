@@ -1,0 +1,16 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/header :: header"/>
+<body>
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <!-- content body -->
+    <div layout:fragment="content"></div>
+
+    <!-- custom javascript -->
+    <th:block layout:fragment="script"></th:block>
+
+    <!-- footer -->
+    <div th:replace="fragments/footer :: footer"/>
+</body>
+
+</html>
