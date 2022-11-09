@@ -216,6 +216,8 @@
 .wrap_reserve .section_step_con .article.article_cinema > .inner .cinema_select_wrap > ul,
 
 .wrap_reserve .section_step_con .article.article_cinema > .inner .cinema_select_wrap > ul .depth2{
+    overflow: auto;
+    overflow-y: scroll;
     height: 753px;
 }
 
@@ -245,7 +247,7 @@
 }
 
 .wrap_reserve .section_step_con .article.article_cinema .cinema_select_wrap > ul > li.depth1.active > a {
-    background: #FFF url("../img/common/check.png") no-repeat 150px 2px;
+    background: #FFF url("../images/icon/check.png") no-repeat 150px 2px;
 }
 
 .cinema_select_wrap > ul > li.depth1.active > a {
@@ -319,5 +321,123 @@
 /* 상영시간 - 영화관 종료*/
 
 /* 상영시간 - 영화선택 시작 */
+.wrap_reserve .section_step_con .article.article_movie > .inner {
+    overflow: hidden;
+    height: 815px;
+    border-right: 1px solid #DDD;
+}
+
+.wrap_reserve .section_step_con .article.article_movie .list_filter {
+    overflow: hidden;
+    position: relative;
+    height: 60px;
+    padding: 0 20px;
+    border-bottom: 1px solid #DDD;
+}
+
+.movie_select_wrap ul > li {
+    box-sizing: border-box;
+    border: 2px solid transparent;
+}
+
+.movie_select_wrap.list ul > li > a {
+    padding: 15px 20px;
+}
+
+.movie_select_wrap ul > li > a {
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.movie_select_wrap ul > li.active > a::before {
+    content: "선택";
+    position: absolute;
+    right: 19px;
+    top: 18px;
+    width: 18px;
+    height: 14px;
+    text-indent: -9999em;
+    background: url("../images/icon/check.png") 0px 0px no-repeat;
+}
+
+.movie_select_wrap.list ul > li .bx_thm {
+    display: none;
+}
+
+.movie_select_wrap ul > li .group_infor {
+    float: left;
+}
+
+.movie_select_wrap ul > li > a:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.movie_select_wrap.list ul > li .group_infor .bx_tit .ic_grade {
+    position: absolute;
+    left: 20px;
+    top: 12px;
+}
+
+.movie_select_wrap ul > li .group_infor .bx_tit .ic_grade {
+    margin-right: 5px;
+}
+
+.movie_select_wrap.list ul > li .group_infor .bx_tit .tit {
+    display: block;
+    overflow: hidden;
+    width: 250px;
+    padding-left: 30px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.movie_select_wrap ul > li .group_infor .bx_tit .tit {
+    font-size: 15px;
+    vertical-align: middle;
+}
+
+.movie_select_wrap.list ul > li .group_infor .bx_tit:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.movie_select_wrap.list ul > li .group_infor dl {
+    display: none;
+}
+
+.movie_select_wrap.list ul > li .group_infor .bx_tit .ic_grade {
+    position: absolute;
+    left: 20px;
+    top: 12px;
+}
+
+.movie_select_wrap ul > li .group_infor .bx_tit .ic_grade {
+    margin-right: 5px;
+}
+
+
+
+.movie_select_wrap.list ul > li .group_infor .bx_tit .tit {
+    display: block;
+    overflow: hidden;
+    width: 250px;
+    padding-left: 30px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.movie_select_wrap ul > li .group_infor .bx_tit .tit {
+    font-size: 15px;
+    vertical-align: middle;
+}
+
+.movie_select_wrap.list ul > li .group_infor .bx_tit:after {
+    content: "";
+    display: block;
+    clear: both;
+}
 
 /* 상영시간 - 영화선택 종료 */

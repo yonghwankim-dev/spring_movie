@@ -1,0 +1,66 @@
+.ic_grade.gr_12 {
+    background-color: #4DD6FF;
+}
+.ic_grade {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    border-radius: 50%;
+    font-size: 0;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.ic_grade.gr_12:before {
+    content: "12";
+    font-family: "Roboto";
+}
+.ic_grade:before {
+    margin-left: -1px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #FFF;
+    white-space: nowrap;
+}
+
+.movie_select_wrap.list ul > li .group_infor .bx_tit .ic_grade {
+    position: absolute;
+    left: 20px;
+    top: 12px;
+}
+
+.movie_select_wrap ul > li .group_infor .bx_tit .ic_grade {
+    margin-right: 5px;
+}
+
+.ic_grade.gr_15 {
+    background-color: #FFC134;
+}
+
+.ic_grade.gr_15:before {
+    content: "15";
+    font-family: "Roboto";
+}
+
+.ic_grade.gr_all {
+    background-color: #5BC77E;
+}
+
+.ic_grade.gr_all:before {
+    content: "전체";
+    font-size: 11px;
+}
+
+.ic_grade.gr_18 {
+    background-color: #ED4C6B;
+}
+
+.ic_grade.gr_18:before {
+    content: "청불";
+    font-size: 11px;
+}
+
+.ic_grade.gr_non	 {background-color:#777777;}
+
+.ic_grade.gr_non:before	 {content:"미정"; font-size:11px;}
