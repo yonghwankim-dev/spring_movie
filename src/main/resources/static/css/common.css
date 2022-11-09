@@ -64,3 +64,51 @@
 .ic_grade.gr_non	 {background-color:#777777;}
 
 .ic_grade.gr_non:before	 {content:"미정"; font-size:11px;}
+
+.slide_wrap {
+    position: relative;
+}
+
+.owl-carousel .owl-nav {
+    position: static;
+    right: auto;
+}
+
+.owl-carousel .owl-nav .owl-prev {
+    opacity: .6;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 37px;
+    height: 39px;
+    margin-top: -20px;
+    background: url("../images/icon/arr_lf_11.png") no-repeat center center;
+}
+
+.slide_reserve_date .owl-nav .owl-prev, .slide_reserve_date_wide .owl-nav .owl-prev {
+    left: -20px;
+}
+
+.owl-carousel .owl-nav .owl-prev.disabled, .owl-carousel .owl-nav .owl-next.disabled {
+    opacity: .35;
+    pointer-events: none;
+}
+
+.owl-carousel .owl-nav .owl-next {
+    opacity: .6;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 37px;
+    height: 39px;
+    margin-top: -20px;
+    background: url("../images/icon/arr_rg_11.png") no-repeat center center;
+}
+
+.slide_reserve_date .owl-nav .owl-next, .slide_reserve_date_wide .owl-nav .owl-next {
+    right: -20px;
+}
+
+.owl-carousel .owl-dots {
+    display: inline-block;
+}

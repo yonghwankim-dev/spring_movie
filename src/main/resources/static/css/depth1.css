@@ -5,7 +5,6 @@
     width: 1280px;
     height: 870px;
     margin: 0 auto;
-    background-color: lightgray;
 }
 
 .wrap_reserve:after {
@@ -441,3 +440,276 @@
 }
 
 /* 상영시간 - 영화선택 종료 */
+
+/* 상영시간 - 날짜선택 시작 */
+.wrap_reserve .section_step_con .article.article_time {
+    width: 500px;
+}
+
+.wrap_reserve .section_step_con:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.wrap_reserve .section_step_con .article.article_time > .inner {
+    overflow: hidden;
+    height: 815px;
+}
+
+.date_select_wrap {
+    overflow: hidden;
+    height: 75px;
+    margin: 22px 20px 10px;
+}
+
+.date_select_wrap .slide_reserve_date {
+    padding: 0 20px;
+}
+
+.date_select_wrap .month {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+}
+
+.date_select_wrap .date {
+    display: block;
+    position: relative;
+    padding-top: 20px;
+}
+
+.date_select_wrap .date label {
+    display: block;
+    cursor: pointer;
+}
+
+.date_select_wrap .date label input[type="radio"] {
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    clip: rect(0, 0, 0, 0);
+}
+
+.date_select_wrap .date label input[type="radio"]:checked + strong {
+    font-weight: bold;
+    color: #fff;
+    background: #000;
+}
+
+.date_select_wrap .date label strong {
+    display: block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    margin: 0 auto;
+    border-radius: 50%;
+    font-family: 'Roboto';
+    font-size: 15px;
+    text-align: center;
+}
+
+.date_select_wrap .date label em {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.date_select_wrap .date.sat {
+    color: #233CA3;
+}
+
+.date_select_wrap .date.sun {
+    color: #F24A6A;
+}
+
+.wrap_reserve .section_step_con .article.article_time.area__movingbar.litype6 > .inner .tab_wrap.outer {
+    width: 500px;
+}
+
+.tab_wrap.outer {
+    padding-top: 80px;
+}
+
+.tab_wrap {
+    position: relative;
+}
+
+.tab_wrap.outer.sml > li > .tab_tit {
+    font-size: 13px;
+}
+
+.tab_wrap.outer > li.active > .tab_tit {
+    border-bottom: 2px solid #111;
+    color: #000;
+}
+
+.tab_wrap.outer > li > .tab_tit {
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #CCC;
+    font-size: 15px;
+    color: #7F7F7F;
+}
+
+.tab_wrap > li > .tab_tit {
+    border: none;
+}
+
+.tab_wrap > li > .tab_tit {
+    position: absolute;
+    top: 0;
+}
+
+.tab_wrap > li > .tab_tit span {
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.tab_wrap > li.active > .tab_con {
+    overflow: inherit;
+    position: relative;
+    width: auto;
+    height: auto;
+}
+.tab_wrap > li > .tab_con.ty5 {
+    margin-top: -30px;
+}
+.tab_wrap > li > .tab_con {
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 0;
+}
+
+.group_time_select {
+    margin-top: 30px;
+}
+
+.time_select_tit {
+    font-size: 15px;
+}
+
+.time_select_tit .ic_grade {
+    margin-right: 5px;
+}
+
+.time_select_wrap {
+    margin-top: 20px;
+}
+
+.time_select_wrap ul.list_hall {
+    margin-bottom: 5px;
+}
+
+.time_select_wrap ul.list_hall li:first-child {
+    margin-left: 0;
+    padding-left: 0;
+}
+.time_select_wrap ul.list_hall li {
+    display: block;
+    position: relative;
+    float: left;
+    margin-left: 6px;
+    padding-left: 6px;
+    font-size: 13px;
+}
+
+.time_select_wrap ul.list_hall li:before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 0;
+    height: 9px;
+    border-left: 1px solid #DDD;
+}
+
+.time_select_wrap ul.list_hall:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.time_select_wrap ul.list_time li:nth-child(4n+1) {
+    margin-left: 0;
+}
+.time_select_wrap ul.list_time li {
+    float: left;
+    width: 23.5%;
+    margin: 0 0 11px 2%;
+}
+
+.time_select_wrap ul.list_time li > a {
+    display: block;
+    position: relative;
+    height: 33px;
+    padding: 8px 14px 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    background: #f8f8f8;
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(248, 248, 248, 1) 100%);
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(248, 248, 248, 1) 100%);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(248, 248, 248, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#f8f8f8", GradientType=0);
+
+    /*추가*/
+    box-sizing: unset;
+}
+
+.time_select_wrap ul.list_time li > a dl dt {
+    overflow: hidden;
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+.time_select_wrap ul.list_time li > a dl dd.time {
+    margin-bottom: 5px;
+    font-family: 'Roboto';
+    font-size: 11px;
+}
+
+.time_select_wrap ul.list_time li > a dl dd.time strong {
+    display: block;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.time_select_wrap ul.list_time li > a dl dd.seat {
+    font-family: 'Roboto';
+    font-size: 11px;
+    color: #666;
+}
+
+.time_select_wrap ul.list_time li > a dl dd.hall {
+    position: absolute;
+    right: 15px;
+    bottom: 5px;
+    font-size: 11px;
+}
+
+.time_select_wrap ul.list_time li.morning > a .txt_ntc.ic {
+    background: url("../images/icon/time_sun.png") no-repeat 0 0;
+}
+
+.time_select_wrap ul.list_time li > a .txt_ntc.ic {
+    top: 3px;
+    right: 3px;
+    width: 12px;
+    height: 12px;
+}
+.time_select_wrap ul.list_time li > a .txt_ntc {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    text-indent: -9999em;
+}
+/* 상영시간 - 날짜선택 종료 */
