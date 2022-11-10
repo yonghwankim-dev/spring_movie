@@ -171,6 +171,10 @@
     margin: 10px auto 0;
 }
 
+.select_seat_wrap .seat_wrap .showMap_wrap{
+    height: 470px;
+}
+
 .select_seat_wrap .seat_wrap .showMap .seat_area .seat_tit{
     position: absolute;
     display: inline-block;
@@ -204,6 +208,35 @@
     box-sizing: border-box;
     border-radius: 7px 7px 2px 0px;
     font-family: "Roboto", "Noto Sans KR";
+}
+
+.select_seat_wrap .seat_wrap .seat_btn_box{
+    padding-left: 45px;
+}
+
+
+.select_seat_wrap .seat_wrap .seat_btn_box .top_info span{
+    font-family: "Noto Sans KR", "Roboto";
+    font-size: 12px;
+    color: #FFFFFF;
+    padding-left: 17px;
+    margin-left: 6px;
+}
+
+.select_seat_wrap .seat_wrap .seat_btn_box .top_info span.seat_type1{
+    background: url("../images/icon/ic_seat_type1.png") no-repeat 0 4px;
+}
+
+.select_seat_wrap .seat_wrap .seat_btn_box .top_info span.seat_type2{
+    background: url("../images/icon/ic_seat_type2.png") no-repeat 0 4px;
+}
+
+.select_seat_wrap .seat_wrap .seat_btn_box .top_info span.seat_type3{
+    background: url("../images/icon/ic_seat_type3.png") no-repeat 0 4px;
+}
+
+.select_seat_wrap .seat_wrap .seat_btn_box .top_info span.seat_type4{
+    background: url("../images/icon/ic_seat_type4.png") no-repeat 0 4px;
 }
 
 /* 인원/좌석 - 좌석 선택 종료*/
