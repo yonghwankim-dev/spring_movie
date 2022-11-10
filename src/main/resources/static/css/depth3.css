@@ -106,3 +106,63 @@
 
 
 /* 결제 - 결제수단 종료 */
+
+/* 결제 - 결제하기 시작 */
+.article_payment{
+    width: 415px;
+    background: #F8F8F8;
+}
+.article_payment .inner{
+    overflow: hidden;
+    height: 815px;
+    border-right: 1px solid #DDDDDD;
+}
+
+.article_payment .inner .payment_sum_wrap{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #414141;
+}
+
+.article_payment .inner .payment_sum_wrap dl{
+    padding: 10px 30px;
+    border-top: 1px solid rgba(255, 255, 255, .2);
+}
+
+.article_payment .inner .payment_sum_wrap dl dt{
+    clear: both;
+    float: left;
+    line-height: 25px;
+    padding: 4px 0;
+    font-size: 13px;
+    color: #fff;
+}
+
+.article_payment .inner .payment_sum_wrap dl dd{
+    float: right;
+    clear: right;
+    line-height: 25px;
+    padding: 4px 0;
+    font-size: 11px;
+    color: #fff;
+}
+
+.article_payment .inner .payment_sum_wrap dl:after{
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.article_payment .inner .payment_sum_wrap .btn_confirm{
+    display: block;
+    border-radius: 0;
+    height: 64px;
+    line-height: 64px;
+    font-size: 17px;
+    background-color: red;
+    text-align: center;
+    color: white;
+}
+/* 결제 - 결제하기 종료 */
