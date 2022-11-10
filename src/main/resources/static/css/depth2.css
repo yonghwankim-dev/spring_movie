@@ -131,7 +131,7 @@
 
 /* 인원/좌석 - 좌석 선택 시작*/
 .select_seat_wrap{
-    height: 698px;
+    height: 618px;
     background-color: #000000;
 }
 
@@ -172,7 +172,7 @@
 }
 
 .select_seat_wrap .seat_wrap .showMap_wrap{
-    height: 470px;
+    height: 395px;
 }
 
 .select_seat_wrap .seat_wrap .showMap .seat_area .seat_tit{
@@ -214,7 +214,6 @@
     padding-left: 45px;
 }
 
-
 .select_seat_wrap .seat_wrap .seat_btn_box .top_info span{
     font-family: "Noto Sans KR", "Roboto";
     font-size: 12px;
@@ -238,5 +237,47 @@
 .select_seat_wrap .seat_wrap .seat_btn_box .top_info span.seat_type4{
     background: url("../images/icon/ic_seat_type4.png") no-repeat 0 4px;
 }
-
 /* 인원/좌석 - 좌석 선택 종료*/
+
+/* 인원/좌석 - 인원 및 좌석요약 시작*/
+#PersonSeatSummery{
+    height: 65px;
+    background: #888888;
+}
+
+#PersonSeatSummery .select_seat_result{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+#PersonSeatSummery .select_seat_result .group_lft{
+    color: white;
+    padding-left: 20px;
+}
+
+#PersonSeatSummery .select_seat_result .group_lft span{
+    font-size: 15px;
+}
+
+#PersonSeatSummery .select_seat_result .group_lft span strong{
+    font-size: 25px;
+}
+
+#PersonSeatSummery .select_seat_result .group_rgt{
+}
+
+#PersonSeatSummery .select_seat_result .group_rgt #link_repay{
+    float: left;
+    width: 180px;
+    height: 65px;
+    line-height: 60px;
+    border-radius: 0;
+    border: none;
+    font-size: 15px;
+    background: red;
+    color: white;
+    text-align: center;
+}
+/* 인원/좌석 - 인원 및 좌석요약 종료*/
