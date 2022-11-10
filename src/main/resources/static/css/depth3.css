@@ -47,3 +47,62 @@
     clear: both;
 }
 /* 결제 - 예매정보 종료 */
+
+/* 결제 - 결제수단 시작 */
+.article_pay_method{
+    width: 478px;
+    background: #F8F8F8;
+}
+.article_pay_method .inner{
+    overflow: hidden;
+    height: 815px;
+    border-right: 1px solid #DDDDDD;
+}
+
+.article_pay_method .inner .group_payment{
+    padding: 15px 30px;
+}
+
+.article_pay_method .inner .group_payment .tit_payment{
+    display: block;
+    margin: 18px 0 16px;
+    font-size: 15px;
+}
+
+.article_pay_method .inner .group_payment .bx_cate .list_pay_item li{
+    position: relative;
+    width: 31.3%;
+    float: left;
+    margin: 0 1% 10px;
+}
+
+.list_pay_item li button{
+    width: 100%;
+    border-radius: 4px;
+    background: white;
+}
+
+.article_pay_method .inner .group_payment .bx_cate .list_pay_item li button{
+    overflow: visible;
+    position: relative;
+    height: 68px;
+    line-height: 95px;
+    background-repeat: no-repeat;
+}
+
+.article_pay_method .inner .group_payment .bx_cate .list_pay_item li button.cate1{
+    background-image: url("../images/payment/method_ic_card.png");
+    background-position: center 17px;
+
+}
+
+.article_pay_method .inner .group_payment .bx_cate .list_pay_item li button.cate2{
+    background-image: url("../images/payment/method_ic_deposit.svg");
+}
+
+.article_pay_method .inner .group_payment .bx_cate .list_pay_item li button.cate3{
+    background-image: url("../images/payment/method_ic_phone.png");
+}
+
+
+/* 결제 - 결제수단 종료 */
