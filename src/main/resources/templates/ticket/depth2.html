@@ -76,7 +76,62 @@
                             </div>
                         </div>
                     </div>
-                    <div class="select_seat_wrap"></div>
+
+                    <div class="select_seat_wrap">
+                        <h5 class="hidden">좌석선택</h5>
+                        <div class="top_txt_info">
+                            <p id="ticketMessageInfo">
+                                - 인원을 선택하세요.
+                            </p>
+                        </div>
+                        <div id="personSeatSelect"></div>
+                        <div id="container" class="seat_wrap">
+                            <div class="seat_screen">
+                                <span>SCREEN</span>
+                            </div>
+                            <div class="showMap">
+                                <div class="seat_area" style="width: 525px; height: 275px; margin-top: 30px;">
+                                    <th:block th:each="seat_tit : ${seatTitleList}">
+                                        <span class="seat_tit" th:text="${seat_tit}"
+                                              th:style="|left: -30px; top: ${25 * seat_titStat.index}px;|"></span>
+                                        <a th:each="num : ${#numbers.sequence(1, 18)}"
+                                           class="sel" th:data-seat="|A${num}|" seat-statuscode="0"
+                                           th:style="|left: ${21 * num}px; top:${25 * seat_titStat.index}px;|">
+                                            <span th:text="${num}"></span>
+                                        </a>
+                                    </th:block>
+
+
+<!--                                    <a href="javascript:void(0)"-->
+<!--                                       class="sel" data-seat="A1" seat-statuscode="0"-->
+<!--                                        style="left: 21px; top: 0px;">-->
+<!--                                        <span>1</span>-->
+<!--                                    </a>-->
+<!--                                    <a href="javascript:void(0)"-->
+<!--                                       class="sel" data-seat="A2" seat-statuscode="0"-->
+<!--                                        style="left: 42px; top: 0px;">-->
+<!--                                        <span>2</span>-->
+<!--                                    </a>-->
+<!--                                    <a href="javascript:void(0)"-->
+<!--                                       class="sel" data-seat="A3" seat-statuscode="0"-->
+<!--                                        style="left: 63px; top: 0px;">-->
+<!--                                        <span>3</span>-->
+<!--                                    </a>-->
+<!--                                    <a href="javascript:void(0)"-->
+<!--                                       class="sel" data-seat="A4" seat-statuscode="0"-->
+<!--                                        style="left: 84px; top: 0px;">-->
+<!--                                        <span>4</span>-->
+<!--                                    </a>-->
+<!--                                    <a href="javascript:void(0)"-->
+<!--                                       class="sel" data-seat="A5" seat-statuscode="0"-->
+<!--                                        style="left: 105px; top: 0px;">-->
+<!--                                        <span>5</span>-->
+<!--                                    </a>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="PersonSeatSummery"></div>
                 </div>
             </div>

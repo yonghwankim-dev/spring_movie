@@ -128,3 +128,82 @@
 }
 
 /* 인원/좌석 - 인원 선택 종료*/
+
+/* 인원/좌석 - 좌석 선택 시작*/
+.select_seat_wrap{
+    height: 698px;
+    background-color: #000000;
+}
+
+.select_seat_wrap .top_txt_info{
+    text-align: center;
+    margin: 15px 0 25px;
+    padding: 20px;
+    height: 55px;
+}
+
+.select_seat_wrap .top_txt_info #ticketMessageInfo{
+    font-family: "Noto Sans KR", "Roboto";
+    font-size: 11px;
+    color: #FFFFFF;
+    height: 100%;
+
+}
+
+.select_seat_wrap .seat_wrap .seat_screen{
+    padding-top: 10px;
+    background-color: #6E6E6E;
+    text-align: center;
+    height: 35px;
+}
+
+.select_seat_wrap .seat_wrap .seat_screen span{
+    color: #FFFFFF;
+    font-size: 16px;
+    letter-spacing: 10px;
+    font-weight: bold;
+}
+
+.select_seat_wrap .seat_wrap .showMap .seat_area{
+    position: relative;
+    width: 525px;
+    height: 275px;
+    margin: 10px auto 0;
+}
+
+.select_seat_wrap .seat_wrap .showMap .seat_area .seat_tit{
+    position: absolute;
+    display: inline-block;
+    width: 20px;
+    height: 16px;
+    line-height: 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: bold;
+    font-family: "Roboto", "Noto Sans KR";
+    color: #FFFFFF;
+}
+
+.select_seat_wrap .seat_wrap .showMap .seat_area .sel{
+    position: absolute;
+    font-size: 10px;
+    outline-color: white;
+}
+
+.select_seat_wrap .seat_wrap .showMap .seat_area .sel > span{
+    position: relative;
+    display: block;
+    overflow : hidden;
+    width: 21px;
+    height: 16px;
+    line-height: 17px;
+    background: #E8E8E8;
+    color: #000;
+    text-align: center;
+    letter-spacing: -0.5px;
+    box-sizing: border-box;
+    border-radius: 7px 7px 2px 0px;
+    font-family: "Roboto", "Noto Sans KR";
+}
+
+/* 인원/좌석 - 좌석 선택 종료*/
