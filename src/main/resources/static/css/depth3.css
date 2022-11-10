@@ -1,0 +1,49 @@
+/* 결제 - 예매정보 시작 */
+.article_sum_infor .inner{
+    overflow: hidden;
+    height: 815px;
+    border-right: 1px solid #DDDDDD;
+}
+
+.article_sum_infor .inner .movie_infor{
+    padding: 30px 30px 18px;
+    border-bottom: 1px solid #DDDDDD;
+}
+.article_sum_infor .inner .movie_infor .thm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.article_sum_infor .inner .movie_infor .thm img{
+    width : 120px;
+    height: 175px;
+}
+
+.article_sum_infor .inner .seat_infor{
+    padding: 30px 30px 18px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.article_sum_infor .inner dl.dlist_infor dt{
+    clear: both;
+    float: left;
+    min-width: 40px;
+    margin-bottom: 7px;
+    font-size: 11px;
+}
+
+.article_sum_infor .inner dl.dlist_infor dd{
+    float: left;
+    margin-bottom: 7px;
+    font-size: 11px;
+    width: 200px;
+    word-break: keep-all;
+}
+
+.article_sum_infor .inner dl.dlist_infor::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+/* 결제 - 예매정보 종료 */

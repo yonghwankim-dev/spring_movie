@@ -36,4 +36,10 @@ public class TicketController {
         }
         return seatTitleList;
     }
+
+    @GetMapping("/ticket/depth3")
+    public ModelAndView depth3(){
+        ModelAndView mav = new ModelAndView("/ticket/depth3");
+        return mav;
+    }
 }
