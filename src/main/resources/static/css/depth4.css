@@ -1,0 +1,96 @@
+/* 결제완료 - 결제완료 시작 */
+.article_result_infor{
+    width: 100%;
+}
+
+.article_result_infor .inner{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.article_result_infor .inner .result_message_wrap{
+    margin-bottom: 20px;
+}
+
+.article_result_infor .inner .result_message_wrap .result_message_icon_con{
+    height: 50px;
+    background: url("../images/payment/method_ic_card.png") no-repeat center center;
+}
+
+.article_result_infor .inner .result_message_wrap .result_message_p_con{
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.article_result_infor .inner .result_movie_wrap{
+    width: 470px;
+    display: flex;
+    justify-content: space-around;
+    margin-left: 150px;
+    margin-bottom: 20px;
+}
+
+.article_result_infor .inner .result_movie_wrap .result_movie_poster span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.article_result_infor .inner .result_movie_wrap .result_movie_poster span img{
+    width: 120px;
+    height: 175px;
+}
+
+.article_result_infor .inner .result_movie_wrap .result_movie_info dl dt{
+    clear: both;
+    float: left;
+    min-width: 70px;
+    margin-bottom: 7px;
+    font-size: 11px;
+}
+
+.article_result_infor .inner .result_movie_wrap .result_movie_info dl dd{
+    float: left;
+    margin-bottom: 7px;
+    font-size: 11px;
+    width: 200px;
+    word-break: keep-all;
+}
+
+.article_result_infor .inner .result_movie_wrap .result_movie_info dl:after{
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.article_result_infor .inner .result_btn_wrap{
+    width: 250px;
+}
+
+.article_result_infor .inner .result_btn_wrap .result_btn_con{
+    display: flex;
+    justify-content: space-between;
+}
+
+.article_result_infor .inner .result_btn_wrap a{
+    display: block;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.article_result_infor .inner .result_btn_wrap a.payment_history_btn{
+    background-color: white;
+    border: 1px solid #000000;
+    color: black;
+}
+
+.article_result_infor .inner .result_btn_wrap a.home_btn{
+    background-color: red;
+    border: none;
+    color: white;
+}
+/* 결제완료 - 결제완료 종료 */

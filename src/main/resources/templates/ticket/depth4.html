@@ -4,6 +4,57 @@
       layout:decorate="~{fragments/layout}">
 
 <div class="container-fluid" layout:fragment="content">
+    <div class="wrap_reserve">
+        <h2 class="hidden">결제완료</h2>
+        <div th:replace="ticket/personSeatHeader"/>
+
+        <div id="reserveStep04" class="section_step_con step04 active">
+            <h3 class="hidden">결제</h3>
+
+            <div class="article article_result_infor">
+                <div class="group_top">
+                    <h4 class="tit">결제완료</h4>
+                </div>
+                <div class="inner">
+                    <div class="result_message_wrap">
+                        <div class="result_message_icon_con"></div>
+                        <div class="result_message_p_con">
+                            <p>김용환 회원님, 결제가 성공적으로 완료되었습니다.</p>
+                        </div>
+                    </div>
+                    <div class="result_movie_wrap">
+                        <div class="result_movie_poster">
+                            <span class="thm">
+                                    <img src="https://caching.lottecinema.co.kr//Media/MovieFile/MovieImg/202211/18944_104_1.jpg" alt="블랙 팬서: 와칸다 포에버">
+                            </span>
+                        </div>
+                        <div class="result_movie_info">
+                            <dl class="movie_dlist_infor">
+                                <dt>예매번호</dt>
+                                <dd>16517983</dd>
+                                <dt>상영일시</dt>
+                                <dd>2022-07-10 (일)23:00 ~ 25:09</dd>
+                                <dt>상영관</dt>
+                                <dd>대전관저2관 씨네컴포트(리클라이너)</dd>
+                                <dt>관람인원</dt>
+                                <dd>성인1</dd>
+                                <dt>좌석</dt>
+                                <dd>E6</dd>
+                                <dt>총 결제 금액</dt>
+                                <dd>17,000원</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="result_btn_wrap">
+                        <div class="result_btn_con">
+                            <a th:href="@{/my/home}" class="payment_history_btn">결제내역</a>
+                            <a th:href="@{/}" class="home_btn">홈으로 바로가기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <th:block layout:fragment="script">
