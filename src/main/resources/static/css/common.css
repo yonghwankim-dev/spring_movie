@@ -2,6 +2,15 @@ html,
 body {
     height: 100%;
 }
+
+
+.hidden{
+    overflow: hidden;
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    clip: rect(1px, 1px, 1px, 1px);
+}
 .ic_grade {
     display: inline-block;
     width: 22px;

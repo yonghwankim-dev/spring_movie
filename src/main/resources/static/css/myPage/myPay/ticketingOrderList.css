@@ -141,7 +141,7 @@
 }
 
 .ticket_list .ticket_info .ticket{
-    display: none;
+    /*display: none;*/
     position: relative;
     margin-top: 23px;
     padding: 23px 22px;
@@ -152,6 +152,100 @@
     background-color: white;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
+}
+
+.ticket_list .ticket_info .ticket .ticket_movie_info{
+    display: flex;
+}
+
+.ticket_list .ticket_info .ticket .ticket_movie_info .thm img{
+    width: 100px;
+    height: 140px;
+}
+
+.ticket_list .ticket_info .ticket .ticket_movie_info .infor{
+    margin-left: 20px;
+    width: 100%;
+}
+
+.ticket_list .ticket_info .ticket .ticket_movie_info .infor dt,
+.ticket_list .ticket_info .ticket .ticket_movie_info .infor dd{
+    margin-bottom: 10px;
+    font-size: 15px;
+    line-height: 25px;
+}
+
+.ticket_list .ticket_info .ticket .ticket_movie_info .infor dt{
+    float: left;
+    font-family: "Noto Sans KR";
+}
+
+.ticket_list .ticket_info .ticket .ticket_movie_info .infor dd{
+    margin-left: 100px;
+    color: #666666;
+    font-family: "Roboto";
+}
+
+.ticket_list .ticket_info .ticket .ticket_movie_btn{
+    display: flex;
+    justify-content: right;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #000000;
+}
+
+.ticket_list .ticket_info .ticket .ticket_movie_btn button{
+    font-size: 14px;
+    line-height: 38px;
+    font-family: "Noto Sans KR", Roboto, dotum, "sans-serif";
+    border: 1px solid black;
+    background: white;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.ticket_list .ticket_info .ticket .ticket_pay_date{
+    border-bottom: 1px solid #DDDDDD;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.ticket_list .ticket_info .ticket .ticket_pay_date label{
+    font-size: 13px;
+    line-height: 18px;
+    font-family: "Noto Sans KR", Roboto, dotum, "sans-serif";
+}
+
+.ticket_list .ticket_info .ticket .ticket_pay_date span{
+    font-size: 13px;
+    line-height: 17px;
+    font-family: Roboto;
+    color: #666666;
+    margin-left: 20px;
+}
+
+.ticket_list .ticket_info .ticket .ticket_pay_amount{
+
+}
+
+.ticket_list .ticket_info .ticket .ticket_pay_amount dt,
+.ticket_list .ticket_info .ticket .ticket_pay_amount dd{
+    margin-bottom: 10px;
+    font-size: 15px;
+    line-height: 25px;
+}
+
+.ticket_list .ticket_info .ticket .ticket_pay_amount dt{
+    float: left;
+    font-family: "Noto Sans KR";
+}
+
+.ticket_list .ticket_info .ticket .ticket_pay_amount dd{
+    margin-left: 100px;
+    color: #666666;
+    font-family: "Roboto";
 }
 
 /* 결제내역 - 예매내역 종료 */
