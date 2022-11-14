@@ -1,5 +1,6 @@
-.ic_grade.gr_12 {
-    background-color: #4DD6FF;
+html,
+body {
+    height: 100%;
 }
 .ic_grade {
     display: inline-block;
@@ -11,11 +12,6 @@
     text-align: center;
     vertical-align: middle;
 }
-
-.ic_grade.gr_12:before {
-    content: "12";
-    font-family: "Roboto";
-}
 .ic_grade:before {
     margin-left: -1px;
     font-size: 13px;
@@ -23,57 +19,64 @@
     color: #FFF;
     white-space: nowrap;
 }
-
+.ic_grade.gr_non:before {
+    content: "미정";
+    font-size: 11px;
+}
+.ic_grade.gr_all:before {
+    content: "전체";
+    font-size: 11px;
+}
+.ic_grade.gr_12:before {
+    content: "12";
+    font-family: "Roboto";
+}
+.ic_grade.gr_15:before {
+    content: "15";
+    font-family: "Roboto";
+}
+.ic_grade.gr_18:before {
+    content: "청불";
+    font-size: 11px;
+}
+.ic_grade.gr_non {
+    background-color: #777777;
+}
+.ic_grade.gr_all {
+    background-color: #5BC77E;
+}
+.ic_grade.gr_12 {
+    background-color: #4DD6FF;
+}
+.ic_grade.gr_15 {
+    background-color: #FFC134;
+}
+.ic_grade.gr_18 {
+    background-color: #ED4C6B;
+}
 .movie_select_wrap.list ul > li .group_infor .bx_tit .ic_grade {
     position: absolute;
     left: 20px;
     top: 12px;
 }
-
 .movie_select_wrap ul > li .group_infor .bx_tit .ic_grade {
     margin-right: 5px;
 }
-
-.ic_grade.gr_15 {
-    background-color: #FFC134;
-}
-
-.ic_grade.gr_15:before {
-    content: "15";
-    font-family: "Roboto";
-}
-
-.ic_grade.gr_all {
-    background-color: #5BC77E;
-}
-
-.ic_grade.gr_all:before {
-    content: "전체";
-    font-size: 11px;
-}
-
-.ic_grade.gr_18 {
-    background-color: #ED4C6B;
-}
-
-.ic_grade.gr_18:before {
-    content: "청불";
-    font-size: 11px;
-}
-
-.ic_grade.gr_non	 {background-color:#777777;}
-
-.ic_grade.gr_non:before	 {content:"미정"; font-size:11px;}
-
 .slide_wrap {
     position: relative;
 }
-
+.slide_reserve_date .owl-nav .owl-prev,
+.slide_reserve_date_wide .owl-nav .owl-prev {
+    left: -20px;
+}
+.slide_reserve_date .owl-nav .owl-next,
+.slide_reserve_date_wide .owl-nav .owl-next {
+    right: -20px;
+}
 .owl-carousel .owl-nav {
     position: static;
     right: auto;
 }
-
 .owl-carousel .owl-nav .owl-prev {
     opacity: .6;
     position: absolute;
@@ -84,16 +87,6 @@
     margin-top: -20px;
     background: url("../images/icon/arr_lf_11.png") no-repeat center center;
 }
-
-.slide_reserve_date .owl-nav .owl-prev, .slide_reserve_date_wide .owl-nav .owl-prev {
-    left: -20px;
-}
-
-.owl-carousel .owl-nav .owl-prev.disabled, .owl-carousel .owl-nav .owl-next.disabled {
-    opacity: .35;
-    pointer-events: none;
-}
-
 .owl-carousel .owl-nav .owl-next {
     opacity: .6;
     position: absolute;
@@ -104,20 +97,18 @@
     margin-top: -20px;
     background: url("../images/icon/arr_rg_11.png") no-repeat center center;
 }
-
-.slide_reserve_date .owl-nav .owl-next, .slide_reserve_date_wide .owl-nav .owl-next {
-    right: -20px;
+.owl-carousel .owl-nav .owl-prev.disabled,
+.owl-carousel .owl-nav .owl-next.disabled {
+    opacity: .35;
+    pointer-events: none;
 }
-
 .owl-carousel .owl-dots {
     display: inline-block;
 }
-
 .select_num_people_wrap .count_people > ul > li .bx_num {
     display: inline-block;
     width: 100px;
 }
-
 .bx_num {
     position: relative;
     width: 105px;
@@ -130,7 +121,6 @@
     background-color: #fff;
     box-sizing: border-box;
 }
-
 .bx_num .txt_num {
     padding: 11px 0;
     font-family: 'Roboto';
@@ -140,9 +130,8 @@
     text-align: center;
     vertical-align: middle;
 }
-
-
-.bx_num .btn_plus, .bx_num .btn_mins {
+.bx_num .btn_plus,
+.bx_num .btn_mins {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -151,17 +140,44 @@
     padding: 0 15px;
     text-indent: -9999em;
 }
-
 .bx_num .btn_mins {
     left: 0;
     background-image: url("../images/icon/minus_12.png");
 }
-
 .bx_num .btn_plus {
     right: 0;
     background-image: url("../images/icon/plus_12.png");
 }
-
-
-
-
+.txt_notice {
+    padding: 18px 0 26px;
+    text-align: center;
+}
+.txt_caution1 {
+    line-height: 1.4;
+    padding-left: 20px;
+    font-size: 13px;
+    color: #666;
+    background: url("../images/icon/caution_15.png") no-repeat 0 1px;
+}
+.txt_col1.ty2,
+.txt_col2.ty2,
+.txt_col3.ty2,
+.txt_col4.ty2,
+.txt_col5.ty2,
+.txt_col6.ty2,
+.txt_col7.ty2,
+.txt_col8.ty2 {
+    height: 19px;
+    line-height: 17px;
+    padding: 0 8px;
+    font-size: 11px;
+}
+.txt_col7 {
+    display: inline-block;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #FF243E;
+    font-size: 10px;
+    color: #FF243E;
+    background-color: #ffffff;
+}

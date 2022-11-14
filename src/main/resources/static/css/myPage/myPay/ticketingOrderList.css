@@ -1,0 +1,157 @@
+#ticketingOrderList{
+    width : 980px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+/* 결제내역 - 예매내역 시작 */
+.mypage_wrap {
+    margin-top: 30px;
+    padding-top: 35px;
+}
+
+.mypage_top_area {
+    position: relative;
+}
+
+.mypage_top_area .txt_notice {
+    padding-top: 0;
+}
+
+.ticket_list {
+    position: relative;
+    padding: 40px 50px 173px 205px;
+    min-height: 523px;
+    background: #f8f8f8;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.ticket_list::before {
+    height: 100%;
+    border-left: 1px dashed #bbb;
+}
+.ticket_list::after, .ticket_list::before {
+    content: '';
+    position: absolute;
+    left: 175px;
+    top: 0;
+    width: 1px;
+}
+
+.ticket_list::after {
+    height: 46px;
+    background-color: #f8f8f8;
+}
+
+.ticket_list::after, .ticket_list::before {
+    content: '';
+    position: absolute;
+    left: 175px;
+    top: 0;
+    width: 1px;
+}
+
+.ticket_list .ticket_info .date{
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    font-size: 13px;
+    font-family: 'Roboto';
+    font-weight: bold;
+}
+
+.ticket_list .ticket_info .date .week{
+    font-size: 11px;
+    font-family: 'Noto';
+}
+
+.ticket_list .ticket_info li.cancel_check:after{
+    background: url("../../../images/icon/rnd_20_on.png");
+}
+
+.ticket_list .ticket_info li:after{
+    content: '';
+    position: absolute;
+    left: 165px;
+    top: 45px;
+    z-index: 3;
+    width: 20px;
+    height: 20px;
+    background: url("../../../images/icon/rnd_20_off.png") no-repeat;
+}
+
+.ticket_list .ticket_info li > button{
+    display: block;
+    position: relative;
+    padding: 0;
+    width: 100%;
+    border: 0;
+    text-align: left;
+    background: none;
+}
+
+.ticket_list .ticket_info .tit{
+    font-size: 15px;
+    vertical-align: middle;
+}
+
+.ticket_list .ticket_info .sum{
+    margin-left: 12px;
+    font-size: 11px;
+    vertical-align: middle;
+}
+
+.ticket_list .ticket_info .sum em{
+    font-size: 13px;
+    font-weight: bold;
+    font-family: 'Roboto';
+}
+
+.ticket_list .ticket_info .num{
+    margin-left: 20px;
+    color: #666;
+    font-size: 11px;
+    vertical-align: middle;
+}
+
+.ticket_list .ticket_info .txt_col7{
+    margin-left: 12px;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+.ticket_list .ticket_info li.open > button:after{
+    background: url("../../../images/icon/arr_up_14.png") no-repeat right center;
+}
+
+.ticket_list .ticket_info li > button:after{
+    content: '';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    margin-top: -4px;
+    width: 14px;
+    height: 8px;
+    background: url("../../../images/icon/arr_dw_14.png") no-repeat right center;
+}
+
+.ticket_list .ticket_info li.open .ticket{
+    display: block;
+}
+
+.ticket_list .ticket_info .ticket{
+    display: none;
+    position: relative;
+    margin-top: 23px;
+    padding: 23px 22px;
+    width: 725px;
+    min-height: 392px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+/* 결제내역 - 예매내역 종료 */

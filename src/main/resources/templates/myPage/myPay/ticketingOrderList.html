@@ -1,8 +1,46 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"/>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
 
-<div id="ticketingOrderList" th:fragment="top_menu_content">
+<div id="ticketingOrderList" layout:fragment="content">
+    <div th:replace="/myPage/top_menu :: top_menu"/>
 
+    <div class="mypage_wrap" id="mypage_wrap">
+        <div class="tab_con">
+            <h4 class="hidden">예매내역</h4>
+
+            <div class="mypage_top_area">
+                <p class="txt_notice"><span class="txt_caution1">최근 70일 이내 정보만 조회가 가능합니다.</span></p>
+            </div>
+
+            <div class="ticket_list">
+                <ul class="ticket_info">
+                    <li class="cancel_check" id="key0">
+                        <div class="date">2022.11.14 <span class="week">(월)</span></div>
+                        <button type="button" title="열기" id="title0">
+                            <strong class="tit">블랙 팬서 : 와칸다 포에버(디지털)</strong>
+                            <span class="sum"><em>15,000</em>원</span>
+                            <span class="num">예매번호<em>30814073</em></span>
+                            <span class="txt_col7 ty2">취소가능</span>
+                        </button>
+                        <div class="ticket"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            $(".ticket_list .ticket_info button").click(function(){
+                alert("열기");
+            });
+        });
+    </script>
+</th:block>
+
+
 </html>
