@@ -4,7 +4,9 @@
       layout:decorate="~{fragments/layout}">
 
 <div class="container-fluid" layout:fragment="content">
-    <div th:replace="/myCinema/top_menu :: top_menu"/>
+    <div th:replace="/myPay/top_menu :: top_menu"/>
+
+    <div layout:fragment="top_menu_content"></div>
 </div>
 
 <th:block layout:fragment="script">
