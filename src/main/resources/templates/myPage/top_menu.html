@@ -1,34 +1,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div id="myPage_top_menu" th:fragment="top_menu">
-    <ul class="tab_wrap_lnk actionmovingbar">
-        <li class="active">
-            <a href="#" style="width: 12.5%; left: 0%;">
-                <span>결제내역</span>
-            </a>
-            <ul>
-                <li class="active">
-                    <a th:href="@{/myPage/myPay/ticketingOrderList}" style="left: 0px; margin-left: 28.85px;">
-                        <span>예매내역</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class=""><a href="#!" style="width: 12.5%; left: 12.5%;"><span>MY 정보 관리</span></a>
-            <ul>
-                <li class=""><a href="#!" style="left: 0px; margin-left: 100px;"><span>회원정보관리</span></a></li>
-            </ul>
-        </li>
-    </ul>
+    <div class="tab_wrap">
+        <ul>
+            <li class="tab_list">
+                <a th:href="@{/myPage/myPay/ticketingOrderList}" class="tab_btn">결제내역</a>
+                <ul>
+                    <li class="tab_content_list">
+                        <a th:href="@{/myPage/myPay/ticketingOrderList}" class="tab_content">예매내역</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="tab_list">
+                <a th:href="@{/myPage/myInfo/myInfoList}" class="tab_btn">MY 정보 관리</a>
+                <ul>
+                    <li class="tab_content_list">
+                        <a th:href="@{/myPage/myInfo/myInfoList}" class="tab_content">회원정보관리</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
 
     <script th:inline="javascript">
         $(document).ready(function(){
-            $(".tab_wrap_lnk > li").click(function () {
-                /* 모든 탭 비활성화 */
-                $(".tab_wrap_lnk > li").removeClass("active");
-                /* 선택한 탭 활성화*/
-                $(this).addClass("active");
-            });
+            activeMainMenuTab().then(activeSubMenuTab);
         });
+
+        function activeMainMenuTab(){
+            return new Promise((resolve, reject)=>{
+                $($(".tab_list")["[[${mTab}]]"]).addClass("active");
+                resolve();
+            });
+        }
+
+        function activeSubMenuTab(){
+            return new Promise((resolve, reject)=>{
+                $($(".tab_list.active .tab_content_list")["[[${sTab}]]"]).addClass("active");
+               resolve();
+            });
+        }
     </script>
 </div>

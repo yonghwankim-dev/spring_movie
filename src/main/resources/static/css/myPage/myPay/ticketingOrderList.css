@@ -136,12 +136,7 @@
     background: url("../../../images/icon/arr_dw_14.png") no-repeat right center;
 }
 
-.ticket_list .ticket_info li.open .ticket{
-    display: block;
-}
-
 .ticket_list .ticket_info .ticket{
-    /*display: none;*/
     position: relative;
     margin-top: 23px;
     padding: 23px 22px;

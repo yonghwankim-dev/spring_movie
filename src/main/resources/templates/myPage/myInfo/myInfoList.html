@@ -1,8 +1,13 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
 
-<div id="myInfoList" th:fragment="top_menu_content">
+<div id="myInfoList" layout:fragment="content">
+    <div th:replace="/myPage/top_menu :: top_menu"/>
 
+    <div class="myInfoList_wrap">
+    </div>
 </div>
 
 </html>

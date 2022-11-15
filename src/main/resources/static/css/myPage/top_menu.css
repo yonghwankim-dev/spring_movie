@@ -1,49 +1,43 @@
-.tab_wrap_lnk {
-    position: relative;
-    padding-top: 50px;
+.tab_wrap > ul > li{
+    display: inline-block;
 }
 
-.tab_wrap_lnk > li.active > a, .tab_wrap_lnk > li.ov > a {
-    border-bottom: 2px solid #111;
-    color: #000;
+.tab_wrap .tab_list.active .tab_btn{
+    border-bottom: 2px solid #000000;
 }
 
-.tab_wrap_lnk > li > a {
-    display: block;
-    position: absolute;
-    top: 0;
-    height: 50px;
-    line-height: 50px;
-    box-sizing: border-box;
-    border-bottom: 1px solid #CCC;
+.tab_wrap .tab_btn{
+    display: inline-block;
+    width: 125px;
+    height: 45px;
+    text-decoration: none;
+    color: black;
     font-size: 18px;
-    color: #7F7F7F;
+    line-height: 50px;
+    font-family: "Noto Sans KR", Roboto, dotum, "sans-serif";
     text-align: center;
-    font-family: "Noto Sans KR", "Roboto", "dotum", "sans-serif";
 }
 
-.tab_wrap_lnk > li > a > span {
-    vertical-align: top;
-    white-space: nowrap;
-}
-
-.tab_wrap_lnk > li > ul > li.active > a, .tab_wrap_lnk > li > ul > li:hover > a {
-    margin-right: 20px;
-    color: #000;
-}
-.tab_wrap_lnk > li.active > ul > li > a, .tab_wrap_lnk > li.ov > ul > li > a {
-    overflow: inherit;
-    width: auto;
-    height: 30px;
-    line-height: 30px;
-    font-size: 13px;
-    color: #7F7F7F;
-}
-.tab_wrap_lnk > li > ul > li > a {
+.tab_wrap .tab_content{
     display: block;
     overflow: hidden;
     position: absolute;
-    top: 50px;
-    height: 0;
     padding: 0 10px;
+    text-decoration: none;
+    color: black;
+    font-size: 13px;
+    line-height: 30px;
+    height: 0px;
+    font-family: "Noto Sans KR", Roboto, dotum, "sans-serif";
 }
+
+.tab_wrap ul > li.active > ul > li > .tab_content{
+    height: 30px;
+    line-height: 30px;
+    color: #7F7F7F;
+}
+
+.tab_wrap ul > li > ul > li.active > .tab_content{
+    color: black;
+}
+
