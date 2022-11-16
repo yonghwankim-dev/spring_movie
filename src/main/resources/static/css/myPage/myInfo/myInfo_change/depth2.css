@@ -4,15 +4,16 @@
     height: 100%;
 }
 
-#myInfo_change_depth2 .title{
-    margin-bottom: 38px;
-    padding: 8px 0;
-    font-weight: 100;
-    font-size: 28px;
-    line-height: 32px;
-    color: black;
-}
-
 #myInfo_change_depth2 table th{
     width: 130px;
+    vertical-align: middle;
+}
+
+#myInfo_change_depth2 .addr_con{
+    display: flex;
+    align-items: center;
+}
+
+#myInfo_change_depth2 .addr_con input{
+    width: 50%;
 }

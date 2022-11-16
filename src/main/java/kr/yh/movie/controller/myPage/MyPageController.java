@@ -3,6 +3,7 @@ package kr.yh.movie.controller.myPage;
 import kr.yh.movie.controller.member.MemberDTO;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,15 +26,31 @@ public class MyPageController {
     }
 
     @GetMapping("/myPage/myInfo/changeMyInfo/depth1")
-    public ModelAndView changeMyInfoDepth1(){
+    public ModelAndView changeMyInfoDepth1Get(){
         ModelAndView mav = new ModelAndView("/myPage/myInfo/myInfo_change/depth1");
         return mav;
     }
 
+    @PostMapping("/myPage/myInfo/changeMyInfo/depth1")
+    public MemberDTO changeMyInfoDepth1Post(){
+        return null;
+    }
+
     @GetMapping("/myPage/myInfo/changeMyInfo/depth2")
-    public ModelAndView changeMyInfoDepth2(){
+    public ModelAndView changeMyInfoDepth2Get(){
         ModelAndView mav = new ModelAndView("/myPage/myInfo/myInfo_change/depth2");
         mav.getModelMap().addAttribute("form", new MemberDTO());
+        return mav;
+    }
+
+    @PostMapping("/myPage/myInfo/changeMyInfo/depth2")
+    public ModelAndView changeMyInfoDepth2Post(){
+        return null;
+    }
+
+    @GetMapping("/myPage/myInfo/changeMyInfo/depth3")
+    public ModelAndView changeMyInfoDepth3Get(){
+        ModelAndView mav = new ModelAndView("/myPage/myInfo/myInfo_change/depth3");
         return mav;
     }
 }

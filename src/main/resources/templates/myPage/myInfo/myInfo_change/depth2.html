@@ -5,7 +5,7 @@
       layout:decorate="~{fragments/layout}">
 
 <div id="myInfo_change_depth2" layout:fragment="content">
-    <h1 class="title">회원정보 변경</h1>
+    <div th:replace="/myPage/myInfo/myInfo_title :: myInfo_title(title='회원정보변경')"></div>
 
     <form th:action="@{/myPage/myInfo/changeMyInfo/depth2}" th:object="${form}" method="post">
         <table class="table table-bordered">
@@ -33,15 +33,21 @@
                 <tr>
                 <th>주소</th>
                     <td>
-                        <label th:for="zipcode" style="width : 100px;">우편번호</label>
-                        <input class="form-control" type="text" th:field="*{zipcode}" th:value="${form.zipcode}"/>
-                        <button type="button" class="btn btn-secondary" onclick="openZipSearch()">검색</button><br>
+                        <div class="addr_con">
+                            <label th:for="zipcode" style="width : 100px;">우편번호</label>
+                            <input class="form-control" type="text" th:field="*{zipcode}" th:value="${form.zipcode}"/>
+                            <button type="button" class="btn btn-secondary ml-3" onclick="openZipSearch()">검색</button>
+                        </div>
+                        <div class="addr_con">
+                            <label th:for="street" style="width : 100px;">도시주소</label>
+                            <input class="form-control" type="text" th:field="*{street}" th:value="${form.street}" readonly />
+                        </div>
 
-                        <label th:for="street" style="width : 100px;">도시주소</label>
-                        <input class="form-control" type="text" th:field="*{street}" th:value="${form.street}" readonly /><br>
+                        <div class="addr_con">
+                            <label th:for="detail" style="width : 100px;">상세주소</label>
+                            <input class="form-control" type="text" th:field="*{detail}" th:value="${form.detail}"/>
+                        </div>
 
-                        <label th:for="detail" style="width : 100px;">상세주소</label>
-                        <input class="form-control" type="text" th:field="*{detail}" th:value="${form.detail}"/>
                     </td>
                 </tr>
                 <tr>
@@ -65,6 +71,7 @@
             <a th:href="@{/myPage/myInfo/myInfoList}" class="btn btn-secondary mr-1">취소</a>
         </div>
     </form>
+    <script src="/members/address.js"></script>
 </div>
 
 </html>

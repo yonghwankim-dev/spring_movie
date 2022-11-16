@@ -4,7 +4,7 @@
       layout:decorate="~{fragments/layout}">
 
 <div id="myInfo_change_depth1" layout:fragment="content">
-    <h1 class="title">비밀번호 확인</h1>
+    <div th:replace="/myPage/myInfo/myInfo_title :: myInfo_title(title='비밀번호 확인')"/>
 
     <form th:action="@{/myPage/myInfo/changeMyInfo/depth1}" method="post">
         <div class="form-group">

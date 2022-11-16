@@ -190,3 +190,12 @@ body {
     color: #FF243E;
     background-color: #ffffff;
 }
+
+.title{
+    margin-bottom: 38px;
+    padding: 8px 0;
+    font-weight: 100;
+    font-size: 28px;
+    line-height: 32px;
+    color: black;
+}
