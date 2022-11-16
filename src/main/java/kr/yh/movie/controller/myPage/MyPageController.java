@@ -22,4 +22,10 @@ public class MyPageController {
         mav.getModelMap().addAttribute("sTab", 0);
         return mav;
     }
+
+    @GetMapping("/myPage/myInfo/changeMyInfo/depth1")
+    public ModelAndView changeMyInfoDepth1(){
+        ModelAndView mav = new ModelAndView("/myPage/myInfo/myInfo_change/depth1");
+        return mav;
+    }
 }

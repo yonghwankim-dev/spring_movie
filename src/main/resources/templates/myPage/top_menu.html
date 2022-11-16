@@ -15,7 +15,7 @@
                 <a th:href="@{/myPage/myInfo/myInfoList}" class="tab_btn">MY 정보 관리</a>
                 <ul>
                     <li class="tab_content_list">
-                        <a th:href="@{/myPage/myInfo/myInfoList}" class="tab_content">회원정보관리</a>
+                        <a th:href="@{/myPage/myInfo/myInfoList}" class="tab_content" style="left: 40px;">회원정보관리</a>
                     </li>
                 </ul>
             </li>
@@ -29,16 +29,18 @@
         });
 
         function activeMainMenuTab(){
-            return new Promise((resolve, reject)=>{
-                $($(".tab_list")["[[${mTab}]]"]).addClass("active");
+            return new Promise((resolve)=>{
+                const mainMenuTabNumber = "[[${mTab}]]";
+                $($(".tab_list")[mainMenuTabNumber]).addClass("active");
                 resolve();
             });
         }
 
         function activeSubMenuTab(){
-            return new Promise((resolve, reject)=>{
-                $($(".tab_list.active .tab_content_list")["[[${sTab}]]"]).addClass("active");
-               resolve();
+            return new Promise((resolve)=>{
+                const subMenuTabNumber = "[[${sTab}]]";
+                $($(".tab_list.active .tab_content_list")[subMenuTabNumber]).addClass("active");
+                resolve();
             });
         }
     </script>

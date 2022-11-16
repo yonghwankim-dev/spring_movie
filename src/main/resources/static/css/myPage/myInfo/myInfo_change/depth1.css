@@ -1,0 +1,22 @@
+#myInfo_change_depth1{
+    width : 980px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+#myInfo_change_depth1 .title{
+    margin-bottom: 38px;
+    padding: 8px 0;
+    font-weight: 100;
+    font-size: 28px;
+    line-height: 32px;
+    color: black;
+}
+
+#myInfo_change_depth1 .form-group label{
+    margin-bottom: 10px;
+}
+
+#myInfo_change_depth1 button{
+    margin-right: 10px;
+}

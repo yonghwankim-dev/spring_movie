@@ -7,6 +7,26 @@
     <div th:replace="/myPage/top_menu :: top_menu"/>
 
     <div class="myInfoList_wrap">
+        <div class="menu_box">
+            <a th:href="@{/myPage/myInfo/changeMyInfo/depth1}">
+                <span class="img">
+                    <img th:src="@{/images/member/ic_my_menu_1.png}">
+                </span>
+                <span>회원정보변경</span>
+            </a>
+            <a th:href="@{/myPage/myInfo/changePassword/depth1}">
+                <span class="img">
+                    <img th:src="@{/images/member/ic_my_menu_2.png}">
+                </span>
+                <span>비밀번호변경</span>
+            </a>
+            <a th:href="@{/myPage/myInfo/deleteMember/depth1}">
+                <span class="img">
+                    <img th:src="@{/images/member/ic_my_menu_5.png}">
+                </span>
+                <span>회원탈퇴</span>
+            </a>
+        </div>
     </div>
 </div>
 

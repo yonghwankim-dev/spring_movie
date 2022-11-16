@@ -3,3 +3,26 @@
     margin: 0 auto;
     height: 100%;
 }
+
+.myInfoList_wrap .menu_box a{
+    display: inline-block;
+    width: 185px;
+    height: 125px;
+    text-align: center;
+    background: #F8F8F8;
+    padding-top: 40px;
+}
+
+.myInfoList_wrap .menu_box a span{
+    display: block;
+    font-size: 13px;
+    line-height: 14px;
+    color: black;
+    font-family: "Noto Sans KR", Roboto, dotum, "sans-serif";
+    margin-bottom: 10px;
+}
+
+.myInfoList_wrap .menu_box a span img{
+    width: 45px;
+    height: 40px;
+}
