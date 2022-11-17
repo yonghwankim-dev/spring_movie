@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class MyInfoController {
     
     @GetMapping("/myInfoList")
-    public ModelAndView myInfoList(){
+    public ModelAndView myInfoListPage(){
         ModelAndView mav = new ModelAndView("/myPage/myInfo/myInfoList");
         mav.getModelMap().addAttribute("mTab", 1);
         mav.getModelMap().addAttribute("sTab", 0);
@@ -20,15 +20,16 @@ public class MyInfoController {
     }
 
     @GetMapping("/changeMyInfo/depth1")
-    public ModelAndView changeMyInfoDepth1Get(){
-        ModelAndView mav = new ModelAndView("/myPage/myInfo/myInfo_change/depth1");
+    public ModelAndView changeMyInfoWithConfirmPasswordPage(){
+        ModelAndView mav = new ModelAndView("/myPage/myInfo/changeMyInfo/depth1");
+        mav.getModelMap().addAttribute("form", new MemberDTO());
         return mav;
     }
 
     @PostMapping("/changeMyInfo/depth1")
-    public ModelAndView changeMyInfoDepth1Post(){
-        ModelAndView mav = new ModelAndView("/myPage/myInfo/myInfo_change/depth2");
-        return mav;
+    public ModelAndView changeMyInfoWithConfirmPassword(MemberDTO form){
+
+        return null;
     }
 
     @GetMapping("/changeMyInfo/depth2")
