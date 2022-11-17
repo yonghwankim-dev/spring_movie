@@ -4,6 +4,12 @@ body {
 }
 
 
+.myInfo_container{
+    width : 980px;
+    margin: 0 auto;
+    height: 100%;
+}
+
 .hidden{
     overflow: hidden;
     position: absolute !important;

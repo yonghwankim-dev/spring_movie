@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout}">
 
-<div id="myInfo_change_depth2" layout:fragment="content">
+<div id="myInfo_change_depth2" class="myInfo_container" layout:fragment="content">
     <div th:replace="/myPage/myInfo/myInfo_title :: myInfo_title(title='회원정보변경')"></div>
 
     <form th:action="@{/myPage/myInfo/changeMyInfo/depth2}" th:object="${form}" method="post">

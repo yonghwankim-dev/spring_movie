@@ -1,8 +1,12 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
 
-<div id="mypassword_change_depth3" th:fragment="top_menu_content">
-
+<div id="mypassword_change_depth3" class="myInfo_container" th:fragment="content">
+    <div th:replace="/myPage/myInfo/myInfo_success :: myInfo_success(title = '회원탈퇴',
+                                                                         message = '회원탈퇴가 완료되었습니다.',
+                                                                         url = '/')"/>
 </div>
 
 </html>

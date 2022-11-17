@@ -1,13 +1,10 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout}">
-
-<div id="myInfo_change_depth3" layout:fragment="content">
-    <div th:replace="/myPage/myInfo/myInfo_success :: myInfo_success(title = '회원정보 변경',
-                                                                     message = '회원정보 변경이 완료되었습니다.',
-                                                                     url = '/myPage/myInfo/myInfoList')"/>
-</div>
-
+    <div id="myInfo_change_depth3" class="myInfo_container" layout:fragment="content">
+        <div th:replace="/myPage/myInfo/myInfo_success :: myInfo_success(title = '회원정보 변경',
+                                                                         message = '회원정보 변경이 완료되었습니다.',
+                                                                         url = '/myPage/myInfo/myInfoList')"/>
+    </div>
 </html>
