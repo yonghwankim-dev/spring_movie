@@ -5,13 +5,9 @@
       layout:decorate="~{fragments/layout}">
 
 <div id="myInfo_change_depth3" layout:fragment="content">
-    <div th:replace="/myPage/myInfo/myInfo_title :: myInfo_title(title='회원정보변경 완료')"></div>
-
-    <div>
-        <p>회원정보 변경이 완료되었습니다.</p>
-        <a th:href="@{/myPage/myInfo/myInfoList}" class="btn btn-secondary mt-3">마이 페이지로 이동</a>
-    </div>
-
+    <div th:replace="/myPage/myInfo/myInfo_success :: myInfo_success(title = '회원정보 변경',
+                                                                     message = '회원정보 변경이 완료되었습니다.',
+                                                                     url = '/myPage/myInfo/myInfoList')"/>
 </div>
 
 </html>

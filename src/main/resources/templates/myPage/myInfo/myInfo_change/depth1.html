@@ -7,13 +7,11 @@
     <div th:replace="/myPage/myInfo/myInfo_title :: myInfo_title(title='비밀번호 확인')"/>
 
     <form th:action="@{/myPage/myInfo/changeMyInfo/depth1}" method="post">
-        <div class="form-group">
-            <label for="password">비밀번호</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호 입력"/>
-        </div>
+        <div th:replace="/members/memberPwdInput :: memberPwdInput"/>
+
         <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary">확인</button>
-            <a th:href="@{/myPage/myInfo/myInfoList}" class="btn btn-secondary">취소</a>
+            <button type="submit" class="btn btn-primary mr-1">확인</button>
+            <a th:href="@{/myPage/myInfo/myInfoList}" class="btn btn-secondary mr-1">취소</a>
         </div>
     </form>
 </div>

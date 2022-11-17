@@ -10,60 +10,65 @@
     <form th:action="@{/myPage/myInfo/changeMyInfo/depth2}" th:object="${form}" method="post">
         <table class="table table-bordered">
             <tbody>
-                <tr>
-                    <th>이름</th>
-                    <td><input class="form-control" type="text" th:field="*{name}" th:value="${form.name}"></td>
-                </tr>
-                <tr>
-                    <th>아이디</th>
-                    <td><input class="form-control" type="text" th:field="*{userId}" th:value="${form.userId}"></td>
-                </tr>
-                <tr>
-                    <th>이메일</th>
-                    <td><input class="form-control" type="email" th:field="*{email}" th:value="${form.email}"></td>
-                </tr>
-                <tr>
-                    <th>핸드폰번호</th>
-                    <td><input class="form-control" type="email" th:field="*{email}" th:value="${form.email}"></td>
-                </tr>
-                <tr>
-                    <th>생년월일</th>
-                    <td><input class="form-control" type="date" th:field="*{birthday}" th:value="${form.birthday}"></td>
-                </tr>
-                <tr>
+            <tr>
+                <th>이름</th>
+                <td><input class="form-control" type="text" th:field="*{name}" th:value="${form.name}"></td>
+            </tr>
+            <tr>
+                <th>아이디</th>
+                <td><input class="form-control" type="text" th:field="*{userId}" th:value="${form.userId}"></td>
+            </tr>
+            <tr>
+                <th>이메일</th>
+                <td><input class="form-control" type="email" th:field="*{email}" th:value="${form.email}"></td>
+            </tr>
+            <tr>
+                <th>핸드폰번호</th>
+                <td><input class="form-control" type="email" th:field="*{phone}" th:value="${form.phone}"></td>
+            </tr>
+            <tr>
+                <th>생년월일</th>
+                <td><input class="form-control" type="date" th:field="*{birthday}" th:value="${form.birthday}"></td>
+            </tr>
+            <tr>
                 <th>주소</th>
-                    <td>
-                        <div class="addr_con">
-                            <label th:for="zipcode" style="width : 100px;">우편번호</label>
-                            <input class="form-control" type="text" th:field="*{zipcode}" th:value="${form.zipcode}"/>
-                            <button type="button" class="btn btn-secondary ml-3" onclick="openZipSearch()">검색</button>
-                        </div>
-                        <div class="addr_con">
-                            <label th:for="street" style="width : 100px;">도시주소</label>
-                            <input class="form-control" type="text" th:field="*{street}" th:value="${form.street}" readonly />
-                        </div>
+                <td>
+                    <div class="addr_con">
+                        <label th:for="zipcode" style="width : 100px;">우편번호</label>
+                        <input class="form-control" type="text" th:field="*{birthday}" th:value="${form.zipcode}"/>
+                        <button type="button" class="btn btn-secondary ml-3" onclick="openZipSearch()">검색</button>
+                    </div>
+                    <div class="addr_con">
+                        <label th:for="street" style="width : 100px;">도시주소</label>
+                        <input class="form-control" type="text" th:field="*{street}" th:value="${form.street}" readonly />
+                    </div>
 
-                        <div class="addr_con">
-                            <label th:for="detail" style="width : 100px;">상세주소</label>
-                            <input class="form-control" type="text" th:field="*{detail}" th:value="${form.detail}"/>
-                        </div>
+                    <div class="addr_con">
+                        <label th:for="detail" style="width : 100px;">상세주소</label>
+                        <input class="form-control" type="text" th:field="*{detail}" th:value="${form.detail}"/>
+                    </div>
 
-                    </td>
-                </tr>
-                <tr>
-                    <th>성별</th>
-                    <td><input class="form-control" type="text" th:field="*{gender}" th:value="${form.gender}"></td>
-                </tr>
-                <tr>
-                    <th>회원권한</th>
-                    <td>
-                        <select th:field="*{roleName}" class="form-control">
-                            <option value="user">일반회원</option>
-                            <option value="manager" sec:authorize="hasRole('ROLE_ADMIN')">매니저</option>
-                            <option value="admin"   sec:authorize="hasRole('ROLE_ADMIN')">관리자</option>
-                        </select>
-                    </td>
-                </tr>
+                </td>
+            </tr>
+            <tr>
+                <th>성별</th>
+                <td>
+                    <div class="form-control">
+                        <input type="radio" th:field="*{gender}" value="male" th:if="${form.gender eq 'male' ? 'checked' : ''}"/>남자
+                        <input type="radio" th:field="*{gender}" value="female" th:if="${form.gender eq 'female' ? 'checked' : ''}"/>여자
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>회원권한</th>
+                <td>
+                    <select id="roleName" th:field="*{roleName}" class="form-control">
+                        <option value="user">일반회원</option>
+                        <option value="manager" sec:authorize="hasRole('ROLE_ADMIN')">매니저</option>
+                        <option value="admin"   sec:authorize="hasRole('ROLE_ADMIN')">관리자</option>
+                    </select>
+                </td>
+            </tr>
             </tbody>
         </table>
         <div class="d-flex justify-content-end">
@@ -73,5 +78,4 @@
     </form>
     <script src="/members/address.js"></script>
 </div>
-
 </html>

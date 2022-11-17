@@ -1,23 +1,17 @@
 package kr.yh.movie.controller.myPage;
 
 import kr.yh.movie.controller.member.MemberDTO;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-public class MyPageController {
-    @GetMapping("/myPage/myPay/ticketingOrderList")
-    public ModelAndView ticketOrderList(){
-        ModelAndView mav = new ModelAndView("/myPage/myPay/ticketingOrderList");
-        mav.getModelMap().addAttribute("mTab", 0);
-        mav.getModelMap().addAttribute("sTab", 0);
-        return mav;
-    }
-
-    @GetMapping("/myPage/myInfo/myInfoList")
+@RequestMapping("/myPage/myInfo")
+public class MyInfoController {
+    
+    @GetMapping("/myInfoList")
     public ModelAndView myInfoList(){
         ModelAndView mav = new ModelAndView("/myPage/myInfo/myInfoList");
         mav.getModelMap().addAttribute("mTab", 1);
@@ -25,30 +19,32 @@ public class MyPageController {
         return mav;
     }
 
-    @GetMapping("/myPage/myInfo/changeMyInfo/depth1")
+    @GetMapping("/changeMyInfo/depth1")
     public ModelAndView changeMyInfoDepth1Get(){
         ModelAndView mav = new ModelAndView("/myPage/myInfo/myInfo_change/depth1");
         return mav;
     }
 
-    @PostMapping("/myPage/myInfo/changeMyInfo/depth1")
-    public MemberDTO changeMyInfoDepth1Post(){
-        return null;
+    @PostMapping("/changeMyInfo/depth1")
+    public ModelAndView changeMyInfoDepth1Post(){
+        ModelAndView mav = new ModelAndView("/myPage/myInfo/myInfo_change/depth2");
+        return mav;
     }
 
-    @GetMapping("/myPage/myInfo/changeMyInfo/depth2")
+    @GetMapping("/changeMyInfo/depth2")
     public ModelAndView changeMyInfoDepth2Get(){
         ModelAndView mav = new ModelAndView("/myPage/myInfo/myInfo_change/depth2");
         mav.getModelMap().addAttribute("form", new MemberDTO());
         return mav;
     }
 
-    @PostMapping("/myPage/myInfo/changeMyInfo/depth2")
+    @PostMapping("/changeMyInfo/depth2")
     public ModelAndView changeMyInfoDepth2Post(){
-        return null;
+        ModelAndView mav = new ModelAndView("/myPage/myInfo/myInfo_change/depth3");
+        return mav;
     }
 
-    @GetMapping("/myPage/myInfo/changeMyInfo/depth3")
+    @GetMapping("/changeMyInfo/depth3")
     public ModelAndView changeMyInfoDepth3Get(){
         ModelAndView mav = new ModelAndView("/myPage/myInfo/myInfo_change/depth3");
         return mav;
