@@ -1,8 +1,20 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
 
-<div id="myInfo_secession_depth2" th:fragment="top_menu_content">
+<div id="myInfo_secession_depth2" class="myInfo_container" layout:fragment="content">
+    <div th:replace="/myPage/myInfo/myInfo_title :: myInfo_title(title = '회원탈퇴 여부 확인')"/>
+    <form th:action="@{/myPage/myInfo/myInfoSecession/depth2}" th:object="${form}" method="post">
+        <input type="text" class="hidden" th:value="${form.id}">
 
+
+        <p class="block text-center mb-2">회원탈퇴릘 진행하겠습니까?</p>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary mr-1">확인</button>
+            <a th:href="@{/myPage/myInfo/myInfoList}" class="btn btn-secondary mr-1">취소</a>
+        </div>
+    </form>
 </div>
 
 </html>

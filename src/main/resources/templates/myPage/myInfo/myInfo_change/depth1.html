@@ -4,15 +4,8 @@
       layout:decorate="~{fragments/layout}">
 
 <div id="myInfo_change_depth1" class="myInfo_container" layout:fragment="content">
-    <div th:replace="/myPage/myInfo/myInfo_title :: myInfo_title(title='비밀번호 확인')"/>
-
     <form th:action="@{/myPage/myInfo/changeMyInfo/depth1}" method="post">
-        <div th:replace="/members/memberPwdInput :: memberPwdInput"/>
-
-        <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary mr-1">확인</button>
-            <a th:href="@{/myPage/myInfo/myInfoList}" class="btn btn-secondary mr-1">취소</a>
-        </div>
+        <div th:replace="/myPage/myInfo/myInfo_confirmPwd :: myInfo_confirmPwd(cancelBtnUrl = '/myPage/myInfo/myInfoList')"/>
     </form>
 </div>
 

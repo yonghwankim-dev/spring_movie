@@ -1,8 +1,12 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
 
-<div id="myInfo_secession_depth1" th:fragment="content">
-
+<div id="myInfo_secession_depth1" class="myInfo_container" layout:fragment="content">
+    <form th:action="@{/myPage/myInfo/changeMyPwd/depth1}" method="post">
+        <div th:replace="/myPage/myInfo/myInfo_confirmPwd :: myInfo_confirmPwd(cancelBtnUrl = '/myPage/myInfo/myInfoList')"/>
+    </form>
 </div>
 
 </html>

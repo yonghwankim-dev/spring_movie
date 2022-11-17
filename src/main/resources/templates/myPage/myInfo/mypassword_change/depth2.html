@@ -1,8 +1,31 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
 
-<div id="mypassword_change_depth2" th:fragment="top_menu_content">
-
+<div id="mypassword_change_depth2" class="myInfo_container" layout:fragment="content">
+    <div th:replace="/myPage/myInfo/myInfo_title :: myInfo_title(title='비밀번호 변경입력')"/>
+    <div>
+        <p class="mb-2">새로운 비밀번호를 입력해주세요</p>
+        <form th:action="@{/myPage/myInfo/changeMyPassword/depth2}" th:object="${form}" method="post">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>비밀번호</th>
+                        <td><input type="password" class="form-control" th:field="*{password}"></td>
+                    </tr>
+                    <tr>
+                        <th>비밀번호 확인</th>
+                        <td><input type="password" class="form-control" th:field="*{password_confirm}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary mr-1">확인</button>
+                <a th:href="@{/myPage/myInfo/myInfoList}" class="btn btn-secondary mr-1">취소</a>
+            </div>
+        </form>
+    </div>
 </div>
 
 </html>
