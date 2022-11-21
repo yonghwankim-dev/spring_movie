@@ -6,10 +6,12 @@ import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Movie;
 import kr.yh.movie.domain.QCinema;
 import kr.yh.movie.domain.QMovie;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface CinemaRepository  extends CrudRepository<Cinema, Long>, QuerydslPredicateExecutor<Cinema> {
+public interface CinemaRepository  extends JpaRepository<Cinema, Long>, QuerydslPredicateExecutor<Cinema> {
     default Predicate makePredicates(String type, String keyword){
         BooleanBuilder builder = new BooleanBuilder();
         QCinema cinema = QCinema.cinema;
