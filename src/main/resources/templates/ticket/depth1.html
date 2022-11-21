@@ -29,29 +29,9 @@
                                             <a href="#none" title="선택됨">서울<em>(23)</em></a>
                                             <div class="depth2">
                                                 <ul>
-                                                    <li class=""><a href="#none">가산디지털</a></li>
-                                                    <li class=""><a href="#none">가양</a></li>
-                                                    <li class=""><a href="#none">강동</a></li>
-                                                    <li class=""><a href="#none">건대입구</a></li>
-                                                    <li class=""><a href="#none">김포공항</a></li>
-                                                    <li class=""><a href="#none">노원</a></li>
-                                                    <li class=""><a href="#none">도곡</a></li>
-                                                    <li class=""><a href="#none">독산</a></li>
-                                                    <li class=""><a href="#none">브로드웨이(신사)</a></li>
-                                                    <li class=""><a href="#none">서울대입구</a></li>
-                                                    <li class=""><a href="#none">수락산</a></li>
-                                                    <li class=""><a href="#none">수유</a></li>
-                                                    <li class=""><a href="#none">신도림</a></li>
-                                                    <li class=""><a href="#none">신림</a></li>
-                                                    <li class=""><a href="#none">에비뉴엘(명동)</a></li>
-                                                    <li class=""><a href="#none">영등포</a></li>
-                                                    <li class=""><a href="#none">용산</a></li>
-                                                    <li class=""><a href="#none">월드타워</a></li>
-                                                    <li class=""><a href="#none">은평(롯데몰)</a></li>
-                                                    <li class=""><a href="#none">중랑</a></li>
-                                                    <li class=""><a href="#none">청량리</a></li>
-                                                    <li class=""><a href="#none">합정</a></li>
-                                                    <li class=""><a href="#none">홍대입구</a></li>
+                                                    <th:block th:each="cinema : ${cinemas}">
+                                                        <li class=""><a href="#none" th:if="${cinema.location == '서울'}" th:text="${cinema.name}"></a></li>
+                                                    </th:block>
                                                 </ul>
                                             </div>
                                         </li>
