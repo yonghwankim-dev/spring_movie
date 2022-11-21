@@ -1,8 +1,24 @@
 spring:
+  profiles:
+    group:
+      "local": "testdb,common"
+      "dev": "testdb,common"
+      "prod": "proddb, common"
+---
+spring:
+  config:
+    activate:
+      on-profile: "common"
+
   thymeleaf:
     cache: false
-  config:
-    import: application-mysql.yml
+
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
   web:
     resources:
       chain:
@@ -11,13 +27,11 @@ spring:
           content:
             enabled: true
             paths: /**
-  devtools:
-    livereload:
-      enabled: true
-    restart:
-      enabled: true
 
-
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
 
 logging:
   level:
@@ -26,5 +40,55 @@ logging:
     org.springframework.web : debug
     org.springframework.security: debug
 
+---
 
+spring:
+  config:
+    activate:
+      on-profile: "testdb"
+
+  datasource:
+    url: jdbc:h2:mem:test
+#    url: jdbc:h2:tcp://localhost/~/jpashop;
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+h2:
+  console:
+    enabled: true
+    path: /h2-console
+
+jpa:
+  hibernate:
+    ddl-auto: create
+  properties:
+    hibernate:
+      format_sql: true
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "proddb"
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/movie?useSSL=false
+    username: movie_user
+    password: movie_user_password
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+    database: mysql
+
+    properties:
+      hibernate:
+        dialect:
+          nodeValue: org.hibernate.dialect.MySQL57Dialect
+          storage_engine: innodb # 트랜잭션을 지원하고, 커밋과 롤백 그리고 데이터 복구 기능을 제공하므로 데이터를 효과적으로 보호
 
