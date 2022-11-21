@@ -6,6 +6,7 @@ import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.repository.CinemaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -16,12 +17,13 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 @Log
 public class CinemaService {
@@ -30,13 +32,79 @@ public class CinemaService {
         return cinemaRepository.makePredicates(type, keyword);
     }
 
-    @Transactional
-    public <S extends Cinema> S save(S entity) {
-        return cinemaRepository.save(entity);
+    public List<Cinema> findAll() {
+        return cinemaRepository.findAll();
     }
 
-    public <S extends Cinema> Iterable<S> saveAll(Iterable<S> entities) {
+    public List<Cinema> findAll(Sort sort) {
+        return cinemaRepository.findAll(sort);
+    }
+
+    public List<Cinema> findAllById(Iterable<Long> longs) {
+        return cinemaRepository.findAllById(longs);
+    }
+
+    public <S extends Cinema> List<S> saveAll(Iterable<S> entities) {
         return cinemaRepository.saveAll(entities);
+    }
+
+    public void flush() {
+        cinemaRepository.flush();
+    }
+
+    public <S extends Cinema> S saveAndFlush(S entity) {
+        return cinemaRepository.saveAndFlush(entity);
+    }
+
+    public <S extends Cinema> List<S> saveAllAndFlush(Iterable<S> entities) {
+        return cinemaRepository.saveAllAndFlush(entities);
+    }
+
+    @Deprecated
+    public void deleteInBatch(Iterable<Cinema> entities) {
+        cinemaRepository.deleteInBatch(entities);
+    }
+
+    public void deleteAllInBatch(Iterable<Cinema> entities) {
+        cinemaRepository.deleteAllInBatch(entities);
+    }
+
+    public void deleteAllByIdInBatch(Iterable<Long> longs) {
+        cinemaRepository.deleteAllByIdInBatch(longs);
+    }
+
+    public void deleteAllInBatch() {
+        cinemaRepository.deleteAllInBatch();
+    }
+
+    @Deprecated
+    public Cinema getOne(Long aLong) {
+        return cinemaRepository.getOne(aLong);
+    }
+
+    @Deprecated
+    public Cinema getById(Long aLong) {
+        return cinemaRepository.getById(aLong);
+    }
+
+    public Cinema getReferenceById(Long aLong) {
+        return cinemaRepository.getReferenceById(aLong);
+    }
+
+    public <S extends Cinema> List<S> findAll(Example<S> example) {
+        return cinemaRepository.findAll(example);
+    }
+
+    public <S extends Cinema> List<S> findAll(Example<S> example, Sort sort) {
+        return cinemaRepository.findAll(example, sort);
+    }
+
+    public Page<Cinema> findAll(Pageable pageable) {
+        return cinemaRepository.findAll(pageable);
+    }
+
+    public <S extends Cinema> S save(S entity) {
+        return cinemaRepository.save(entity);
     }
 
     public Optional<Cinema> findById(Long aLong) {
@@ -47,41 +115,48 @@ public class CinemaService {
         return cinemaRepository.existsById(aLong);
     }
 
-    public Iterable<Cinema> findAll() {
-        return cinemaRepository.findAll();
-    }
-
-    public Iterable<Cinema> findAllById(Iterable<Long> longs) {
-        return cinemaRepository.findAllById(longs);
-    }
-
     public long count() {
         return cinemaRepository.count();
     }
 
-    @Transactional
     public void deleteById(Long aLong) {
         cinemaRepository.deleteById(aLong);
     }
 
-    @Transactional
     public void delete(Cinema entity) {
         cinemaRepository.delete(entity);
     }
 
-    @Transactional
     public void deleteAllById(Iterable<? extends Long> longs) {
         cinemaRepository.deleteAllById(longs);
     }
 
-    @Transactional
     public void deleteAll(Iterable<? extends Cinema> entities) {
         cinemaRepository.deleteAll(entities);
     }
 
-    @Transactional
     public void deleteAll() {
         cinemaRepository.deleteAll();
+    }
+
+    public <S extends Cinema> Optional<S> findOne(Example<S> example) {
+        return cinemaRepository.findOne(example);
+    }
+
+    public <S extends Cinema> Page<S> findAll(Example<S> example, Pageable pageable) {
+        return cinemaRepository.findAll(example, pageable);
+    }
+
+    public <S extends Cinema> long count(Example<S> example) {
+        return cinemaRepository.count(example);
+    }
+
+    public <S extends Cinema> boolean exists(Example<S> example) {
+        return cinemaRepository.exists(example);
+    }
+
+    public <S extends Cinema, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+        return cinemaRepository.findBy(example, queryFunction);
     }
 
     public Optional<Cinema> findOne(Predicate predicate) {
