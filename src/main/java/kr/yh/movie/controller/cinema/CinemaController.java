@@ -37,12 +37,12 @@ public class CinemaController {
 
     @GetMapping("/add")
     public String addForm(Model model){
-        model.addAttribute("form", new CinemaForm());
+        model.addAttribute("form", new CinemaDTO());
         return "cinemas/add";
     }
 
     @PostMapping("/add")
-    public String add(@Valid @ModelAttribute CinemaForm cinemaForm,
+    public String add(@Valid @ModelAttribute CinemaDTO cinemaForm,
                       Errors errors,
                       Model model,
                       RedirectAttributes rttr) {
@@ -69,12 +69,12 @@ public class CinemaController {
     public String modifyForm(Long cinemaId,
                              Model model){
         cinemaService.findById(cinemaId)
-                     .ifPresent(vo->model.addAttribute("form", new CinemaForm(vo)));
+                     .ifPresent(vo->model.addAttribute("form", new CinemaDTO(vo)));
         return "cinemas/modify";
     }
 
     @PostMapping("/modify")
-    public String modify(CinemaForm form,
+    public String modify(CinemaDTO form,
                          RedirectAttributes rttr){
         cinemaService.findById(form.getId()).ifPresent(origin->{
             origin.changeInfo(form);
@@ -88,7 +88,7 @@ public class CinemaController {
     }
 
     @PostMapping("/delete")
-    public String delete(CinemaForm form,
+    public String delete(CinemaDTO form,
                          RedirectAttributes rttr){
         cinemaService.deleteById(form.getId());
         rttr.addFlashAttribute("msg", "success");

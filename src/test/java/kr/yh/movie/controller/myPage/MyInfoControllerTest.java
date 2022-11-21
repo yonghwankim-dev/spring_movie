@@ -35,6 +35,11 @@ public class MyInfoControllerTest {
     }
 
     @Test
+    public void testMyInfoListPage_whenNotLoginStatus_thenMovingLoginPage() throws Exception {
+        mockMvc.perform(get("/myPage/myInfo/myInfoList"));
+    }
+
+    @Test
     public void testChangeMyInfoWithConfirmPasswordPage() throws Exception {
         mockMvc.perform(get("/myPage/myInfo/changeMyInfo/depth1"))
                 .andExpect(status().isOk())

@@ -1,6 +1,6 @@
 package kr.yh.movie.domain;
 
-import kr.yh.movie.controller.cinema.CinemaForm;
+import kr.yh.movie.controller.cinema.CinemaDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = {"id"})
 @Builder
 public class Cinema {
     @Id
@@ -24,7 +25,7 @@ public class Cinema {
     private final List<Theater> theaters = new ArrayList<Theater>();
 
     //== 생성 로직 ==//
-    public static Cinema createCinema(CinemaForm form){
+    public static Cinema createCinema(CinemaDTO form){
         Cinema cinema = Cinema.builder()
                                 .name(form.getName())
                                 .location(form.getLocation())
@@ -33,7 +34,7 @@ public class Cinema {
     }
 
     //== 수정 로직 ==//
-    public void changeInfo(CinemaForm form){
+    public void changeInfo(CinemaDTO form){
         this.name       = form.getName();
         this.location   = form.getLocation();
     }

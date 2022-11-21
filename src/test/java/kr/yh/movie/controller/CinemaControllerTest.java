@@ -1,16 +1,14 @@
 package kr.yh.movie.controller;
 
-import kr.yh.movie.controller.cinema.CinemaForm;
+import kr.yh.movie.controller.cinema.CinemaDTO;
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.service.CinemaService;
 import kr.yh.movie.vo.PageMarker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,7 +51,7 @@ public class CinemaControllerTest {
         //given
         String url = "/cinemas/add";
         //when
-        CinemaForm form = (CinemaForm) this.mockMvc.perform(get(url)
+        CinemaDTO form = (CinemaDTO) this.mockMvc.perform(get(url)
                                                    .contentType(TEXT_HTML))
                                                    .andExpect(status().isOk())
                                                    .andReturn().getModelAndView().getModel().get("form");
@@ -101,7 +99,7 @@ public class CinemaControllerTest {
         String url = "/cinemas/modify";
         String cinemaId = "1";
         //when
-        CinemaForm form = (CinemaForm) this.mockMvc.perform(get(url)
+        CinemaDTO form = (CinemaDTO) this.mockMvc.perform(get(url)
                                                    .param("cinemaId", cinemaId)
                                                    .contentType(APPLICATION_JSON))
                                                    .andExpect(status().isOk())

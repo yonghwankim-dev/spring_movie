@@ -1,5 +1,6 @@
 package kr.yh.movie.security;
 
+import kr.yh.movie.domain.member.MemberRole;
 import kr.yh.movie.domain.member.handler.AuthFailureHandler;
 import kr.yh.movie.domain.member.handler.AuthSuccessHandler;
 import kr.yh.movie.service.MemberService;
@@ -47,7 +48,8 @@ public class SecurityConfig {
             .antMatchers("/members/**").permitAll()
             .antMatchers("/cinemas/**").permitAll()
             .antMatchers("/seats/**").permitAll()
-            .antMatchers("/myPage/**").permitAll()
+            .antMatchers("/myPage/**").hasRole(MemberRole.USER.name())
+            .antMatchers("/ticket/**").permitAll()
             .antMatchers("/h2-console/**").permitAll()
             .anyRequest().authenticated();
 
