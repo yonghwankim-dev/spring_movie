@@ -1,6 +1,8 @@
 package kr.yh.movie.controller.ticket;
 
+import kr.yh.movie.controller.cinema.CinemaLocationDTO;
 import kr.yh.movie.domain.Cinema;
+import kr.yh.movie.repository.CinemaRepository;
 import kr.yh.movie.service.CinemaService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,13 +18,16 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class TicketController {
+    private final CinemaRepository cinemaRepository;
     private final CinemaService cinemaService;
 
     @GetMapping("/ticket/depth1")
     public ModelAndView depth1(){
         ModelAndView mav = new ModelAndView("/ticket/depth1");
         List<Cinema> cinemas = cinemaService.findAll();
+        List<CinemaLocationDTO> cinemaLocations = cinemaRepository.findAllLocationAndCountGroupByLocation();
         mav.getModelMap().addAttribute("cinemas", cinemas);
+        mav.getModelMap().addAttribute("cinemaLocations", cinemaLocations);
         return mav;
     }
 

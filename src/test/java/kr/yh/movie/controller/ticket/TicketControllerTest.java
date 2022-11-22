@@ -1,6 +1,8 @@
 package kr.yh.movie.controller.ticket;
 
+import kr.yh.movie.controller.cinema.CinemaLocationDTO;
 import kr.yh.movie.domain.Cinema;
+import kr.yh.movie.repository.CinemaRepository;
 import kr.yh.movie.service.CinemaService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.ui.ModelMap;
 
 import java.util.List;
 
@@ -34,6 +37,9 @@ public class TicketControllerTest {
     MockMvc mockMvc;
 
     @MockBean
+    private CinemaRepository cinemaRepository;
+
+    @MockBean
     private CinemaService cinemaService;
 
     @Test
@@ -41,21 +47,23 @@ public class TicketControllerTest {
     public void testDepth1() throws Exception {
         //given
         Cinema fakeCinema = createCinemaEntity(1L, "가산디지털", "서울");
+        CinemaLocationDTO fakeCinemaLocationDTO = new CinemaLocationDTO("서울", 23L);
         List<Cinema> fakeCinemas = List.of(fakeCinema);
-
+        List<CinemaLocationDTO> fakeCinemaLocations = List.of(fakeCinemaLocationDTO);
         //mocking
         Mockito.when(cinemaService.findAll()).thenReturn(fakeCinemas);
-
+        Mockito.when(cinemaRepository.findAllLocationAndCountGroupByLocation()).thenReturn(fakeCinemaLocations);
         //when
-        List<Cinema> cinemas = (List<Cinema>)
-                        this.mockMvc.perform(get("/ticket/depth1"))
+        ModelMap modelMap = this.mockMvc.perform(get("/ticket/depth1"))
                                     .andExpect(status().isOk())
                                     .andExpect(view().name("/ticket/depth1"))
                                     .andExpect(model().attributeExists("cinemas"))
-                                    .andReturn().getModelAndView().getModelMap().getAttribute("cinemas");
+                                    .andExpect(model().attributeExists("cinemaLocations"))
+                                    .andReturn().getModelAndView().getModelMap();
 
         //then
-        assertThat(cinemas).isEqualTo(fakeCinemas);
+        assertThat(modelMap.getAttribute("cinemas")).isEqualTo(fakeCinemas);
+        assertThat(modelMap.getAttribute("cinemaLocations")).isEqualTo(fakeCinemaLocations);
     }
 
     private Cinema createCinemaEntity(long id, String name, String location) {
