@@ -3,7 +3,9 @@ package kr.yh.movie.controller.ticket;
 import kr.yh.movie.controller.cinema.CinemaDTO;
 import kr.yh.movie.controller.cinema.CinemaLocationDTO;
 import kr.yh.movie.domain.Cinema;
+import kr.yh.movie.domain.Movie;
 import kr.yh.movie.repository.CinemaRepository;
+import kr.yh.movie.repository.MovieRepository;
 import kr.yh.movie.service.CinemaService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ import java.util.Optional;
 public class TicketController {
     private final CinemaRepository cinemaRepository;
     private final CinemaService cinemaService;
+    private final MovieRepository movieRepository;
 
     @GetMapping("/ticket/depth1")
     public ModelAndView depth1(@RequestParam(value = "selectedLocation", required = false, defaultValue = "서울") String selectedLocation,
@@ -31,11 +34,16 @@ public class TicketController {
 
         List<Cinema> cinemas = cinemaService.findAll();
         List<CinemaLocationDTO> cinemaLocations = cinemaRepository.findAllLocationAndCountGroupByLocation();
+        List<Movie> moviesByCinema = selectedCinemaId == 0L ?
+                movieRepository.findAll() : movieRepository.findAllByCinemaId(selectedCinemaId);
+
+        log.info("moviesByCinema : " + moviesByCinema);
 
         mav.getModelMap().addAttribute("cinemas", cinemas);
         mav.getModelMap().addAttribute("cinemaLocations", cinemaLocations);
         mav.getModelMap().addAttribute("selectedLocation", selectedLocation);
         mav.getModelMap().addAttribute("selectedCinemaId", selectedCinemaId);
+        mav.getModelMap().addAttribute("moviesByCinema", moviesByCinema);
         return mav;
     }
 

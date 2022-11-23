@@ -67,6 +67,7 @@ public class TicketControllerTest {
         Mockito.when(cinemaService.findAll()).thenReturn(fakeCinemas);
         Mockito.when(cinemaRepository.findAllLocationAndCountGroupByLocation()).thenReturn(fakeCinemaLocations);
         Mockito.when(cinemaRepository.findById(Long.valueOf(selectedCinemaId))).thenReturn(Optional.ofNullable(null));
+        Mockito.when(movieRepository.findAllByCinemaId(Long.valueOf(selectedCinemaId))).thenReturn(new ArrayList<>());
 
         //when
         ModelMap modelMap = this.mockMvc.perform(get("/ticket/depth1"))
@@ -102,6 +103,7 @@ public class TicketControllerTest {
         Mockito.when(cinemaRepository.findAllLocationAndCountGroupByLocation()).thenReturn(new ArrayList<>());
         Mockito.when(cinemaRepository.findById(Long.valueOf(selectedCinemaId))).thenReturn(Optional.ofNullable(fakeSelectedCinema));
         Mockito.when(movieRepository.findAllByCinemaId(Long.valueOf(selectedCinemaId))).thenReturn(fakeMovies);
+
         //when
         ModelMap modelMap = this.mockMvc.perform(get("/ticket/depth1")
                         .param("selectedLocation", selectedLocation)
@@ -112,10 +114,13 @@ public class TicketControllerTest {
                 .andExpect(model().attributeExists("cinemaLocations"))
                 .andExpect(model().attributeExists("selectedLocation"))
                 .andExpect(model().attributeExists("selectedCinemaId"))
+                .andExpect(model().attributeExists("moviesByCinema"))
                 .andReturn().getModelAndView().getModelMap();
         //then
         assertThat(modelMap.getAttribute("selectedLocation")).isEqualTo(selectedLocation);
         assertThat(modelMap.getAttribute("selectedCinemaId")).isEqualTo(Long.valueOf(selectedCinemaId));
+        assertThat(modelMap.getAttribute("moviesByCinema")).isEqualTo(fakeMovies);
     }
+
 
 }
