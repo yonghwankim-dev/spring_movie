@@ -153,6 +153,7 @@ INSERT INTO MOVIE (film_rating, name, runtime) VALUES (12, '블랙 팬서: 와�
 INSERT INTO MOVIE (film_rating, name, runtime) VALUES (12, '데시벨', 130);
 
 INSERT INTO theater(name, cinema_id) VALUES ('1관', 1);
+INSERT INTO theater(name, cinema_id) VALUES ('2관', 1);
 
 INSERT INTO seat(seat_col, seat_row, theater_id) VALUES ('1', 'A', 1);
 INSERT INTO seat(seat_col, seat_row, theater_id) VALUES ('2', 'A', 1);
@@ -208,3 +209,6 @@ INSERT INTO seat(seat_col, seat_row, theater_id) VALUES ('15', 'C', 1);
 INSERT INTO seat(seat_col, seat_row, theater_id) VALUES ('16', 'C', 1);
 INSERT INTO seat(seat_col, seat_row, theater_id) VALUES ('17', 'C', 1);
 INSERT INTO seat(seat_col, seat_row, theater_id) VALUES ('18', 'C', 1);
+
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (1, current_time, 1, 1);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (1, current_time, 1, 2);

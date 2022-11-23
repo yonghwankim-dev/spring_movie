@@ -3,12 +3,15 @@ package kr.yh.movie.repository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import kr.yh.movie.domain.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface ScreenRepository extends CrudRepository<Screen, Long>, QuerydslPredicateExecutor<Screen> {
+import java.util.List;
+
+public interface ScreenRepository extends JpaRepository<Screen, Long>, QuerydslPredicateExecutor<Screen> {
     default Predicate makePredicates(String type, String keyword){
         BooleanBuilder builder = new BooleanBuilder();
         QScreen screen = QScreen.screen;
@@ -36,4 +39,9 @@ public interface ScreenRepository extends CrudRepository<Screen, Long>, Querydsl
     @Query("SELECT s FROM Screen s WHERE s.id = (SELECT MIN(id) FROM Screen)")
     Screen findFirstByScreenId();
 
+    @Query("SELECT s FROM Screen s " +
+            "INNER JOIN Theater t ON s.theater.id = t.id " +
+            "INNER JOIN Cinema c ON t.cinema.id = c.id " +
+            "WHERE c.id = :cinemaId")
+    List<Screen> findAllByCinemaId(@Param("cinemaId") Long cinemaId);
 }

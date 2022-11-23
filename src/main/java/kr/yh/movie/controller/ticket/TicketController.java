@@ -1,5 +1,6 @@
 package kr.yh.movie.controller.ticket;
 
+import kr.yh.movie.controller.cinema.CinemaDTO;
 import kr.yh.movie.controller.cinema.CinemaLocationDTO;
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.repository.CinemaRepository;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -24,10 +26,16 @@ public class TicketController {
     @GetMapping("/ticket/depth1")
     public ModelAndView depth1(){
         ModelAndView mav = new ModelAndView("/ticket/depth1");
+
         List<Cinema> cinemas = cinemaService.findAll();
         List<CinemaLocationDTO> cinemaLocations = cinemaRepository.findAllLocationAndCountGroupByLocation();
+        String selectedLocation = "";
+        Cinema selectedCinema = cinemaRepository.findById(1L).orElse(null);
+
         mav.getModelMap().addAttribute("cinemas", cinemas);
         mav.getModelMap().addAttribute("cinemaLocations", cinemaLocations);
+        mav.getModelMap().addAttribute("selectedLocation", selectedLocation);
+        mav.getModelMap().addAttribute("selectedCinema", selectedCinema);
         return mav;
     }
 

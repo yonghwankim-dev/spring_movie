@@ -2,16 +2,10 @@ package kr.yh.movie.repository;
 
 import kr.yh.movie.controller.cinema.CinemaLocationDTO;
 import kr.yh.movie.domain.Cinema;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,15 +36,14 @@ public class CinemaRepositoryTest {
     }
 
     @Test
+    @Transactional
     public void testFindAll(){
         //given
-        Cinema cinema = createCinemaEntity(1L, "가산디지털", "서울");
-        cinemaRepository.save(cinema);
+
         //when
         List<Cinema> cinemas = cinemaRepository.findAll();
-
         //then
-        assertThat(cinemas).isEqualTo(List.of(cinema));
+        assertThat(cinemas.size()).isEqualTo(142);
     }
 
     private Cinema createCinemaEntity(long id, String name, String location) {
@@ -85,8 +78,6 @@ public class CinemaRepositoryTest {
                                             .split(" ");
         //then
         assertThat(actual).isEqualTo(expected);
-
-
     }
 
 }

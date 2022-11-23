@@ -2,6 +2,7 @@ package kr.yh.movie.service;
 
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
+import kr.yh.movie.controller.cinema.CinemaLocationDTO;
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.repository.CinemaRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,21 @@ public class CinemaService {
     private final CinemaRepository cinemaRepository;
     public Predicate makePredicates(String type, String keyword) {
         return cinemaRepository.makePredicates(type, keyword);
+    }
+
+    @Query("select new kr.yh.movie.controller.cinema.CinemaLocationDTO(c.location, count(c))" +
+            "from Cinema c " +
+            "group by c.location " +
+            "order by case when c.location = '서울' then 1 " +
+            "when c.location = '경기/인천' then 2 " +
+            "when c.location = '충청/대전' then 3 " +
+            "when c.location = '전라/광주' then 4 " +
+            "when c.location = '경북/대구' then 5 " +
+            "when c.location = '경남/부산/울산' then 6 " +
+            "when c.location = '강원' then 7 " +
+            "else 8 end")
+    public List<CinemaLocationDTO> findAllLocationAndCountGroupByLocation() {
+        return cinemaRepository.findAllLocationAndCountGroupByLocation();
     }
 
     public List<Cinema> findAll() {

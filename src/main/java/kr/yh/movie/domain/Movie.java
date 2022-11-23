@@ -1,6 +1,6 @@
 package kr.yh.movie.domain;
 
-import kr.yh.movie.controller.movie.MovieForm;
+import kr.yh.movie.controller.movie.MovieDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,7 +28,7 @@ public class Movie {
     private final List<Screen> screens = new ArrayList<>();
 
     //== 생성 로직 ==//
-    public static Movie createMovie(MovieForm form){
+    public static Movie createMovie(MovieDTO form){
         Movie movie = Movie.builder()
                             .name(form.getName())
                             .filmRating(form.getFilmRating())
@@ -38,7 +38,7 @@ public class Movie {
     }
 
     //== 수정 로직 ==//
-    public void changeInfo(MovieForm form){
+    public void changeInfo(MovieDTO form){
         this.name       = form.getName();
         this.filmRating = form.getFilmRating();
         this.runtime    = form.getRuntime();

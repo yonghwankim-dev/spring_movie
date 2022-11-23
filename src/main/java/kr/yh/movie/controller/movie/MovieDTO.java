@@ -1,20 +1,21 @@
 package kr.yh.movie.controller.movie;
 
+import kr.yh.movie.controller.cinema.CinemaDTO;
+import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Movie;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+
+import static kr.yh.movie.util.ModelMapperUtils.getModelMapper;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
-public class MovieForm {
+public class MovieDTO {
     private Long    id;
     @NotEmpty(message = "영화제목을 입력해주세요.")
     private String  name;
@@ -22,10 +23,11 @@ public class MovieForm {
     @Min(value = 1, message = "상영시간은 0보다 커야합니다.")
     private int     runtime;
 
-    public MovieForm(Movie movie){
-        this.id         = movie.getId();
-        this.name       = movie.getName();
-        this.filmRating = movie.getFilmRating();
-        this.runtime    = movie.getRuntime();
+    public static MovieDTO createMovieDTO(){
+        return new MovieDTO();
+    }
+
+    public static MovieDTO of(Movie movie){
+        return getModelMapper().map(movie, MovieDTO.class);
     }
 }

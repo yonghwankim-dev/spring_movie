@@ -2,12 +2,16 @@ package kr.yh.movie.controller.ticket;
 
 import kr.yh.movie.controller.cinema.CinemaLocationDTO;
 import kr.yh.movie.domain.Cinema;
+import kr.yh.movie.domain.Movie;
 import kr.yh.movie.repository.CinemaRepository;
+import kr.yh.movie.repository.MovieRepository;
 import kr.yh.movie.service.CinemaService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,11 +20,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.ui.ModelMap;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,12 +39,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = TicketController.class,
         excludeFilters = @ComponentScan.Filter(type= FilterType.REGEX, pattern = "kr.yh.movie.controller.converter.*"))
+@ActiveProfiles("local")
 public class TicketControllerTest {
     @Autowired
     MockMvc mockMvc;
 
     @MockBean
     private CinemaRepository cinemaRepository;
+
+    @MockBean
+    private MovieRepository movieRepository;
 
     @MockBean
     private CinemaService cinemaService;
@@ -72,6 +83,29 @@ public class TicketControllerTest {
                 .name(name)
                 .location(location)
                 .build();
+    }
+
+    @Test
+    @WithMockUser
+    public void testDepth1_whenSelectCinema() throws Exception {
+        //given
+        Long selectedCinemaId = 1L;
+        Cinema fakeSelectedCinema = new Cinema(1L, "가산디지털", "서울");
+        List<Movie> fakeMovies = List.of(new Movie(1L, "올빼미", 15, 120));
+        // mocking
+        Mockito.when(cinemaService.findAll()).thenReturn(new ArrayList<>());
+        Mockito.when(cinemaRepository.findAllLocationAndCountGroupByLocation()).thenReturn(new ArrayList<>());
+        Mockito.when(cinemaRepository.findById(selectedCinemaId)).thenReturn(Optional.ofNullable(fakeSelectedCinema));
+        Mockito.when(movieRepository.findAllByCinemaId(selectedCinemaId)).thenReturn(fakeMovies);
+        //when
+        this.mockMvc.perform(get("/ticket/depth1"))
+                    .andExpect(status().isOk())
+                    .andExpect(view().name("/ticket/depth1"))
+                    .andExpect(model().attributeExists("cinemas"))
+                    .andExpect(model().attributeExists("cinemaLocations"))
+                    .andExpect(model().attributeExists("selectedLocation"))
+                    .andExpect(model().attributeExists("selectedCinema"));
+        //then
     }
 
 }

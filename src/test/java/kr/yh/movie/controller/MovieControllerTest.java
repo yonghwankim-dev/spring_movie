@@ -1,11 +1,10 @@
 package kr.yh.movie.controller;
 
 
-import kr.yh.movie.controller.movie.MovieForm;
+import kr.yh.movie.controller.movie.MovieDTO;
 import kr.yh.movie.domain.Movie;
 import kr.yh.movie.service.MovieService;
 import kr.yh.movie.vo.PageMarker;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -52,7 +51,7 @@ public class MovieControllerTest {
         //given
         String url = "/movies/add";
         //when
-        MovieForm form = (MovieForm) this.mockMvc.perform(get(url)
+        MovieDTO form = (MovieDTO) this.mockMvc.perform(get(url)
                                                  .contentType(TEXT_HTML))
                                                  .andExpect(status().isOk())
                                                  .andReturn().getModelAndView().getModel().get("form");
@@ -102,7 +101,7 @@ public class MovieControllerTest {
         String url = "/movies/modify";
         String movieId = "1";
         //when
-        MovieForm form = (MovieForm) this.mockMvc.perform(get(url)
+        MovieDTO form = (MovieDTO) this.mockMvc.perform(get(url)
                                                  .param("movieId", movieId)
                                                  .contentType(TEXT_HTML))
                                                  .andExpect(status().isOk())

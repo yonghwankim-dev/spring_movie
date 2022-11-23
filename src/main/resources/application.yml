@@ -88,6 +88,7 @@ spring:
     hibernate:
       ddl-auto: update
     generate-ddl: true
+    defer-datasource-initialization: true
     show-sql: true
     database: mysql
 
@@ -96,4 +97,7 @@ spring:
         dialect:
           nodeValue: org.hibernate.dialect.MySQL57Dialect
           storage_engine: innodb # 트랜잭션을 지원하고, 커밋과 롤백 그리고 데이터 복구 기능을 제공하므로 데이터를 효과적으로 보호
-
+  sql:
+    init:
+      data-locations: "classpath*:/data.sql"
+      mode: always
