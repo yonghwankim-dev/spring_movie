@@ -289,11 +289,15 @@
 
 .cinema_select_wrap > ul .depth2 ul li a {
     display: table-cell;
-    /* display: block; */
     overflow: hidden;
     padding: 10px 16px;
     font-size: 13px;
     vertical-align: middle;
+    width: 150px;
+}
+
+.cinema_select_wrap > ul .depth2 ul li.active a{
+    background: #FFF url("../images/icon/check.png") no-repeat 120px 2px;
 }
 
 .article_cinema.area__movingbar.litype2 .tab_wrap.outer.actionmovingbar .wrap_nav_underline {

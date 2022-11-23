@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,18 +25,17 @@ public class TicketController {
     private final CinemaService cinemaService;
 
     @GetMapping("/ticket/depth1")
-    public ModelAndView depth1(){
+    public ModelAndView depth1(@RequestParam(value = "selectedLocation", required = false, defaultValue = "서울") String selectedLocation,
+                               @RequestParam(value = "selectedCinemaId", required = false, defaultValue = "0") Long selectedCinemaId){
         ModelAndView mav = new ModelAndView("/ticket/depth1");
 
         List<Cinema> cinemas = cinemaService.findAll();
         List<CinemaLocationDTO> cinemaLocations = cinemaRepository.findAllLocationAndCountGroupByLocation();
-        String selectedLocation = "";
-        Cinema selectedCinema = cinemaRepository.findById(1L).orElse(null);
 
         mav.getModelMap().addAttribute("cinemas", cinemas);
         mav.getModelMap().addAttribute("cinemaLocations", cinemaLocations);
         mav.getModelMap().addAttribute("selectedLocation", selectedLocation);
-        mav.getModelMap().addAttribute("selectedCinema", selectedCinema);
+        mav.getModelMap().addAttribute("selectedCinemaId", selectedCinemaId);
         return mav;
     }
 

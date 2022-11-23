@@ -26,13 +26,14 @@
                                 <div class="cinema_select_wrap cinemaSelect basicCinema">
                                     <ul>
                                         <th:block th:each="cinemaLocation, status : ${cinemaLocations}">
-                                            <li class="depth1" th:classappend="${status.index == 0 ? ' active' : ''}">
+                                            <li class="depth1" th:classappend="${selectedLocation eq cinemaLocation.location ? ' active' : ''}">
                                                 <a href="#none" title="선택됨" th:text="${cinemaLocation.location}"><em th:text="${'('+cinemaLocation.count+')'}"></em></a>
                                                 <div class="depth2">
                                                     <ul>
                                                         <th:block th:each="cinema : ${cinemas}">
-                                                            <li class="" th:if="${cinema.location eq cinemaLocation.location}">
-                                                                <a href="#none" th:text="${cinema.name}"></a>
+                                                            <li class="" th:if="${cinema.location eq cinemaLocation.location}" th:classappend="${selectedCinemaId eq cinema.id ? 'active' : ''}">
+                                                                <a th:href="@{/ticket/depth1(selectedLocation=${cinemaLocation.location},
+                                                                                             selectedCinemaId=${cinema.id})}" th:text="${cinema.name}"></a>
                                                             </li>
                                                         </th:block>
                                                     </ul>
