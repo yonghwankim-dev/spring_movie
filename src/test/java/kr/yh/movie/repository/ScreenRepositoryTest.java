@@ -1,5 +1,7 @@
 package kr.yh.movie.repository;
 
+import kr.yh.movie.domain.Cinema;
+import kr.yh.movie.domain.Movie;
 import kr.yh.movie.domain.Screen;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -50,5 +52,16 @@ public class ScreenRepositoryTest {
         List<Long> actual = screenRepository.findAllCinemaIdByMovieId(movieId);
         //then
         Assertions.assertThat(actual).isEqualTo(List.of(1L));
+    }
+
+    @Test
+    public void testFindAllMovieByLocation(){
+        //given
+        String selectedLocation = "서울";
+        Movie expectedMovie = new Movie(1L, "올빼미", 15, 150);
+        //when
+        List<Movie> actual = screenRepository.findAllMovieByLocation(selectedLocation);
+        //then
+        Assertions.assertThat(actual).isEqualTo(List.of(expectedMovie));
     }
 }
