@@ -300,6 +300,10 @@
     background: #FFF url("../images/icon/check.png") no-repeat 120px 2px;
 }
 
+.cinema_select_wrap > ul .depth2 ul li.disabled a{
+    color: #ccc;
+}
+
 .article_cinema.area__movingbar.litype2 .tab_wrap.outer.actionmovingbar .wrap_nav_underline {
     position: absolute;
     top: 61px;

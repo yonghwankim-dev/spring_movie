@@ -31,7 +31,7 @@
                                                 <div class="depth2">
                                                     <ul>
                                                         <th:block th:each="cinema : ${cinemas}">
-                                                            <li class="" th:if="${cinema.location eq cinemaLocation.location}" th:classappend="${selectedCinemaId eq cinema.id ? 'active' : ''}">
+                                                            <li th:class="${not cinemaIdsOnScreen.contains(cinema.id) and selectedMovieId != 0 ? 'disabled' : ''}" th:if="${cinema.location eq cinemaLocation.location}" th:classappend="${selectedCinemaId eq cinema.id ? 'active' : ''}">
                                                                 <a th:href="@{/ticket/depth1(selectedLocation=${cinemaLocation.location},
                                                                                              selectedCinemaId=${cinema.id})}" th:text="${cinema.name}"></a>
                                                             </li>
@@ -63,7 +63,6 @@
                                 <li th:class="${not movieIdsOnScreen.contains(movie.id) and selectedCinemaId != 0 ? 'disabled' : ''}"
                                 th:classappend="${movie.id == selectedMovieId ? 'active' : ''}">
                                     <a th:href="@{/ticket/depth1(selectedLocation=${selectedLocation},
-                                                                 selectedCinemaId=${selectedCinemaId},
                                                                  selectedMovieId=${movie.id})}">
                                         <div class="bx_thm"><span class="rank"><span class="hidden">순위</span><strong>1</strong></span><img
                                                 alt="포스터"
