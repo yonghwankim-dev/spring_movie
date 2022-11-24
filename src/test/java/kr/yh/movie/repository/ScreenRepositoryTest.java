@@ -41,4 +41,14 @@ public class ScreenRepositoryTest {
         //then
         Assertions.assertThat(actual).isEqualTo(List.of(1L));
     }
+    
+    @Test
+    public void testFindAllCinemaIdByMovieId(){
+        //given
+        Long movieId = 1L;
+        //when
+        List<Long> actual = screenRepository.findAllCinemaIdByMovieId(movieId);
+        //then
+        Assertions.assertThat(actual).isEqualTo(List.of(1L));
+    }
 }
