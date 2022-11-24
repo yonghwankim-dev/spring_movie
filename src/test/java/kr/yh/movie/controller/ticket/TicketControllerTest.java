@@ -168,5 +168,24 @@ public class TicketControllerTest {
         assertThat(modelMap.getAttribute("selectedMovieId")).isEqualTo(Long.valueOf(selectedMovieId));
     }
 
+    @Test
+    @WithMockUser
+    public void testDepth1_whenSelectLocationAndMovie() throws Exception {
+        //given
+        List<Long> cinemaIdsOnScreen = List.of(1L);
+        String selectedMovieId = "1";
+        //mocking
+        Mockito.when(screenRepository.findAllCinemaIdByMovieId(Long.valueOf(selectedMovieId))).thenReturn(cinemaIdsOnScreen);
+
+        //when
+        ModelMap modelMap = this.mockMvc.perform(get("/ticket/depth1")
+                                            .param("selectedLocation", selectedLocation)
+                                            .param("selectedMovieId", selectedMovieId))
+                                        .andExpect(model().attributeExists("cinemaIdsOnScreen"))
+                                        .andReturn().getModelAndView().getModelMap();
+        //then
+        assertThat(modelMap.getAttribute("cinemaIdsOnScreen")).isEqualTo(cinemaIdsOnScreen);
+    }
+
 
 }
