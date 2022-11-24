@@ -39,7 +39,7 @@ public class TicketController {
 
         List<Cinema> cinemas = cinemaService.findAll();
         List<CinemaLocationDTO> cinemaLocations = cinemaRepository.findAllLocationAndCountGroupByLocation();
-        List<Movie> movies = movieRepository.findAll();
+        List<Movie> moviesOnScreen = screenRepository.findAllMovieByLocation(selectedLocation);
         List<Screen> screensByCinemaId = screenRepository.findAllByCinemaId(selectedCinemaId);
         List<Long> movieIdsOnScreen = screenRepository.findAllMovieIdByCinemaId(selectedCinemaId);
         List<Long> cinemaIdsOnScreen = screenRepository.findAllCinemaIdByMovieId(selectedMovieId);
@@ -48,7 +48,7 @@ public class TicketController {
         mav.getModelMap().addAttribute("cinemaLocations", cinemaLocations);
         mav.getModelMap().addAttribute("selectedLocation", selectedLocation);
         mav.getModelMap().addAttribute("selectedCinemaId", selectedCinemaId);
-        mav.getModelMap().addAttribute("movies", movies);
+        mav.getModelMap().addAttribute("moviesOnScreen", moviesOnScreen);
         mav.getModelMap().addAttribute("screensByCinemaId", screensByCinemaId);
         mav.getModelMap().addAttribute("movieIdsOnScreen", movieIdsOnScreen);
         mav.getModelMap().addAttribute("selectedMovieId", selectedMovieId);
