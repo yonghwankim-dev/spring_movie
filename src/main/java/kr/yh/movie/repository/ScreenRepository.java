@@ -44,4 +44,10 @@ public interface ScreenRepository extends JpaRepository<Screen, Long>, QuerydslP
             "INNER JOIN Cinema c ON t.cinema.id = c.id " +
             "WHERE c.id = :cinemaId")
     List<Screen> findAllByCinemaId(@Param("cinemaId") Long cinemaId);
+
+    @Query("SELECT distinct s.movie.id FROM Screen s " +
+            "INNER JOIN Theater t ON s.theater.id = t.id " +
+            "INNER JOIN Cinema c ON t.cinema.id = c.id " +
+            "WHERE c.id = :cinemaId")
+    List<Long> findAllMovieIdByCinemaId(@Param("cinemaId") Long cinemaId);
 }

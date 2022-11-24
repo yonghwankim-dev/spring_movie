@@ -31,4 +31,14 @@ public class ScreenRepositoryTest {
         System.out.println(actual);
         Assertions.assertThat(actual).isNotNull();
     }
+
+    @Test
+    public void testFindAllMovieIdByCinemaId(){
+        //given
+        Long cinemaId = 1L;
+        //when
+        List<Long> actual = screenRepository.findAllMovieIdByCinemaId(cinemaId);
+        //then
+        Assertions.assertThat(actual).isEqualTo(List.of(1L));
+    }
 }
