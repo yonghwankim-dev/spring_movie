@@ -3,8 +3,11 @@ package kr.yh.movie.controller.ticket;
 import kr.yh.movie.controller.cinema.CinemaLocationDTO;
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Movie;
+import kr.yh.movie.domain.Screen;
+import kr.yh.movie.domain.Theater;
 import kr.yh.movie.repository.CinemaRepository;
 import kr.yh.movie.repository.MovieRepository;
+import kr.yh.movie.repository.ScreenRepository;
 import kr.yh.movie.service.CinemaService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,6 +28,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.ui.ModelMap;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +55,9 @@ public class TicketControllerTest {
     private MovieRepository movieRepository;
 
     @MockBean
+    private ScreenRepository screenRepository;
+
+    @MockBean
     private CinemaService cinemaService;
 
     @Test
@@ -67,7 +74,7 @@ public class TicketControllerTest {
         Mockito.when(cinemaService.findAll()).thenReturn(fakeCinemas);
         Mockito.when(cinemaRepository.findAllLocationAndCountGroupByLocation()).thenReturn(fakeCinemaLocations);
         Mockito.when(cinemaRepository.findById(Long.valueOf(selectedCinemaId))).thenReturn(Optional.ofNullable(null));
-        Mockito.when(movieRepository.findAllByCinemaId(Long.valueOf(selectedCinemaId))).thenReturn(new ArrayList<>());
+        Mockito.when(movieRepository.findAll()).thenReturn(new ArrayList<>());
 
         //when
         ModelMap modelMap = this.mockMvc.perform(get("/ticket/depth1"))
@@ -97,13 +104,18 @@ public class TicketControllerTest {
         String selectedCinemaId = "1";
         String selectedLocation = "서울";
         Cinema fakeSelectedCinema = new Cinema(1L, "가산디지털", "서울");
-        List<Movie> fakeMovies = List.of(new Movie(1L, "올빼미", 15, 120));
+        Movie fakeMovie = new Movie(1L, "올빼미", 15, 120);
+        Theater fakeTheater = new Theater(1L, "1관", fakeSelectedCinema);
+        Screen fakeScreen = new Screen(1L, LocalDateTime.now(), 1, new ArrayList<>(), fakeMovie, fakeTheater);
+        List<Movie> fakeMovies = List.of(fakeMovie);
+        List<Screen> fakeScreensByCinemaId = List.of(fakeScreen);
+
         // mocking
         Mockito.when(cinemaService.findAll()).thenReturn(new ArrayList<>());
         Mockito.when(cinemaRepository.findAllLocationAndCountGroupByLocation()).thenReturn(new ArrayList<>());
         Mockito.when(cinemaRepository.findById(Long.valueOf(selectedCinemaId))).thenReturn(Optional.ofNullable(fakeSelectedCinema));
-        Mockito.when(movieRepository.findAllByCinemaId(Long.valueOf(selectedCinemaId))).thenReturn(fakeMovies);
-
+        Mockito.when(movieRepository.findAll()).thenReturn(fakeMovies);
+        Mockito.when(screenRepository.findAllByCinemaId(fakeSelectedCinema.getId())).thenReturn(fakeScreensByCinemaId);
         //when
         ModelMap modelMap = this.mockMvc.perform(get("/ticket/depth1")
                         .param("selectedLocation", selectedLocation)
@@ -114,12 +126,14 @@ public class TicketControllerTest {
                 .andExpect(model().attributeExists("cinemaLocations"))
                 .andExpect(model().attributeExists("selectedLocation"))
                 .andExpect(model().attributeExists("selectedCinemaId"))
-                .andExpect(model().attributeExists("moviesByCinema"))
+                .andExpect(model().attributeExists("movies"))
+                .andExpect(model().attributeExists("screensByCinemaId"))
                 .andReturn().getModelAndView().getModelMap();
         //then
         assertThat(modelMap.getAttribute("selectedLocation")).isEqualTo(selectedLocation);
         assertThat(modelMap.getAttribute("selectedCinemaId")).isEqualTo(Long.valueOf(selectedCinemaId));
-        assertThat(modelMap.getAttribute("moviesByCinema")).isEqualTo(fakeMovies);
+        assertThat(modelMap.getAttribute("movies")).isEqualTo(fakeMovies);
+        assertThat(modelMap.getAttribute("screensByCinemaId")).isEqualTo(fakeScreensByCinemaId);
     }
 
 

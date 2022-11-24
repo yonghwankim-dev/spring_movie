@@ -4,8 +4,10 @@ import kr.yh.movie.controller.cinema.CinemaDTO;
 import kr.yh.movie.controller.cinema.CinemaLocationDTO;
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Movie;
+import kr.yh.movie.domain.Screen;
 import kr.yh.movie.repository.CinemaRepository;
 import kr.yh.movie.repository.MovieRepository;
+import kr.yh.movie.repository.ScreenRepository;
 import kr.yh.movie.service.CinemaService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +28,7 @@ public class TicketController {
     private final CinemaRepository cinemaRepository;
     private final CinemaService cinemaService;
     private final MovieRepository movieRepository;
-
+    private final ScreenRepository screenRepository;
     @GetMapping("/ticket/depth1")
     public ModelAndView depth1(@RequestParam(value = "selectedLocation", required = false, defaultValue = "서울") String selectedLocation,
                                @RequestParam(value = "selectedCinemaId", required = false, defaultValue = "0") Long selectedCinemaId){
@@ -34,16 +36,15 @@ public class TicketController {
 
         List<Cinema> cinemas = cinemaService.findAll();
         List<CinemaLocationDTO> cinemaLocations = cinemaRepository.findAllLocationAndCountGroupByLocation();
-        List<Movie> moviesByCinema = selectedCinemaId == 0L ?
-                movieRepository.findAll() : movieRepository.findAllByCinemaId(selectedCinemaId);
-
-        log.info("moviesByCinema : " + moviesByCinema);
+        List<Movie> movies = movieRepository.findAll();
+        List<Screen> screensByCinemaId = screenRepository.findAllByCinemaId(selectedCinemaId);
 
         mav.getModelMap().addAttribute("cinemas", cinemas);
         mav.getModelMap().addAttribute("cinemaLocations", cinemaLocations);
         mav.getModelMap().addAttribute("selectedLocation", selectedLocation);
         mav.getModelMap().addAttribute("selectedCinemaId", selectedCinemaId);
-        mav.getModelMap().addAttribute("moviesByCinema", moviesByCinema);
+        mav.getModelMap().addAttribute("movies", movies);
+        mav.getModelMap().addAttribute("screensByCinemaId", screensByCinemaId);
         return mav;
     }
 
