@@ -60,8 +60,11 @@
                     <div class="movie_select_wrap list movieSelect" style="height: 754px;">
                         <ul style="overflow: auto; overflow-y: scroll; height: 754px;">
                             <th:block th:each="movie : ${movies}">
-                                <li th:class="${not movieIdsOnScreen.contains(movie.id) and selectedCinemaId != 0 ? 'disabled' : ''}">
-                                    <a href="#none">
+                                <li th:class="${not movieIdsOnScreen.contains(movie.id) and selectedCinemaId != 0 ? 'disabled' : ''}"
+                                th:classappend="${movie.id == selectedMovieId ? 'active' : ''}">
+                                    <a th:href="@{/ticket/depth1(selectedLocation=${selectedLocation},
+                                                                 selectedCinemaId=${selectedCinemaId},
+                                                                 selectedMovieId=${movie.id})}">
                                         <div class="bx_thm"><span class="rank"><span class="hidden">순위</span><strong>1</strong></span><img
                                                 alt="포스터"
                                                 src="https://caching.lottecinema.co.kr//Media/MovieFile/MovieImg/202211/18944_101_1.jpg"></div>

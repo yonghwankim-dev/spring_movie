@@ -33,7 +33,8 @@ public class TicketController {
     private final ScreenRepository screenRepository;
     @GetMapping("/ticket/depth1")
     public ModelAndView depth1(@RequestParam(value = "selectedLocation", required = false, defaultValue = "서울") String selectedLocation,
-                               @RequestParam(value = "selectedCinemaId", required = false, defaultValue = "0") Long selectedCinemaId){
+                               @RequestParam(value = "selectedCinemaId", required = false, defaultValue = "0") Long selectedCinemaId,
+                               @RequestParam(value = "selectedMovieId", required = false, defaultValue = "0") Long selectedMovieId){
         ModelAndView mav = new ModelAndView("/ticket/depth1");
 
         List<Cinema> cinemas = cinemaService.findAll();
@@ -49,6 +50,7 @@ public class TicketController {
         mav.getModelMap().addAttribute("movies", movies);
         mav.getModelMap().addAttribute("screensByCinemaId", screensByCinemaId);
         mav.getModelMap().addAttribute("movieIdsOnScreen", movieIdsOnScreen);
+        mav.getModelMap().addAttribute("selectedMovieId", selectedMovieId);
         return mav;
     }
 
