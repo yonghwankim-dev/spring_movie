@@ -60,7 +60,7 @@
                     <div class="movie_select_wrap list movieSelect" style="height: 754px;">
                         <ul style="overflow: auto; overflow-y: scroll; height: 754px;">
                             <th:block th:each="movie : ${movies}">
-                                <li class="">
+                                <li th:class="${not movieIdsOnScreen.contains(movie.id) and selectedCinemaId != 0 ? 'disabled' : ''}">
                                     <a href="#none">
                                         <div class="bx_thm"><span class="rank"><span class="hidden">순위</span><strong>1</strong></span><img
                                                 alt="포스터"
@@ -77,7 +77,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="article article_time area__movingbar litype6">
                 <div class="group_top">
                     <h4 class="tit">2022-11-09(오늘)</h4>

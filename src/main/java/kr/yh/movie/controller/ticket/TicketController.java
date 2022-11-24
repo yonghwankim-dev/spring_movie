@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -38,6 +40,7 @@ public class TicketController {
         List<CinemaLocationDTO> cinemaLocations = cinemaRepository.findAllLocationAndCountGroupByLocation();
         List<Movie> movies = movieRepository.findAll();
         List<Screen> screensByCinemaId = screenRepository.findAllByCinemaId(selectedCinemaId);
+        List<Long> movieIdsOnScreen = screenRepository.findAllMovieIdByCinemaId(selectedCinemaId);
 
         mav.getModelMap().addAttribute("cinemas", cinemas);
         mav.getModelMap().addAttribute("cinemaLocations", cinemaLocations);
@@ -45,6 +48,7 @@ public class TicketController {
         mav.getModelMap().addAttribute("selectedCinemaId", selectedCinemaId);
         mav.getModelMap().addAttribute("movies", movies);
         mav.getModelMap().addAttribute("screensByCinemaId", screensByCinemaId);
+        mav.getModelMap().addAttribute("movieIdsOnScreen", movieIdsOnScreen);
         return mav;
     }
 
