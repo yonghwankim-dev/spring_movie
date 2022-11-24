@@ -347,6 +347,10 @@
     padding: 15px 20px;
 }
 
+.movie_select_wrap ul > li.disabled .bx_thm{
+    opacity: 0.3;
+}
+
 .movie_select_wrap ul > li > a {
     display: block;
     position: relative;
@@ -370,6 +374,10 @@
 
 .movie_select_wrap ul > li .group_infor {
     float: left;
+}
+
+.movie_select_wrap ul > li.disabled .group_infor{
+    opacity: 0.5;
 }
 
 .movie_select_wrap ul > li > a:after {
