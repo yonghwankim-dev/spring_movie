@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.format.annotation.DateTimeFormat.ISO.*;
 
@@ -48,7 +49,10 @@ public class TicketController {
         List<CinemaLocationDTO> cinemaLocations = cinemaRepository.findAllLocationAndCountGroupByLocation();
         List<Movie> movies = movieRepository.findAll();
         List<Movie> moviesOnScreen = movieRepositoryImpl.findAllMovieOnScreen(location, startDate, cinemaId);
-
+        LocalDate today = LocalDate.now();
+        List<LocalDate> localDateList = today.datesUntil(today.plusWeeks(2)
+                                                              .plusDays(1))
+                                             .collect(Collectors.toList());
         mav.getModelMap().addAttribute("cinemas", cinemas);
         mav.getModelMap().addAttribute("cinemasOnScreen", cinemasOnScreen);
         mav.getModelMap().addAttribute("cinemaLocations", cinemaLocations);
@@ -58,6 +62,8 @@ public class TicketController {
         mav.getModelMap().addAttribute("selectedCinemaId", cinemaId);
         mav.getModelMap().addAttribute("selectedMovieId", movieId);
         mav.getModelMap().addAttribute("selectedStartDate", startDate);
+        mav.getModelMap().addAttribute("localDateList", localDateList);
+
         return mav;
     }
 
