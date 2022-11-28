@@ -40,9 +40,10 @@ public class TicketController {
     public ModelAndView depth1(@RequestParam(value = "selectedLocation", required = false, defaultValue = "서울") String location,
                                @RequestParam(value = "selectedCinemaId", required = false) Long cinemaId,
                                @RequestParam(value = "selectedMovieId", required = false) Long movieId,
-                               @RequestParam(value = "selectedStartDate", required = false) @DateTimeFormat(iso = DATE_TIME) LocalDateTime startDate) {
+                               @RequestParam(value = "selectedStartDate", required = false) String startDateStr) {
         ModelAndView mav = new ModelAndView("/ticket/depth1");
-        startDate = startDate == null ? LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT) : startDate;
+        LocalDateTime startDate = startDateStr == null ? LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT)
+                                            : LocalDateTime.of(LocalDate.parse(startDateStr), LocalTime.MIDNIGHT);
 
         List<Cinema> cinemas = cinemaRepository.findAll();
         List<Cinema> cinemasOnScreen = cinemaRepositoryImpl.findAll(location, startDate, null, movieId);
@@ -62,6 +63,7 @@ public class TicketController {
         mav.getModelMap().addAttribute("selectedMovieId", movieId);
         mav.getModelMap().addAttribute("selectedStartDate", startDate);
         mav.getModelMap().addAttribute("localDateList", localDateList);
+
 
         return mav;
     }

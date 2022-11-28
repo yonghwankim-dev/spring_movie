@@ -100,7 +100,7 @@
                                                             class="month" th:text="${date.getMonth().value + '월'}"></strong>
                                                     <span class="date">
                                                         <label>
-                                                            <input checked="" data-displayyn="Y"
+                                                            <input th:checked="${date.dayOfMonth == selectedStartDate.dayOfMonth}" data-displayyn="Y"
                                                                    data-isplaydate="Y"
                                                                    th:data-playdate="${date}"
                                                                    data-playweek="오늘" name="radioDate1"
@@ -444,6 +444,15 @@
                 $("#owl-prev-btn").removeClass("disabled");
                 $("#owl-next-btn").addClass("disabled");
             });
+
+            $(".owl-item input").click(function(){
+                const selectedLocation = [[${selectedLocation}]];
+                const selectedCinemaId = [[${selectedCinemaId}]] == null ? "" : [[${selectedCinemaId}]];
+                const selectedMovieId = [[${selectedMovieId}]] == null ? "" : [[${selectedMovieId}]];
+                const startDate = $(this).data("playdate");
+
+                location.href = `/ticket/depth1?selectedLocation=${selectedLocation}&selectedCinemaId=${selectedCinemaId}&selectedMovieId=${selectedMovieId}&selectedStartDate=${startDate}`;
+            })
         });
     </script>
 </th:block>
