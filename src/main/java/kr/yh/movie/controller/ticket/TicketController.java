@@ -50,8 +50,7 @@ public class TicketController {
         List<Movie> movies = movieRepository.findAll();
         List<Movie> moviesOnScreen = movieRepositoryImpl.findAllMovieOnScreen(location, startDate, cinemaId);
         LocalDate today = LocalDate.now();
-        List<LocalDate> localDateList = today.datesUntil(today.plusWeeks(2)
-                                                              .plusDays(1))
+        List<LocalDate> localDateList = today.datesUntil(today.plusWeeks(2))
                                              .collect(Collectors.toList());
         mav.getModelMap().addAttribute("cinemas", cinemas);
         mav.getModelMap().addAttribute("cinemasOnScreen", cinemasOnScreen);

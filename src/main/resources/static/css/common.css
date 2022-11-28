@@ -95,7 +95,7 @@ body {
 .owl-carousel .owl-nav .owl-prev {
     opacity: .6;
     position: absolute;
-    left: 0;
+    left: -30px;
     top: 50%;
     width: 37px;
     height: 39px;
@@ -105,7 +105,7 @@ body {
 .owl-carousel .owl-nav .owl-next {
     opacity: .6;
     position: absolute;
-    right: 0;
+    right: -30px;
     top: 50%;
     width: 37px;
     height: 39px;

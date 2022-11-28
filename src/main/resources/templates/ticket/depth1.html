@@ -94,7 +94,7 @@
                                     <div class="owl-stage"
                                          style="transform: translate3d(0px, 0px, 0px); transition: all 0.6s ease 0s; width: 1470px;">
                                         <th:block th:each="date, dateStatus : ${localDateList}">
-                                            <div class="owl-item active" style="width: 52.5px;">
+                                            <div class="owl-item" th:classappend="${dateStatus.count <= 7 ? 'active' : ''}" style="width: 52.5px;">
                                                 <li class="item">
                                                     <strong th:if="${dateStatus.first or date.getDayOfMonth() == 1}"
                                                             class="month" th:text="${date.getMonth().value + '월'}"></strong>
@@ -112,272 +112,15 @@
                                                 </li>
                                             </div>
                                         </th:block>
-<!--                                        <div class="owl-item active" style="width: 52.5px;">-->
-<!--                                            <li class="item">-->
-<!--                                                <strong class="month">11월</strong>-->
-<!--                                                <span class="date">-->
-<!--                                                    <label>-->
-<!--                                                    <input checked="" data-displayyn="Y"-->
-<!--                                                                      data-isplaydate="Y"-->
-<!--                                                                      data-playdate="2022-11-09"-->
-<!--                                                                      data-playweek="오늘" name="radioDate1"-->
-<!--                                                                      type="radio">-->
-<!--                                                    <strong>9</strong>-->
-<!--                                                    <em>오늘</em>-->
-<!--                                                    </label>-->
-<!--                                                </span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item active" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date"><label><input data-displayyn="Y"-->
-<!--                                                                                              data-isplaydate="Y"-->
-<!--                                                                                              data-playdate="2022-11-10"-->
-<!--                                                                                              data-playweek="목"-->
-<!--                                                                                              name="radioDate1"-->
-<!--                                                                                              type="radio"><strong>10</strong><em>목</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item active" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date"><label><input data-displayyn="Y"-->
-<!--                                                                                              data-isplaydate="Y"-->
-<!--                                                                                              data-playdate="2022-11-11"-->
-<!--                                                                                              data-playweek="금"-->
-<!--                                                                                              name="radioDate1"-->
-<!--                                                                                              type="radio"><strong>11</strong><em>금</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item active" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date sat"><label><input data-displayyn="Y"-->
-<!--                                                                                                  data-isplaydate="Y"-->
-<!--                                                                                                  data-playdate="2022-11-12"-->
-<!--                                                                                                  data-playweek="토"-->
-<!--                                                                                                  name="radioDate1"-->
-<!--                                                                                                  type="radio"><strong>12</strong><em>토</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item active" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date sun"><label><input data-displayyn="Y"-->
-<!--                                                                                                  data-isplaydate="Y"-->
-<!--                                                                                                  data-playdate="2022-11-13"-->
-<!--                                                                                                  data-playweek="일"-->
-<!--                                                                                                  name="radioDate1"-->
-<!--                                                                                                  type="radio"><strong>13</strong><em>일</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item active" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date"><label><input data-displayyn="Y"-->
-<!--                                                                                              data-isplaydate="Y"-->
-<!--                                                                                              data-playdate="2022-11-14"-->
-<!--                                                                                              data-playweek="월"-->
-<!--                                                                                              name="radioDate1"-->
-<!--                                                                                              type="radio"><strong>14</strong><em>월</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item active" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date"><label><input data-displayyn="Y"-->
-<!--                                                                                              data-isplaydate="Y"-->
-<!--                                                                                              data-playdate="2022-11-15"-->
-<!--                                                                                              data-playweek="화"-->
-<!--                                                                                              name="radioDate1"-->
-<!--                                                                                              type="radio"><strong>15</strong><em>화</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item active" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date"><label><input data-displayyn="Y"-->
-<!--                                                                                              data-isplaydate="Y"-->
-<!--                                                                                              data-playdate="2022-11-16"-->
-<!--                                                                                              data-playweek="수"-->
-<!--                                                                                              name="radioDate1"-->
-<!--                                                                                              type="radio"><strong>16</strong><em>수</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date"><label><input data-displayyn="Y"-->
-<!--                                                                                              data-isplaydate="Y"-->
-<!--                                                                                              data-playdate="2022-11-17"-->
-<!--                                                                                              data-playweek="목"-->
-<!--                                                                                              name="radioDate1"-->
-<!--                                                                                              type="radio"><strong>17</strong><em>목</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date"><label><input data-displayyn="Y"-->
-<!--                                                                                              data-isplaydate="Y"-->
-<!--                                                                                              data-playdate="2022-11-18"-->
-<!--                                                                                              data-playweek="금"-->
-<!--                                                                                              name="radioDate1"-->
-<!--                                                                                              type="radio"><strong>18</strong><em>금</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date sat"><label><input data-displayyn="Y"-->
-<!--                                                                                                  data-isplaydate="Y"-->
-<!--                                                                                                  data-playdate="2022-11-19"-->
-<!--                                                                                                  data-playweek="토"-->
-<!--                                                                                                  name="radioDate1"-->
-<!--                                                                                                  type="radio"><strong>19</strong><em>토</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date sun"><label><input data-displayyn="Y"-->
-<!--                                                                                                  data-isplaydate="Y"-->
-<!--                                                                                                  data-playdate="2022-11-20"-->
-<!--                                                                                                  data-playweek="일"-->
-<!--                                                                                                  name="radioDate1"-->
-<!--                                                                                                  type="radio"><strong>20</strong><em>일</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date"><label><input data-displayyn="Y"-->
-<!--                                                                                              data-isplaydate="Y"-->
-<!--                                                                                              data-playdate="2022-11-21"-->
-<!--                                                                                              data-playweek="월"-->
-<!--                                                                                              name="radioDate1"-->
-<!--                                                                                              type="radio"><strong>21</strong><em>월</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date"><label><input data-displayyn="Y"-->
-<!--                                                                                              data-isplaydate="Y"-->
-<!--                                                                                              data-playdate="2022-11-22"-->
-<!--                                                                                              data-playweek="화"-->
-<!--                                                                                              name="radioDate1"-->
-<!--                                                                                              type="radio"><strong>22</strong><em>화</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date"><label><input data-displayyn="Y"-->
-<!--                                                                                              data-isplaydate="Y"-->
-<!--                                                                                              data-playdate="2022-11-23"-->
-<!--                                                                                              data-playweek="수"-->
-<!--                                                                                              name="radioDate1"-->
-<!--                                                                                              type="radio"><strong>23</strong><em>수</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date"><label><input data-displayyn="Y"-->
-<!--                                                                                              data-isplaydate="Y"-->
-<!--                                                                                              data-playdate="2022-11-24"-->
-<!--                                                                                              data-playweek="목"-->
-<!--                                                                                              name="radioDate1"-->
-<!--                                                                                              type="radio"><strong>24</strong><em>목</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date disabled"><label><input data-displayyn="N"-->
-<!--                                                                                                       data-isplaydate="N"-->
-<!--                                                                                                       data-playdate="2022-11-25"-->
-<!--                                                                                                       data-playweek="금"-->
-<!--                                                                                                       name="radioDate1"-->
-<!--                                                                                                       type="radio"><strong>25</strong><em>금</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date sat disabled"><label><input data-displayyn="N"-->
-<!--                                                                                                           data-isplaydate="N"-->
-<!--                                                                                                           data-playdate="2022-11-26"-->
-<!--                                                                                                           data-playweek="토"-->
-<!--                                                                                                           name="radioDate1"-->
-<!--                                                                                                           type="radio"><strong>26</strong><em>토</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date sun disabled"><label><input data-displayyn="N"-->
-<!--                                                                                                           data-isplaydate="N"-->
-<!--                                                                                                           data-playdate="2022-11-27"-->
-<!--                                                                                                           data-playweek="일"-->
-<!--                                                                                                           name="radioDate1"-->
-<!--                                                                                                           type="radio"><strong>27</strong><em>일</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date disabled"><label><input data-displayyn="N"-->
-<!--                                                                                                       data-isplaydate="N"-->
-<!--                                                                                                       data-playdate="2022-11-28"-->
-<!--                                                                                                       data-playweek="월"-->
-<!--                                                                                                       name="radioDate1"-->
-<!--                                                                                                       type="radio"><strong>28</strong><em>월</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date disabled"><label><input data-displayyn="N"-->
-<!--                                                                                                       data-isplaydate="N"-->
-<!--                                                                                                       data-playdate="2022-11-29"-->
-<!--                                                                                                       data-playweek="화"-->
-<!--                                                                                                       name="radioDate1"-->
-<!--                                                                                                       type="radio"><strong>29</strong><em>화</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date disabled"><label><input data-displayyn="N"-->
-<!--                                                                                                       data-isplaydate="N"-->
-<!--                                                                                                       data-playdate="2022-11-30"-->
-<!--                                                                                                       data-playweek="수"-->
-<!--                                                                                                       name="radioDate1"-->
-<!--                                                                                                       type="radio"><strong>30</strong><em>수</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><strong class="month">12월</strong><span-->
-<!--                                                    class="date disabled"><label><input data-displayyn="N" data-isplaydate="N"-->
-<!--                                                                                        data-playdate="2022-12-01"-->
-<!--                                                                                        data-playweek="목"-->
-<!--                                                                                        name="radioDate1"-->
-<!--                                                                                        type="radio"><strong>1</strong><em>목</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date disabled"><label><input data-displayyn="N"-->
-<!--                                                                                                       data-isplaydate="N"-->
-<!--                                                                                                       data-playdate="2022-12-02"-->
-<!--                                                                                                       data-playweek="금"-->
-<!--                                                                                                       name="radioDate1"-->
-<!--                                                                                                       type="radio"><strong>2</strong><em>금</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date sat disabled"><label><input data-displayyn="N"-->
-<!--                                                                                                           data-isplaydate="N"-->
-<!--                                                                                                           data-playdate="2022-12-03"-->
-<!--                                                                                                           data-playweek="토"-->
-<!--                                                                                                           name="radioDate1"-->
-<!--                                                                                                           type="radio"><strong>3</strong><em>토</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date sun disabled"><label><input data-displayyn="N"-->
-<!--                                                                                                           data-isplaydate="N"-->
-<!--                                                                                                           data-playdate="2022-12-04"-->
-<!--                                                                                                           data-playweek="일"-->
-<!--                                                                                                           name="radioDate1"-->
-<!--                                                                                                           type="radio"><strong>4</strong><em>일</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date disabled"><label><input data-displayyn="N"-->
-<!--                                                                                                       data-isplaydate="N"-->
-<!--                                                                                                       data-playdate="2022-12-05"-->
-<!--                                                                                                       data-playweek="월"-->
-<!--                                                                                                       name="radioDate1"-->
-<!--                                                                                                       type="radio"><strong>5</strong><em>월</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
-<!--                                        <div class="owl-item" style="width: 52.5px;">-->
-<!--                                            <li class="item"><span class="date disabled"><label><input data-displayyn="N"-->
-<!--                                                                                                       data-isplaydate="N"-->
-<!--                                                                                                       data-playdate="2022-12-06"-->
-<!--                                                                                                       data-playweek="화"-->
-<!--                                                                                                       name="radioDate1"-->
-<!--                                                                                                       type="radio"><strong>6</strong><em>화</em></label></span>-->
-<!--                                            </li>-->
-<!--                                        </div>-->
                                     </div>
                                 </div>
                                 <div class="owl-nav">
-                                    <button class="owl-prev disabled" role="presentation" type="button"><span
-                                            aria-label="Previous">‹</span></button>
-                                    <button class="owl-next" role="presentation" type="button"><span
-                                            aria-label="Next">›</span></button>
+                                    <button id="owl-prev-btn" class="owl-prev disabled" role="presentation" type="button">
+                                        <span aria-label="Previous">‹</span>
+                                    </button>
+                                    <button id="owl-next-btn" class="owl-next" role="presentation" type="button">
+                                        <span aria-label="Next">›</span>
+                                    </button>
                                 </div>
                                 <div class="owl-dots disabled"></div>
                             </ul>
@@ -686,6 +429,20 @@
 
                 // 클릭한 버튼의 li active 추가
                 $(this).parent("li").addClass("active");
+            });
+
+            $("#owl-prev-btn").click(function(){
+                // 왼쪽으로 이동
+                $(".owl-stage").css({"transform" : "translate3d(0px, 0px, 0px)"});
+                $("#owl-prev-btn").addClass("disabled");
+                $("#owl-next-btn").removeClass("disabled");
+            });
+
+            $("#owl-next-btn").click(function(){
+                // 오른쪽으로 이동
+                $(".owl-stage").css({"transform" : "translate3d(-315px, 0px, 0px)"});
+                $("#owl-prev-btn").removeClass("disabled");
+                $("#owl-next-btn").addClass("disabled");
             });
         });
     </script>
