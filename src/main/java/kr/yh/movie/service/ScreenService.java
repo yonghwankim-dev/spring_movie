@@ -37,8 +37,6 @@ public class ScreenService {
         return screenRepository.makePredicates(type, keyword);
     }
 
-
-
     @Transactional
     public <S extends Screen> S save(S entity) {
         Screen savedScreen = screenRepository.save(entity);
@@ -145,10 +143,5 @@ public class ScreenService {
 
     public <S extends Screen, R> R findBy(Predicate predicate, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return screenRepository.findBy(predicate, queryFunction);
-    }
-
-    @Query("SELECT s FROM Screen s WHERE s.id = (SELECT MIN(id) FROM ScreenSeat)")
-    public Screen findFirstByScreenId() {
-        return screenRepository.findFirstByScreenId();
     }
 }

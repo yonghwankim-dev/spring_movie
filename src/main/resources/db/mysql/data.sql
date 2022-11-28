@@ -154,6 +154,20 @@ INSERT INTO MOVIE (film_rating, name, runtime) VALUES (12, '데시벨', 130);
 
 INSERT INTO theater(name, cinema_id) VALUES ('1관', 1);
 INSERT INTO theater(name, cinema_id) VALUES ('2관', 1);
+INSERT INTO theater(name, cinema_id) VALUES ('3관', 1);
+INSERT INTO theater(name, cinema_id) VALUES ('4관', 1);
+INSERT INTO theater(name, cinema_id) VALUES ('5관', 1);
+INSERT INTO theater(name, cinema_id) VALUES ('6관', 1);
+INSERT INTO theater(name, cinema_id) VALUES ('7관', 1);
+INSERT INTO theater(name, cinema_id) VALUES ('8관', 1);
+INSERT INTO theater(name, cinema_id) VALUES ('1관', 2);
+INSERT INTO theater(name, cinema_id) VALUES ('2관', 2);
+INSERT INTO theater(name, cinema_id) VALUES ('3관', 2);
+INSERT INTO theater(name, cinema_id) VALUES ('4관', 2);
+INSERT INTO theater(name, cinema_id) VALUES ('5관', 2);
+INSERT INTO theater(name, cinema_id) VALUES ('6관', 2);
+INSERT INTO theater(name, cinema_id) VALUES ('7관', 2);
+INSERT INTO theater(name, cinema_id) VALUES ('8관', 2);
 
 INSERT INTO seat(seat_col, seat_row, theater_id) VALUES ('1', 'A', 1);
 INSERT INTO seat(seat_col, seat_row, theater_id) VALUES ('2', 'A', 1);
@@ -210,5 +224,47 @@ INSERT INTO seat(seat_col, seat_row, theater_id) VALUES ('16', 'C', 1);
 INSERT INTO seat(seat_col, seat_row, theater_id) VALUES ('17', 'C', 1);
 INSERT INTO seat(seat_col, seat_row, theater_id) VALUES ('18', 'C', 1);
 
-INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (1, current_time, 1, 1);
-INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (1, current_time, 1, 2);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (1, DATE_ADD(CURDATE(), INTERVAL 8 HOUR), 1, 1);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (2, DATE_ADD(CURDATE(), INTERVAL 10 HOUR), 1, 1);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (3, DATE_ADD(CURDATE(), INTERVAL 12 HOUR), 1, 1);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (4, DATE_ADD(CURDATE(), INTERVAL 14 HOUR), 1, 1);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (5, DATE_ADD(CURDATE(), INTERVAL 16 HOUR), 1, 1);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (6, DATE_ADD(CURDATE(), INTERVAL 18 HOUR), 1, 1);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (7, DATE_ADD(CURDATE(), INTERVAL 20 HOUR), 1, 1);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (8, DATE_ADD(CURDATE(), INTERVAL 22 HOUR), 1, 1);
+
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (1, DATE_ADD(CURDATE(), INTERVAL 8 HOUR), 2, 2);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (2, DATE_ADD(CURDATE(), INTERVAL 10 HOUR), 2, 2);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (3, DATE_ADD(CURDATE(), INTERVAL 12 HOUR), 2, 2);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (4, DATE_ADD(CURDATE(), INTERVAL 14 HOUR), 2, 2);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (5, DATE_ADD(CURDATE(), INTERVAL 16 HOUR), 2, 2);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (6, DATE_ADD(CURDATE(), INTERVAL 18 HOUR), 2, 2);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (7, DATE_ADD(CURDATE(), INTERVAL 20 HOUR), 2, 2);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (8, DATE_ADD(CURDATE(), INTERVAL 22 HOUR), 2, 2);
+
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (1, DATE_ADD(CURDATE(), INTERVAL 8 HOUR), 3, 3);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (2, DATE_ADD(CURDATE(), INTERVAL 10 HOUR), 3, 3);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (3, DATE_ADD(CURDATE(), INTERVAL 12 HOUR), 3, 3);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (4, DATE_ADD(CURDATE(), INTERVAL 14 HOUR), 3, 3);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (5, DATE_ADD(CURDATE(), INTERVAL 16 HOUR), 3, 3);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (6, DATE_ADD(CURDATE(), INTERVAL 18 HOUR), 3, 3);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (7, DATE_ADD(CURDATE(), INTERVAL 20 HOUR), 3, 3);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (8, DATE_ADD(CURDATE(), INTERVAL 22 HOUR), 3, 3);
+
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (1, DATE_ADD(CURDATE(), INTERVAL 8 HOUR), 1, 9);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (2, DATE_ADD(CURDATE(), INTERVAL 10 HOUR), 1, 9);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (3, DATE_ADD(CURDATE(), INTERVAL 12 HOUR), 1, 9);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (4, DATE_ADD(CURDATE(), INTERVAL 14 HOUR), 1, 9);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (5, DATE_ADD(CURDATE(), INTERVAL 16 HOUR), 1, 9);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (6, DATE_ADD(CURDATE(), INTERVAL 18 HOUR), 1, 9);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (7, DATE_ADD(CURDATE(), INTERVAL 20 HOUR), 1, 9);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (8, DATE_ADD(CURDATE(), INTERVAL 22 HOUR), 1, 9);
+
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (1, DATE_ADD(CURDATE(), INTERVAL 8 HOUR), 2, 10);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (2, DATE_ADD(CURDATE(), INTERVAL 10 HOUR), 2, 10);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (3, DATE_ADD(CURDATE(), INTERVAL 12 HOUR), 2, 10);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (4, DATE_ADD(CURDATE(), INTERVAL 14 HOUR), 2, 10);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (5, DATE_ADD(CURDATE(), INTERVAL 16 HOUR), 2, 10);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (6, DATE_ADD(CURDATE(), INTERVAL 18 HOUR), 2, 10);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (7, DATE_ADD(CURDATE(), INTERVAL 20 HOUR), 2, 10);
+INSERT INTO screen(round, start_datetime, movie_id, theater_id) VALUES (8, DATE_ADD(CURDATE(), INTERVAL 22 HOUR), 2, 10);

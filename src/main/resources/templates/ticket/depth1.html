@@ -31,7 +31,9 @@
                                                 <div class="depth2">
                                                     <ul>
                                                         <th:block th:each="cinema : ${cinemas}">
-                                                            <li th:class="${not cinemaIdsOnScreen.contains(cinema.id) and selectedMovieId != 0 ? 'disabled' : ''}" th:if="${cinema.location eq cinemaLocation.location}" th:classappend="${selectedCinemaId eq cinema.id ? 'active' : ''}">
+                                                            <li th:if="${cinema.location eq cinemaLocation.location}"
+                                                                    th:class="${not cinemasOnScreen.contains(cinema) ? 'disabled' : ''}"
+                                                                     th:classappend="${selectedCinemaId eq cinema.id ? 'active' : ''}">
                                                                 <a th:href="@{/ticket/depth1(selectedLocation=${cinemaLocation.location},
                                                                                              selectedCinemaId=${cinema.id})}" th:text="${cinema.name}"></a>
                                                             </li>
@@ -59,11 +61,11 @@
                     <div class="list_filter"></div>
                     <div class="movie_select_wrap list movieSelect" style="height: 754px;">
                         <ul style="overflow: auto; overflow-y: scroll; height: 754px;">
-                            <th:block th:each="movie : ${moviesOnScreen}">
-                                <li th:class="${not movieIdsOnScreen.contains(movie.id) and selectedCinemaId != 0 ? 'disabled' : ''}"
-                                th:classappend="${movie.id == selectedMovieId ? 'active' : ''}">
+                            <th:block th:each="movie : ${movies}">
+                                <li th:class="${not moviesOnScreen.contains(movie) ? 'disabled' : ''}"
+                                        th:classappend="${movie.id == selectedMovieId ? 'active' : ''}">
                                     <a th:href="@{/ticket/depth1(selectedLocation=${selectedLocation},
-                                                                 selectedCinemaId=${selectedCinemaId},
+                                                                 selectedCinemaId=${moviesOnScreen.contains(movie) ? selectedCinemaId : ''},
                                                                  selectedMovieId=${movie.id})}">
                                         <div class="bx_thm"><span class="rank"><span class="hidden">순위</span><strong>1</strong></span><img
                                                 alt="포스터"

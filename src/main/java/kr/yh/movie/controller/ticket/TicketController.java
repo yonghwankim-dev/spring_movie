@@ -1,58 +1,63 @@
 package kr.yh.movie.controller.ticket;
 
-import kr.yh.movie.controller.cinema.CinemaDTO;
 import kr.yh.movie.controller.cinema.CinemaLocationDTO;
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Movie;
-import kr.yh.movie.domain.Screen;
-import kr.yh.movie.repository.CinemaRepository;
-import kr.yh.movie.repository.MovieRepository;
-import kr.yh.movie.repository.ScreenRepository;
+import kr.yh.movie.repository.cinema.CinemaRepository;
+import kr.yh.movie.repository.cinema.CinemaRepositoryImpl;
+import kr.yh.movie.repository.movie.MovieRepository;
+import kr.yh.movie.repository.movie.MovieRepositoryImpl;
 import kr.yh.movie.service.CinemaService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ui.Model;
+import net.bytebuddy.asm.Advice;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
+
+import static org.springframework.format.annotation.DateTimeFormat.ISO.*;
 
 @RestController
 @AllArgsConstructor
 @Slf4j
 public class TicketController {
     private final CinemaRepository cinemaRepository;
-    private final CinemaService cinemaService;
+    private final CinemaRepositoryImpl cinemaRepositoryImpl;
+    private final MovieRepositoryImpl movieRepositoryImpl;
     private final MovieRepository movieRepository;
-    private final ScreenRepository screenRepository;
-    @GetMapping("/ticket/depth1")
-    public ModelAndView depth1(@RequestParam(value = "selectedLocation", required = false, defaultValue = "서울") String selectedLocation,
-                               @RequestParam(value = "selectedCinemaId", required = false, defaultValue = "0") Long selectedCinemaId,
-                               @RequestParam(value = "selectedMovieId", required = false, defaultValue = "0") Long selectedMovieId){
-        ModelAndView mav = new ModelAndView("/ticket/depth1");
 
-        List<Cinema> cinemas = cinemaService.findAll();
+    @GetMapping("/ticket/depth1")
+    public ModelAndView depth1(@RequestParam(value = "selectedLocation", required = false, defaultValue = "서울") String location,
+                               @RequestParam(value = "selectedCinemaId", required = false) Long cinemaId,
+                               @RequestParam(value = "selectedMovieId", required = false) Long movieId,
+                               @RequestParam(value = "selectedStartDate", required = false) @DateTimeFormat(iso = DATE_TIME) LocalDateTime startDate) {
+        ModelAndView mav = new ModelAndView("/ticket/depth1");
+        startDate = startDate == null ? LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT) : startDate;
+
+        List<Cinema> cinemas = cinemaRepository.findAll();
+        List<Cinema> cinemasOnScreen = cinemaRepositoryImpl.findAll(location, startDate, null, movieId);
         List<CinemaLocationDTO> cinemaLocations = cinemaRepository.findAllLocationAndCountGroupByLocation();
-        List<Movie> moviesOnScreen = screenRepository.findAllMovieByLocation(selectedLocation);
-        List<Screen> screensByCinemaId = screenRepository.findAllByCinemaId(selectedCinemaId);
-        List<Long> movieIdsOnScreen = screenRepository.findAllMovieIdByCinemaId(selectedCinemaId);
-        List<Long> cinemaIdsOnScreen = screenRepository.findAllCinemaIdByMovieId(selectedMovieId);
+        List<Movie> movies = movieRepository.findAll();
+        List<Movie> moviesOnScreen = movieRepositoryImpl.findAllMovieOnScreen(location, startDate, cinemaId);
 
         mav.getModelMap().addAttribute("cinemas", cinemas);
+        mav.getModelMap().addAttribute("cinemasOnScreen", cinemasOnScreen);
         mav.getModelMap().addAttribute("cinemaLocations", cinemaLocations);
-        mav.getModelMap().addAttribute("selectedLocation", selectedLocation);
-        mav.getModelMap().addAttribute("selectedCinemaId", selectedCinemaId);
+        mav.getModelMap().addAttribute("movies", movies);
         mav.getModelMap().addAttribute("moviesOnScreen", moviesOnScreen);
-        mav.getModelMap().addAttribute("screensByCinemaId", screensByCinemaId);
-        mav.getModelMap().addAttribute("movieIdsOnScreen", movieIdsOnScreen);
-        mav.getModelMap().addAttribute("selectedMovieId", selectedMovieId);
-        mav.getModelMap().addAttribute("cinemaIdsOnScreen", cinemaIdsOnScreen);
+        mav.getModelMap().addAttribute("selectedLocation", location);
+        mav.getModelMap().addAttribute("selectedCinemaId", cinemaId);
+        mav.getModelMap().addAttribute("selectedMovieId", movieId);
+        mav.getModelMap().addAttribute("selectedStartDate", startDate);
         return mav;
     }
 

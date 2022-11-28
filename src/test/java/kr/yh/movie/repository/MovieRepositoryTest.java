@@ -1,48 +1,91 @@
 package kr.yh.movie.repository;
 
-import kr.yh.movie.controller.movie.MovieDTO;
+import kr.yh.movie.config.QuerydslConfig;
+import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Movie;
-import org.assertj.core.api.Assertions;
+import kr.yh.movie.repository.cinema.CinemaRepository;
+import kr.yh.movie.repository.movie.MovieRepository;
+import kr.yh.movie.repository.movie.MovieRepositoryImpl;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @ActiveProfiles("local")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(QuerydslConfig.class)
 public class MovieRepositoryTest {
     @Autowired
     MovieRepository movieRepository;
 
+    @Autowired
+    MovieRepositoryImpl movieRepositoryImpl;
+
+    @Autowired
+    CinemaRepository cinemaRepository;
+
     @Test
-    @Transactional
-    public void testFindAll(){
+    @DisplayName("지역 + 상영일")
+    public void testFindAllMovieOnScreenByLocationAndStartDate(){
         //given
-        List<Movie> expected = List.of(new Movie(1L, "올빼미", 15, 120),
-                new Movie(2L, "블랙 팬서: 와칸다 포에버", 12, 120),
-                new Movie(3L, "데시벨", 12, 130));
+        String location = "서울";
+        LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
         //when
-        List<Movie> actual = movieRepository.findAll();
+        List<Movie> actual = movieRepositoryImpl.findAllMovieOnScreen(location, startDate);
         //then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual.size()).isEqualTo(3);
     }
-    
+
     @Test
-    public void testFindAllByCinemaId(){
+    @DisplayName("지역 + 상영일 + 영화관")
+    public void testFindAllMovieOnScreenByLocationAndStartDateAndCinema(){
         //given
+        String location = "서울";
+        LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
         Long cinemaId = 1L;
-        List<Movie> expected = List.of(new Movie(1L, "올빼미", 15, 150));
         //when
-        List<Movie> actual = movieRepository.findAllByCinemaId(cinemaId);
+        List<Movie> actual = movieRepositoryImpl.findAllMovieOnScreen(location, startDate, cinemaId);
         //then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual.size()).isEqualTo(3);
     }
+
+    @Test
+    @DisplayName("지역 + 상영일 + 영화관들")
+    public void testFindAllMovieOnScreenByLocationAndStartDateAndCinemaList(){
+        //given
+        String location = "서울";
+        LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
+        List<Long> cinemaIdList = List.of(1L, 2L);
+        //when
+        List<Movie> actual = movieRepositoryImpl.findAllMovieOnScreen(location, startDate, cinemaIdList);
+        //then
+        assertThat(actual.size()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("지역 + 상영일 + 영화관 + 영화")
+    public void testFindAllMovieOnScreenByLocationAndStartDateAndCinemaAndMovie(){
+        //given
+        String location = "서울";
+        LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
+        Long cinemaId = 1L;
+        Long movieId = 1L;
+        //when
+        List<Movie> actual = movieRepositoryImpl.findAllMovieOnScreen(location, startDate, cinemaId, movieId);
+        //then
+        assertThat(actual.size()).isEqualTo(1);
+    }
+
 }

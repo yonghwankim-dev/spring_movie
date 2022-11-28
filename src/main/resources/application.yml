@@ -61,7 +61,7 @@ spring:
 
   sql:
     init:
-      data-locations: "classpath*:/data.sql"
+      data-locations: "classpath*:/db/h2/data.sql"
 
   h2:
     console:
@@ -86,7 +86,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     generate-ddl: true
     defer-datasource-initialization: true
     show-sql: true
@@ -99,5 +99,5 @@ spring:
           storage_engine: innodb # 트랜잭션을 지원하고, 커밋과 롤백 그리고 데이터 복구 기능을 제공하므로 데이터를 효과적으로 보호
   sql:
     init:
-      data-locations: "classpath*:/data.sql"
+      data-locations: "classpath*:/db/mysql/data.sql"
       mode: always

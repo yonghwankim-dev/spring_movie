@@ -9,6 +9,8 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public interface ScreenRepository extends JpaRepository<Screen, Long>, QuerydslPredicateExecutor<Screen> {
@@ -35,32 +37,4 @@ public interface ScreenRepository extends JpaRepository<Screen, Long>, QuerydslP
 
         return builder;
     }
-
-    @Query("SELECT s FROM Screen s WHERE s.id = (SELECT MIN(id) FROM Screen)")
-    Screen findFirstByScreenId();
-
-    @Query("SELECT s FROM Screen s " +
-            "INNER JOIN Theater t ON s.theater.id = t.id " +
-            "INNER JOIN Cinema c ON t.cinema.id = c.id " +
-            "WHERE c.id = :cinemaId")
-    List<Screen> findAllByCinemaId(@Param("cinemaId") Long cinemaId);
-
-    @Query("SELECT distinct s.movie.id FROM Screen s " +
-            "INNER JOIN Theater t ON s.theater.id = t.id " +
-            "INNER JOIN Cinema c ON t.cinema.id = c.id " +
-            "WHERE c.id = :cinemaId")
-    List<Long> findAllMovieIdByCinemaId(@Param("cinemaId") Long cinemaId);
-
-    @Query("SELECT distinct c.id FROM Screen s " +
-            "INNER JOIN Theater t ON s.theater.id = t.id " +
-            "INNER JOIN Cinema c ON t.cinema.id = c.id " +
-            "WHERE s.movie.id = :movieId")
-    List<Long> findAllCinemaIdByMovieId(@Param("movieId") Long movieId);
-
-    @Query("SELECT distinct m FROM Screen s " +
-            "INNER JOIN Theater t ON s.theater.id = t.id " +
-            "INNER JOIN Cinema c ON t.cinema.id = c.id " +
-            "INNER JOIN Movie m ON s.movie.id = m.id " +
-            "WHERE c.location = :location")
-    List<Movie> findAllMovieByLocation(@Param("location") String location);
 }

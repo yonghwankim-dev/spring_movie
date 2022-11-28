@@ -1,7 +1,8 @@
-package kr.yh.movie.repository;
+package kr.yh.movie.repository.movie;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import kr.yh.movie.domain.Movie;
 import kr.yh.movie.domain.QMovie;
 import kr.yh.movie.domain.member.Member;

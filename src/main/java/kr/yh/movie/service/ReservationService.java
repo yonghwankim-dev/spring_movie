@@ -2,9 +2,7 @@ package kr.yh.movie.service;
 
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
-import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Reservation;
-import kr.yh.movie.repository.CinemaRepository;
 import kr.yh.movie.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;

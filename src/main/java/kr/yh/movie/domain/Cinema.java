@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 @Builder
+@ToString(exclude = {"theaters"})
 public class Cinema {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

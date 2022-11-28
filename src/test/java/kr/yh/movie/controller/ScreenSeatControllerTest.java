@@ -41,7 +41,7 @@ public class ScreenSeatControllerTest {
 
     @BeforeEach
     public void setup(){
-        screenId = String.valueOf(screenService.findFirstByScreenId().getId());
+        screenId = String.valueOf(1L);
         screenSeatId = String.valueOf(screenSeatService.findFirstByScreenId(Long.parseLong(screenId)).getId());
     }
 

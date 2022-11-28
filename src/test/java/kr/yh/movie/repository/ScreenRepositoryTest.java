@@ -1,5 +1,6 @@
 package kr.yh.movie.repository;
 
+import kr.yh.movie.config.QuerydslConfig;
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Movie;
 import kr.yh.movie.domain.Screen;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,50 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @ActiveProfiles("local")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(QuerydslConfig.class)
 public class ScreenRepositoryTest {
     @Autowired
     ScreenRepository screenRepository;
-    
-    @Test
-    @Transactional
-    public void testFindAllByCinemaIdWithInnerJoinTheater(){
-        //given
-        Long cinemaId = 1L;
-        //when
-        List<Screen> actual = screenRepository.findAllByCinemaId(cinemaId);
-        //then
-        System.out.println(actual);
-        Assertions.assertThat(actual).isNotNull();
-    }
-
-    @Test
-    public void testFindAllMovieIdByCinemaId(){
-        //given
-        Long cinemaId = 1L;
-        //when
-        List<Long> actual = screenRepository.findAllMovieIdByCinemaId(cinemaId);
-        //then
-        Assertions.assertThat(actual).isEqualTo(List.of(1L));
-    }
-    
-    @Test
-    public void testFindAllCinemaIdByMovieId(){
-        //given
-        Long movieId = 1L;
-        //when
-        List<Long> actual = screenRepository.findAllCinemaIdByMovieId(movieId);
-        //then
-        Assertions.assertThat(actual).isEqualTo(List.of(1L));
-    }
-
-    @Test
-    public void testFindAllMovieByLocation(){
-        //given
-        String selectedLocation = "서울";
-        Movie expectedMovie = new Movie(1L, "올빼미", 15, 150);
-        //when
-        List<Movie> actual = screenRepository.findAllMovieByLocation(selectedLocation);
-        //then
-        Assertions.assertThat(actual).isEqualTo(List.of(expectedMovie));
-    }
 }

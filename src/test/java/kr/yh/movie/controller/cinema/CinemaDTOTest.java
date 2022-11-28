@@ -1,26 +1,15 @@
 package kr.yh.movie.controller.cinema;
 
 import kr.yh.movie.domain.Cinema;
-import kr.yh.movie.domain.member.Member;
-import kr.yh.movie.repository.CinemaRepository;
-import kr.yh.movie.repository.MemberRepository;
+import kr.yh.movie.repository.cinema.CinemaRepository;
 import kr.yh.movie.service.CinemaService;
-import kr.yh.movie.service.MemberService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
