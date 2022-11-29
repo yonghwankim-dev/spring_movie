@@ -52,7 +52,7 @@ public class TicketController {
         List<Cinema> cinemasOnScreen = cinemaRepositoryImpl.findAll(location, startDate, null, movieId);
         List<CinemaLocationDTO> cinemaLocations = cinemaRepository.findAllLocationAndCountGroupByLocation();
         List<Movie> movies = movieRepository.findAll();
-        List<Movie> moviesOnScreen = movieRepositoryImpl.findAllMovieOnScreen(location, startDate, cinemaId);
+        List<Movie> moviesOnScreen = movieRepositoryImpl.findAllMovieOnScreen(location, startDate, cinemaId, movieId);
         List<Screen> screens = screenRepositoryImpl.findAll(location, cinemaId, movieId, startDate);
         LocalDate today = LocalDate.now();
         List<LocalDate> localDateList = today.datesUntil(today.plusWeeks(2)).collect(Collectors.toList());

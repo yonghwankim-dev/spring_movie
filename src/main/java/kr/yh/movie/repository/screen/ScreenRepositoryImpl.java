@@ -49,6 +49,7 @@ public class ScreenRepositoryImpl {
                                     .innerJoin(theater).on(screen.theater.id.eq(theater.id))
                                     .innerJoin(cinema).on(theater.cinema.id.eq(cinema.id))
                                     .where(moviePredicate, cinemaPredicate, screenPredicate)
+                                    .orderBy(movie.name.asc(), screen.startDateTime.asc())
                                     .fetch();
         return result;
     }
