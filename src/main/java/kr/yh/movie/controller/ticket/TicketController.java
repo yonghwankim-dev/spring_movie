@@ -3,10 +3,12 @@ package kr.yh.movie.controller.ticket;
 import kr.yh.movie.controller.cinema.CinemaLocationDTO;
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.domain.Movie;
+import kr.yh.movie.domain.Screen;
 import kr.yh.movie.repository.cinema.CinemaRepository;
 import kr.yh.movie.repository.cinema.CinemaRepositoryImpl;
 import kr.yh.movie.repository.movie.MovieRepository;
 import kr.yh.movie.repository.movie.MovieRepositoryImpl;
+import kr.yh.movie.repository.screen.ScreenRepositoryImpl;
 import kr.yh.movie.service.CinemaService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +37,7 @@ public class TicketController {
     private final CinemaRepositoryImpl cinemaRepositoryImpl;
     private final MovieRepositoryImpl movieRepositoryImpl;
     private final MovieRepository movieRepository;
+    private final ScreenRepositoryImpl screenRepositoryImpl;
 
     @GetMapping("/ticket/depth1")
     public ModelAndView depth1(@RequestParam(value = "selectedLocation", required = false, defaultValue = "서울") String location,
@@ -50,20 +53,21 @@ public class TicketController {
         List<CinemaLocationDTO> cinemaLocations = cinemaRepository.findAllLocationAndCountGroupByLocation();
         List<Movie> movies = movieRepository.findAll();
         List<Movie> moviesOnScreen = movieRepositoryImpl.findAllMovieOnScreen(location, startDate, cinemaId);
+        List<Screen> screens = screenRepositoryImpl.findAll(location, cinemaId, movieId, startDate);
         LocalDate today = LocalDate.now();
-        List<LocalDate> localDateList = today.datesUntil(today.plusWeeks(2))
-                                             .collect(Collectors.toList());
+        List<LocalDate> localDateList = today.datesUntil(today.plusWeeks(2)).collect(Collectors.toList());
+
         mav.getModelMap().addAttribute("cinemas", cinemas);
         mav.getModelMap().addAttribute("cinemasOnScreen", cinemasOnScreen);
         mav.getModelMap().addAttribute("cinemaLocations", cinemaLocations);
         mav.getModelMap().addAttribute("movies", movies);
         mav.getModelMap().addAttribute("moviesOnScreen", moviesOnScreen);
+        mav.getModelMap().addAttribute("screens", screens);
         mav.getModelMap().addAttribute("selectedLocation", location);
         mav.getModelMap().addAttribute("selectedCinemaId", cinemaId);
         mav.getModelMap().addAttribute("selectedMovieId", movieId);
         mav.getModelMap().addAttribute("selectedStartDate", startDate);
         mav.getModelMap().addAttribute("localDateList", localDateList);
-
 
         return mav;
     }

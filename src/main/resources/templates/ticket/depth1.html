@@ -131,270 +131,227 @@
                     <ul class="tab_wrap outer sm1 actionmovingbar">
                         <li class="active">
                             <button type="button" class="tab_tit" style="width: 100%; left: 0%;"><span>전체</span></button>
-                            <div class="tab_con ty5">
+                            <div class="tab_con ty5" style="overflow: auto; overflow-y: scroll; height: 665px;">
                                 <h5 class="hidden">전체</h5>
                                 <div style="height: 658px; padding: 0 20px;">
-                                    <div class="group_time_select">
-                                        <div class="time_select_tit"><span class="ic_grade gr_12">12</span><strong>블랙 팬서: 와칸다
-                                            포에버</strong></div>
-                                        <div class="time_select_wrap timeSelect">
-                                            <ul class="list_hall">
-                                                <li>4D2D</li>
-                                                <li>수퍼 4D</li>
-                                            </ul>
-                                            <ul class="list_time">
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>11:40</strong>
-                                                            <div class="tooltip">종료 14:31</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>94</strong> / 100</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">3관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>14:50</strong>
-                                                            <div class="tooltip">종료 17:41</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>96</strong> / 100</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">3관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>18:00</strong>
-                                                            <div class="tooltip">종료 20:51</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>90</strong> / 100</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">3관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>21:10</strong>
-                                                            <div class="tooltip">종료 24:01</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>96</strong> / 100</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">3관</dd>
-                                                    </dl>
-                                                </a></li>
-                                            </ul>
+                                    <th:block th:each="movie : ${moviesOnScreen}">
+                                        <div class="group_time_select">
+                                            <div class="time_select_tit">
+                                                <span class="ic_grade"
+                                                      th:classappend="${'gr_' + movie.filmRating}"
+                                                      th:text="${movie.filmRating}"/>
+                                                <strong th:text="${movie.name}"/>
+                                            </div>
+                                            <div class="time_select_wrap timeSelect">
+                                                <ul class="list_hall">
+                                                    <li>2D</li>
+                                                </ul>
+                                                <ul class="list_time">
+                                                    <th:block th:each="screen : ${screens}">
+                                                        <li>
+                                                            <a th:href="@{/ticket/depth2}" role="button">
+                                                            <dl>
+                                                                <dt>상영시간</dt>
+                                                                <dd class="time">
+                                                                    <strong th:text="${#temporals.format(screen.startDateTime, 'HH:mm')}"/>
+                                                                    <div class="tooltip" th:text="${'종료 ' + #temporals.format(screen.startDateTime.plusMinutes(movie.runtime), 'HH:mm')}"/>
+                                                                </dd>
+                                                                <dt>잔여석</dt>
+                                                                <dd class="seat">
+                                                                    <strong th:text="${screen.screenSeats.size()}"/> / [[${screen.screenSeats.size()}]]</dd>
+                                                                <dt>상영관</dt>
+                                                                <dd class="hall" th:text="${screen.theater.name}"></dd>
+                                                            </dl>
+                                                        </a>
+                                                        </li>
+                                                    </th:block>
+
+<!--                                                    <li class="morning"><a th:href="@{/ticket/depth2}" role="button"><span-->
+<!--                                                            class="txt_ntc ic">조조</span>-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>09:40</strong>-->
+<!--                                                                <div class="tooltip">종료 12:31</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>146</strong> / 164</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">1관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+<!--                                                    <li class=""><a th:href="@{/ticket/depth2}" role="button">-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>10:20</strong>-->
+<!--                                                                <div class="tooltip">종료 13:11</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>158</strong> / 184</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">6관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+<!--                                                    <li class=""><a th:href="@{/ticket/depth2}" role="button">-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>12:10</strong>-->
+<!--                                                                <div class="tooltip">종료 15:01</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>294</strong> / 332</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">5관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+<!--                                                    <li class=""><a th:href="@{/ticket/depth2}" role="button">-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>12:50</strong>-->
+<!--                                                                <div class="tooltip">종료 15:41</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>157</strong> / 164</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">1관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+<!--                                                    <li class=""><a th:href="@{/ticket/depth2}" role="button">-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>13:30</strong>-->
+<!--                                                                <div class="tooltip">종료 16:21</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>155</strong> / 184</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">6관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+<!--                                                    <li class=""><a th:href="@{/ticket/depth2}" role="button">-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>14:10</strong>-->
+<!--                                                                <div class="tooltip">종료 17:01</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>125</strong> / 142</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">2관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+<!--                                                    <li class=""><a th:href="@{/ticket/depth2}" role="button">-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>15:20</strong>-->
+<!--                                                                <div class="tooltip">종료 18:11</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>275</strong> / 332</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">5관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+<!--                                                    <li class=""><a th:href="@{/ticket/depth2}" role="button">-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>16:00</strong>-->
+<!--                                                                <div class="tooltip">종료 18:51</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>150</strong> / 164</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">1관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+<!--                                                    <li class=""><a th:href="@{/ticket/depth2}" role="button">-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>16:40</strong>-->
+<!--                                                                <div class="tooltip">종료 19:31</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>171</strong> / 184</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">6관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+<!--                                                    <li class=""><a th:href="@{/ticket/depth2}" role="button">-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>18:30</strong>-->
+<!--                                                                <div class="tooltip">종료 21:21</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>301</strong> / 332</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">5관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+<!--                                                    <li class=""><a th:href="@{/ticket/depth2}" role="button">-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>19:10</strong>-->
+<!--                                                                <div class="tooltip">종료 22:01</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>149</strong> / 164</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">1관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+<!--                                                    <li class=""><a th:href="@{/ticket/depth2}" role="button">-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>19:50</strong>-->
+<!--                                                                <div class="tooltip">종료 22:41</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>167</strong> / 184</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">6관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+<!--                                                    <li class=""><a th:href="@{/ticket/depth2}" role="button">-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>21:40</strong>-->
+<!--                                                                <div class="tooltip">종료 24:31</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>308</strong> / 332</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">5관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+<!--                                                    <li class=""><a th:href="@{/ticket/depth2}" role="button">-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>22:20</strong>-->
+<!--                                                                <div class="tooltip">종료 25:11</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>155</strong> / 164</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">1관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+<!--                                                    <li class=""><a th:href="@{/ticket/depth2}" role="button">-->
+<!--                                                        <dl>-->
+<!--                                                            <dt>상영시간</dt>-->
+<!--                                                            <dd class="time"><strong>23:00</strong>-->
+<!--                                                                <div class="tooltip">종료 25:51</div>-->
+<!--                                                            </dd>-->
+<!--                                                            <dt>잔여석</dt>-->
+<!--                                                            <dd class="seat"><strong>179</strong> / 184</dd>-->
+<!--                                                            <dt>상영관</dt>-->
+<!--                                                            <dd class="hall">6관</dd>-->
+<!--                                                        </dl>-->
+<!--                                                    </a></li>-->
+                                                </ul>
+                                            </div>
                                         </div>
-                                        <div class="time_select_wrap timeSelect">
-                                            <ul class="list_hall">
-                                                <li>2D</li>
-                                            </ul>
-                                            <ul class="list_time">
-                                                <li class="morning"><a th:href="@{/ticket/depth2}" role="button"><span
-                                                        class="txt_ntc ic">조조</span>
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>09:00</strong>
-                                                            <div class="tooltip">종료 11:51</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>295</strong> / 332</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">5관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class="morning"><a th:href="@{/ticket/depth2}" role="button"><span
-                                                        class="txt_ntc ic">조조</span>
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>09:40</strong>
-                                                            <div class="tooltip">종료 12:31</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>146</strong> / 164</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">1관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>10:20</strong>
-                                                            <div class="tooltip">종료 13:11</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>158</strong> / 184</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">6관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>12:10</strong>
-                                                            <div class="tooltip">종료 15:01</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>294</strong> / 332</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">5관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>12:50</strong>
-                                                            <div class="tooltip">종료 15:41</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>157</strong> / 164</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">1관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>13:30</strong>
-                                                            <div class="tooltip">종료 16:21</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>155</strong> / 184</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">6관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>14:10</strong>
-                                                            <div class="tooltip">종료 17:01</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>125</strong> / 142</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">2관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>15:20</strong>
-                                                            <div class="tooltip">종료 18:11</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>275</strong> / 332</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">5관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>16:00</strong>
-                                                            <div class="tooltip">종료 18:51</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>150</strong> / 164</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">1관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>16:40</strong>
-                                                            <div class="tooltip">종료 19:31</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>171</strong> / 184</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">6관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>18:30</strong>
-                                                            <div class="tooltip">종료 21:21</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>301</strong> / 332</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">5관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>19:10</strong>
-                                                            <div class="tooltip">종료 22:01</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>149</strong> / 164</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">1관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>19:50</strong>
-                                                            <div class="tooltip">종료 22:41</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>167</strong> / 184</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">6관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>21:40</strong>
-                                                            <div class="tooltip">종료 24:31</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>308</strong> / 332</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">5관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>22:20</strong>
-                                                            <div class="tooltip">종료 25:11</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>155</strong> / 164</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">1관</dd>
-                                                    </dl>
-                                                </a></li>
-                                                <li class=""><a th:href="@{/ticket/depth2}" role="button">
-                                                    <dl>
-                                                        <dt>상영시간</dt>
-                                                        <dd class="time"><strong>23:00</strong>
-                                                            <div class="tooltip">종료 25:51</div>
-                                                        </dd>
-                                                        <dt>잔여석</dt>
-                                                        <dd class="seat"><strong>179</strong> / 184</dd>
-                                                        <dt>상영관</dt>
-                                                        <dd class="hall">6관</dd>
-                                                    </dl>
-                                                </a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    </th:block>
+
                                 </div>
                             </div>
 
