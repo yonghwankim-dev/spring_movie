@@ -1,4 +1,4 @@
-package kr.yh.movie.repository;
+package kr.yh.movie.repository.screen;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;

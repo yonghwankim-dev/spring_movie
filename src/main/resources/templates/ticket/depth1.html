@@ -103,7 +103,7 @@
                                                             <input th:checked="${date.dayOfMonth == selectedStartDate.dayOfMonth}" data-displayyn="Y"
                                                                    data-isplaydate="Y"
                                                                    th:data-playdate="${date}"
-                                                                   data-playweek="오늘" name="radioDate1"
+                                                                   name="radioDate1"
                                                                    type="radio">
                                                             <strong th:text="${date.getDayOfMonth()}"></strong>
                                                             <em th:text="${dateStatus.first ? '오늘' : #temporals.dayOfWeekNameShort(date)}">오늘</em>
