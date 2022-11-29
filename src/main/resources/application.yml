@@ -99,5 +99,7 @@ spring:
           storage_engine: innodb # 트랜잭션을 지원하고, 커밋과 롤백 그리고 데이터 복구 기능을 제공하므로 데이터를 효과적으로 보호
   sql:
     init:
-      data-locations: "classpath*:/db/mysql/data.sql"
+      data-locations: "classpath*:/db/mysql/data-mysql.sql"
       mode: always
+      platform: mysql
+
