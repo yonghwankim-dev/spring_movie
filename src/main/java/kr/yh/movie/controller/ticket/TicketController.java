@@ -9,12 +9,8 @@ import kr.yh.movie.repository.cinema.CinemaRepositoryImpl;
 import kr.yh.movie.repository.movie.MovieRepository;
 import kr.yh.movie.repository.movie.MovieRepositoryImpl;
 import kr.yh.movie.repository.screen.ScreenRepositoryImpl;
-import kr.yh.movie.service.CinemaService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.asm.Advice;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,10 +20,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
-import static org.springframework.format.annotation.DateTimeFormat.ISO.*;
 
 @RestController
 @AllArgsConstructor
@@ -54,6 +50,7 @@ public class TicketController {
         List<Movie> movies = movieRepository.findAll();
         List<Movie> moviesOnScreen = movieRepositoryImpl.findAllMovieOnScreen(location, startDate, cinemaId, movieId);
         List<Screen> screens = screenRepositoryImpl.findAll(location, cinemaId, movieId, startDate);
+        Map<Movie, List<Screen>> movieOnScreenMap = createMovieOnScreenMap(moviesOnScreen, screens);
         LocalDate today = LocalDate.now();
         List<LocalDate> localDateList = today.datesUntil(today.plusWeeks(2)).collect(Collectors.toList());
 
@@ -68,8 +65,16 @@ public class TicketController {
         mav.getModelMap().addAttribute("selectedMovieId", movieId);
         mav.getModelMap().addAttribute("selectedStartDate", startDate);
         mav.getModelMap().addAttribute("localDateList", localDateList);
+        mav.getModelMap().addAttribute("movieOnScreenMap", movieOnScreenMap);
 
         return mav;
+    }
+
+    private Map<Movie, List<Screen>> createMovieOnScreenMap(List<Movie> movies, List<Screen> screens) {
+        Map<Movie, List<Screen>> result = new HashMap<>();
+        movies.forEach(m->result.putIfAbsent(m, new ArrayList<>()));
+        screens.forEach(s->result.get(s.getMovie()).add(s));
+        return result;
     }
 
     @GetMapping("/ticket/depth2")

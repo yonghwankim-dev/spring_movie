@@ -1,6 +1,8 @@
 package kr.yh.movie.controller.ticket;
 
 import kr.yh.movie.domain.Cinema;
+import kr.yh.movie.domain.Movie;
+import kr.yh.movie.domain.Screen;
 import kr.yh.movie.repository.cinema.CinemaRepository;
 import kr.yh.movie.repository.cinema.CinemaRepositoryImpl;
 import kr.yh.movie.repository.movie.MovieRepositoryImpl;
@@ -24,7 +26,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
