@@ -8,6 +8,7 @@ import kr.yh.movie.repository.cinema.CinemaRepository;
 import kr.yh.movie.repository.cinema.CinemaRepositoryImpl;
 import kr.yh.movie.repository.movie.MovieRepository;
 import kr.yh.movie.repository.movie.MovieRepositoryImpl;
+import kr.yh.movie.repository.screen.ScreenRepository;
 import kr.yh.movie.repository.screen.ScreenRepositoryImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,7 @@ public class TicketController {
     private final MovieRepositoryImpl movieRepositoryImpl;
     private final MovieRepository movieRepository;
     private final ScreenRepositoryImpl screenRepositoryImpl;
+    private final ScreenRepository screenRepository;
 
     @GetMapping("/ticket/depth1")
     public ModelAndView depth1(@RequestParam(value = "selectedLocation", required = false, defaultValue = "서울") String location,
@@ -77,11 +79,12 @@ public class TicketController {
         return result;
     }
 
-    @GetMapping("/ticket/depth2")
-    public ModelAndView depth2(){
+    @GetMapping("/ticket/depth2/")
+    public ModelAndView depth2(@RequestParam(value = "screenId") Long screenId){
         log.info("depth2");
         ModelAndView mav = new ModelAndView("/ticket/depth2");
-
+        Screen screen = screenRepository.findById(screenId).get();
+        mav.getModel().put("screen", screen);
         mav.getModel().put("seatTitleList", getSeatTitleList());
         return mav;
     }
