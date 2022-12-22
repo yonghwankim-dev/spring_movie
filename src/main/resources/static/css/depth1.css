@@ -604,8 +604,10 @@
 }
 
 .group_time_select {
+    clear: both;
     margin-top: 30px;
 }
+
 
 .time_select_tit {
     font-size: 15px;
