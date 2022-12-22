@@ -79,13 +79,13 @@ public class TicketController {
         return result;
     }
 
-    @GetMapping("/ticket/depth2/")
-    public ModelAndView depth2(@RequestParam(value = "screenId") Long screenId){
-        log.info("depth2");
+    @GetMapping("/ticket/depth2")
+    public ModelAndView depth2(@RequestParam(value = "screenId", required = false) Long screenId){
+        log.info("depth2 : " + screenId);
         ModelAndView mav = new ModelAndView("/ticket/depth2");
         Screen screen = screenRepository.findById(screenId).get();
-        mav.getModel().put("screen", screen);
-        mav.getModel().put("seatTitleList", getSeatTitleList());
+        mav.getModelMap().addAttribute("screen", screen);
+        mav.getModelMap().addAttribute("seatTitleList", getSeatTitleList());
         return mav;
     }
 
