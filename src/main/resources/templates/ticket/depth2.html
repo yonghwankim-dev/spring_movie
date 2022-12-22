@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/layout}">
+      layout:decorate="~{fragments/layout}" lang="kr">
 
 <div class="container-fluid" layout:fragment="content">
     <div class="wrap_reserve">
         <h2 class="hidden">예매하기</h2>
 
-        <div th:replace="ticket/personSeatHeader"/>
+        <div th:replace="ticket/personSeatHeader"></div>
 
         <div id="reserveStep02" class="section_step_con step02 active">
             <h3 class="hidden">인원/좌석</h3>
@@ -22,18 +22,23 @@
                             <h5 class="hidden">인원선택</h5>
                             <div class="movie_infor" style="box-sizing: unset;">
                                 <h6 class="hidden">예매 정보</h6>
-                                <span class="thm"><img src="https://caching.lottecinema.co.kr//Media/MovieFile/MovieImg/202211/18944_103_1.jpg"></span>
+                                <span class="thm"><img src="https://caching.lottecinema.co.kr//Media/MovieFile/MovieImg/202211/18944_103_1.jpg" alt=""></span>
                                 <div class="group_infor">
                                     <div class="bx_tit">
                                         <span class="ic_grade gr_12">관람가</span>
-                                        <strong>블랙 팬서: 와칸다 포에버 (2D)</strong>
+                                        <strong th:text="${screen.movie.name}"/>
                                     </div>
                                     <dl>
                                         <dt>일시</dt>
-                                        <dd class="sub_info1">22.11.10<em>(목)</em><span
-                                                class="time">10:50 ~ 13:41</span></dd>
+                                        <dd class="sub_info1" th:text="${#temporals.format(screen.startDateTime, 'yyyy-MM-dd')}">
+                                            <em th:text="'('+${#temporals.dayOfWeekNameShort(screen.startDateTime)}+')'"/>
+                                            <span class="time"
+                                                  th:text="${#temporals.format(screen.startDateTime, 'HH:mm')
+                                                  + '~' +
+                                                  #temporals.format(screen.startDateTime.plusMinutes(screen.movie.runtime), 'HH:mm')}"/>
+                                        </dd>
                                         <dt>영화관</dt>
-                                        <dd class="sub_info1">가산디지털 · 6관</dd>
+                                        <dd class="sub_info1" th:text="${screen.theater.cinema.name} + ${screen.theater.name}"/>
                                     </dl>
                                 </div>
                             </div>
@@ -60,7 +65,7 @@
                                         <strong class="tit">시니어</strong>
                                         <span class="bx_num">
                                             <button class="btn_mins" id="Minus|12">감소</button>
-                                            <div class="txt_num">0</div>
+                                            <div class="txt_num">0</div>-
                                             <button class="btn_plus" id="Plus|12">증가</button>
                                         </span>
                                     </li>
