@@ -149,7 +149,7 @@
                                                 <ul class="list_time">
                                                     <th:block th:each="screen : ${movieOnScreenMap.get(movie)}">
                                                         <li>
-                                                            <a th:href="@{/ticket/depth2}" role="button">
+                                                            <a th:href="@{/ticket/depth2(screenId=${screen.id})}">
                                                                 <dl>
                                                                     <dt>상영시간</dt>
                                                                     <dd class="time">
