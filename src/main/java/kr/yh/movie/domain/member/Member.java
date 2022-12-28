@@ -2,19 +2,14 @@ package kr.yh.movie.domain.member;
 
 import kr.yh.movie.controller.member.MemberDTO;
 import kr.yh.movie.domain.Reservation;
-import kr.yh.movie.util.ModelMapperUtils;
 import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
-import org.modelmapper.config.Configuration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,17 +17,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
-import static kr.yh.movie.util.ModelMapperUtils.*;
-import static org.modelmapper.config.Configuration.AccessLevel.*;
+import static kr.yh.movie.util.ModelMapperUtils.getModelMapper;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "member_id")
-@ToString(exclude = {"reservations"})
 @Builder
 public class Member implements UserDetails {
     @Id
@@ -47,7 +40,7 @@ public class Member implements UserDetails {
     private Address address;
     @Column(name = "email", unique = true)
     private String email;
-    @Column(name = "userId", unique = true)
+    @Column(name = "user_id", unique = true)
     private String userId;
     private String password;
     private String gender;
@@ -55,6 +48,7 @@ public class Member implements UserDetails {
     private MemberRole roleName;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private final List<Reservation> reservations = new ArrayList<>();
 
     @CreationTimestamp
@@ -63,7 +57,6 @@ public class Member implements UserDetails {
     private LocalDateTime lastLoginTime;
     @UpdateTimestamp
     private LocalDateTime lastUpdatedTime;
-
 
     //== 생성 로직 ==//
     public static Member of(MemberDTO dto){
@@ -131,5 +124,18 @@ public class Member implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Member member = (Member) o;
+        return id != null && Objects.equals(id, member.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

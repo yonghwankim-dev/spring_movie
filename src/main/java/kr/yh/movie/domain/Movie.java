@@ -2,17 +2,18 @@ package kr.yh.movie.domain;
 
 import kr.yh.movie.controller.movie.MovieDTO;
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-@ToString(exclude = {"screens"})
+@ToString
 @Builder
 public class Movie {
     @Id
@@ -25,16 +26,16 @@ public class Movie {
     private int runtime;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private final List<Screen> screens = new ArrayList<>();
 
     //== 생성 로직 ==//
     public static Movie createMovie(MovieDTO form){
-        Movie movie = Movie.builder()
-                            .name(form.getName())
-                            .filmRating(form.getFilmRating())
-                            .runtime(form.getRuntime())
-                            .build();
-        return movie;
+        return Movie.builder()
+                    .name(form.getName())
+                    .filmRating(form.getFilmRating())
+                    .runtime(form.getRuntime())
+                    .build();
     }
 
     //== 수정 로직 ==//
@@ -42,5 +43,18 @@ public class Movie {
         this.name       = form.getName();
         this.filmRating = form.getFilmRating();
         this.runtime    = form.getRuntime();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Movie movie = (Movie) o;
+        return id != null && Objects.equals(id, movie.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

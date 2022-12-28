@@ -1,7 +1,9 @@
 package kr.yh.movie.domain;
 
 import kr.yh.movie.controller.member.MemberDTO;
+import kr.yh.movie.domain.member.Address;
 import kr.yh.movie.domain.member.Member;
+import kr.yh.movie.domain.member.MemberRole;
 import kr.yh.movie.service.MemberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,30 +12,38 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
 
-@SpringBootTest
-@Transactional(readOnly = true)
 public class MemberTest {
-
-    @Autowired
-    private MemberService memberService;
-
-    private Long id;
+    private Member fakeMember;
 
     @BeforeEach
     public void setup(){
-        id = 1L;
+        fakeMember = Member.builder()
+                            .id(1L)
+                            .address(new Address("06228", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)", ""))
+                            .birthday(LocalDate.of(1995, 01, 01))
+                            .email("user1@gmail.com")
+                            .gender("male")
+                            .name("김용환")
+                            .userId("user1")
+                            .password("user1")
+                            .phone("010-1234-4567")
+                            .roleName(MemberRole.USER)
+                            .regDate(LocalDateTime.now())
+                            .build();
     }
 
     @Test
     public void testOf(){
         //given
         // entity -> dto
-        MemberDTO memberDto = MemberDTO.of(memberService.findById(id).get());
+        MemberDTO memberDto = MemberDTO.of(fakeMember);
         //when
         Member member = Member.of(memberDto);
         //then
@@ -53,7 +63,7 @@ public class MemberTest {
     @Test
     public void testChangeInfo(){
         //given
-        Member member = memberService.findById(1L).get();
+        Member member = fakeMember;
         MemberDTO form = MemberDTO.of(member);
         //when
         form.setName("홍길동");
@@ -65,61 +75,11 @@ public class MemberTest {
     @Test
     public void testGetAuthorities(){
         //given
-        Member member = memberService.findById(1L).get();
+        Member member = fakeMember;
         //when
         List<? extends GrantedAuthority> authorities = (List<? extends GrantedAuthority>) member.getAuthorities();
         String authority = authorities.get(0).getAuthority();
         //then
         assertThat(authority).isEqualTo("계정별 등록할 권한");
-    }
-    
-    @Test
-    public void testGetUsername(){
-        //given
-        Member member = memberService.findById(id).get();
-        //when
-        String userId = member.getUsername();
-        //then
-        assertThat(userId).isEqualTo("user1");
-    }
-    
-    @Test
-    public void testIsAccountNonExpired(){
-        //given
-        Member member = memberService.findById(id).get();
-        //when
-        boolean actual = member.isAccountNonExpired();
-        //then
-        assertThat(actual).isTrue();
-    }
-
-    @Test
-    public void testIsAccountNonLocked(){
-        //given
-        Member member = memberService.findById(id).get();
-        //when
-        boolean actual = member.isAccountNonLocked();
-        //then
-        assertThat(actual).isTrue();
-    }
-
-    @Test
-    public void testIsCredentialsNonExpired(){
-        //given
-        Member member = memberService.findById(id).get();
-        //when
-        boolean actual = member.isCredentialsNonExpired();
-        //then
-        assertThat(actual).isTrue();
-    }
-
-    @Test
-    public void testIsEnabled(){
-        //given
-        Member member = memberService.findById(id).get();
-        //when
-        boolean actual = member.isEnabled();
-        //then
-        assertThat(actual).isTrue();
     }
 }

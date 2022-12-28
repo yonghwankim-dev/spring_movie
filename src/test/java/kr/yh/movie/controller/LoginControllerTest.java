@@ -1,11 +1,17 @@
 package kr.yh.movie.controller;
 
+import kr.yh.movie.controller.login.LoginController;
+import kr.yh.movie.controller.ticket.TicketController;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@Transactional(readOnly = true)
+@WebMvcTest(controllers = LoginController.class,
+        excludeFilters = @ComponentScan.Filter(type= FilterType.REGEX, pattern = "kr.yh.movie.controller.converter.*"))
+
 public class LoginControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -68,7 +74,7 @@ public class LoginControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andReturn().getResponse().getRedirectedUrl();
         String decode = URLDecoder.decode(redirectedUrl, "UTF-8");
-        assertThat(decode).contains("아이디 또는 비밀번호가 일치하지 않습니다.");
+        assertThat(decode).contains("/login?error");
     }
 
     @Test
@@ -84,7 +90,7 @@ public class LoginControllerTest {
                                             .andExpect(status().is3xxRedirection())
                                             .andReturn().getResponse().getRedirectedUrl();
         String decode = URLDecoder.decode(redirectedUrl, "UTF-8");
-        assertThat(decode).contains("비밀번호가 불일치합니다.");
+        assertThat(decode).contains("/login?error");
     }
     
     @Test

@@ -4,11 +4,13 @@ import kr.yh.movie.domain.Reservation;
 import kr.yh.movie.domain.member.Address;
 import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.domain.member.MemberRole;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -24,90 +26,6 @@ public class MemberServiceTest {
     private MemberService memberService;
     @Autowired
     private ReservationService reservationService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    private final static String NUMERIC = "0123456789";
-    private final static Random random = new Random();
-
-    @Test
-    @Transactional
-    public void insert() throws Exception{
-        for (int i = 1; i <= 100; i++) {
-            Member member = Member.builder()
-                    .name("사용자"+i)
-                    .birthday(getRandomBirthday())
-                    .phone(randomCellPhone())
-                    .address(new Address("06035", "서울 강남구 가로수길 5",""))
-                    .email("user"+i+"@gmail.com")
-                    .userId("user"+i)
-                    .password(passwordEncoder.encode("pw"+i))
-                    .gender(getGender(i))
-                    .roleName(MemberRole.valueOf(getRole(i)))
-                    .build();
-
-            memberService.save(member);
-        }
-    }
-
-    private static LocalDate getRandomBirthday(){
-        GregorianCalendar gc = new GregorianCalendar();
-
-        int year = randBetween(1950, 2022);
-
-        gc.set(gc.YEAR, year);
-
-        int dayOfYear = randBetween(1, gc.getActualMaximum(gc.DAY_OF_YEAR));
-
-        gc.set(gc.DAY_OF_YEAR, dayOfYear);
-
-        return gc.toZonedDateTime().toLocalDate();
-    }
-
-    private static int randBetween(int start, int end) {
-        return start + (int)Math.round(Math.random() * (end - start));
-    }
-
-    private static String randomCellPhone() throws Exception {
-        return "010-" + randomNumberic(4) + "-" + randomNumberic(4);
-    }
-
-    private static String randomNumberic(int size) throws Exception {
-        return randomChoice(NUMERIC, size);
-    }
-
-    private static String randomChoice(String strIdxs, int size) throws Exception {
-
-        if (size < 1) {
-            throw new Exception();
-        }
-
-        StringBuilder rtnStr = new StringBuilder();
-
-        int i=0;
-        while(i++ < size) {
-            int random_idx = random.nextInt(strIdxs.length());
-            rtnStr.append(strIdxs.substring(random_idx, random_idx+1));
-        }
-
-        return rtnStr.toString();
-    }
-
-    private static String getGender(int i){
-        return i % 2 == 0 ? "male" : "female";
-    }
-
-    private static String getRole(int i){
-        if(i <= 80){
-            return "USER";
-        }
-        if(i <= 90){
-            return "MANAGER";
-        }
-        if(i <= 100){
-            return "ADMIN";
-        }
-        return "USER";
-    }
 
     @Test
     @Transactional

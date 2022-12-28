@@ -42,6 +42,7 @@ public class Theater {
     //== 생성 로직 ==//
     public static Theater createTheater(TheaterForm form, Cinema cinema){
         Theater theater = Theater.builder()
+                                 .id(form.getId())
                                  .name(form.getName())
                                  .build();
         theater.setCinema(cinema);
@@ -50,6 +51,7 @@ public class Theater {
 
     //== 수정 로직 ==//
     public void changeInfo(TheaterForm form, Cinema cinema){
+        this.id = form.getId();
         this.name = form.getName();
         setCinema(cinema);
     }

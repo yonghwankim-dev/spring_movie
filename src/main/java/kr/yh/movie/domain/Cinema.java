@@ -27,16 +27,17 @@ public class Cinema {
 
     //== 생성 로직 ==//
     public static Cinema createCinema(CinemaDTO form){
-        Cinema cinema = Cinema.builder()
-                                .name(form.getName())
-                                .location(form.getLocation())
-                                .build();
-        return cinema;
+        return Cinema.builder()
+                     .id(form.getId())
+                     .name(form.getName())
+                     .location(form.getLocation())
+                     .build();
     }
 
     //== 수정 로직 ==//
     public void changeInfo(CinemaDTO form){
-        this.name       = form.getName();
-        this.location   = form.getLocation();
+        this.id = form.getId();
+        this.name = form.getName();
+        this.location = form.getLocation();
     }
 }

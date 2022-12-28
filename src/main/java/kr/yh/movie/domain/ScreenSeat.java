@@ -4,6 +4,7 @@ import kr.yh.movie.controller.screenSeat.ScreenSeatForm;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "screen_seat")
@@ -73,4 +74,16 @@ public class ScreenSeat {
         this.status = ScreenSeatStatus.EMPTY;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ScreenSeat)) return false;
+        ScreenSeat that = (ScreenSeat) o;
+        return getId().equals(that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }

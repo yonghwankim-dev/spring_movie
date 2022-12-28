@@ -36,7 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = TicketController.class,
         excludeFilters = @ComponentScan.Filter(type= FilterType.REGEX, pattern = "kr.yh.movie.controller.converter.*"))
-@ActiveProfiles("dev")
 public class TicketControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -88,12 +87,11 @@ public class TicketControllerTest {
                 .thenReturn(fakeCinemas);
 
         //when
-        ModelMap modelMap = this.mockMvc.perform(get("/ticket/depth1"))
-                                        .andExpect(status().isOk())
-                                        .andReturn().getModelAndView().getModelMap();
-        List<Cinema> cinemas = (List<Cinema>) modelMap.getAttribute("cinemas");
+        this.mockMvc.perform(get("/ticket/depth1"))
+                    .andExpect(status().isOk())
+                    .andExpect(view().name("/ticket/depth1"))
+                    .andExpect(model().attributeExists("cinemas"));
         //then
-        Assertions.assertThat(cinemas.size()).isEqualTo(2);
     }
 
     @Test

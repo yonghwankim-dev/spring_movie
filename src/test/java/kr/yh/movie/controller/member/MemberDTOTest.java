@@ -1,17 +1,44 @@
 package kr.yh.movie.controller.member;
 
+import kr.yh.movie.controller.cinema.CinemaController;
+import kr.yh.movie.domain.member.Address;
 import kr.yh.movie.domain.member.Member;
 import kr.yh.movie.service.MemberService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
+
+import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
 public class MemberDTOTest {
-    @Autowired
-    private MemberService memberService;
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private Member fakeMember;
+
+    @BeforeEach
+    public void setup(){
+        fakeMember = Member.builder()
+                            .id(1L)
+                            .birthday(LocalDate.of(1990,1,1))
+                            .phone("010-1234-5678")
+                            .address(new Address("06288", "서울특별시 강남구 삼성로 154 (대치동, 강남구의회, 강남구민회관)", ""))
+                            .email("fakeuser@gmail.com")
+                            .userId("fakeuser")
+                            .password(passwordEncoder.encode("fakeuser1234@"))
+                            .gender("male")
+                            .name("김용환")
+                            .build();
+    }
 
     @Test
     public void testCreateMemberDTO(){
@@ -26,7 +53,7 @@ public class MemberDTOTest {
     @Test
     public void testOf(){
         //given
-        Member member = memberService.findById(1L).get();
+        Member member = fakeMember;
         //when
         MemberDTO memberDto = MemberDTO.of(member);
         //then

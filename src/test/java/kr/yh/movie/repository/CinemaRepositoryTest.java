@@ -5,6 +5,7 @@ import kr.yh.movie.controller.cinema.CinemaLocationDTO;
 import kr.yh.movie.domain.Cinema;
 import kr.yh.movie.repository.cinema.CinemaRepository;
 import kr.yh.movie.repository.cinema.CinemaRepositoryImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,6 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@ActiveProfiles("local")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(QuerydslConfig.class)
 public class CinemaRepositoryTest {
 
@@ -33,6 +32,19 @@ public class CinemaRepositoryTest {
 
     @Autowired
     CinemaRepositoryImpl cinemaRepositoryImpl;
+
+    Long cinemaId;
+    Long movieId;
+    String location;
+    LocalDateTime startDate;
+
+    @BeforeEach
+    public void setup(){
+        cinemaId = 1L;
+        movieId = 1L;
+        location = "서울";
+        startDate = LocalDateTime.of(LocalDate.of(2022, 01, 01), LocalTime.of(0,0));
+    }
 
     @Test
     @DisplayName("영화관 저장")
@@ -67,7 +79,6 @@ public class CinemaRepositoryTest {
     @DisplayName("서울 지역 영화관 = 23개")
     public void testFindAllLocationAndCountGroupByLocation() {
         //given
-        String location = "서울";
         //when
         List<CinemaLocationDTO> cinemaLocationDTOS = cinemaRepository.findAllLocationAndCountGroupByLocation();
         CinemaLocationDTO actual = cinemaLocationDTOS.stream().filter(c -> c.getLocation().equals(location)).findFirst().get();
@@ -96,21 +107,16 @@ public class CinemaRepositoryTest {
     @DisplayName("지역 + 상영일")
     public void testFindAllByLocationAndStartDate() {
         //given
-        String location = "서울";
-        LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
         //when
         List<Cinema> actual = cinemaRepositoryImpl.findAll(location, startDate, null, null);
         //then
-        assertThat(actual.size()).isEqualTo(2);
+        assertThat(actual.size()).isGreaterThan(0);
     }
 
     @Test
     @DisplayName("지역 + 상영일 + 영화관")
     public void testFindAllByLocationAndStartDateAndCinema(){
         //given
-        String location = "서울";
-        LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
-        Long cinemaId = 1L;
         //when
         List<Cinema> actual = cinemaRepositoryImpl.findAll(location, startDate,cinemaId);
         //then
@@ -121,23 +127,9 @@ public class CinemaRepositoryTest {
     @DisplayName("지역 + 상영일 + 영화")
     public void testFindAllByLocationAndStartDateAndMovie() {
         //given
-        String location = "서울";
-        LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
-        Long movieId = 1L;
         //when
         List<Cinema> actual = cinemaRepositoryImpl.findAll(location, startDate, null, movieId);
         //then
-        assertThat(actual.size()).isEqualTo(2);
+        assertThat(actual.size()).isGreaterThan(0);
     }
-
-    @Test
-    public void test(){
-        //given
-
-        //when
-        String s = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT).format(DateTimeFormatter.ISO_LOCAL_DATE).toString();
-        //then
-        System.out.println(s);
-    }
-
 }

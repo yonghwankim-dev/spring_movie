@@ -6,6 +6,7 @@ import kr.yh.movie.domain.Movie;
 import kr.yh.movie.repository.cinema.CinemaRepository;
 import kr.yh.movie.repository.movie.MovieRepository;
 import kr.yh.movie.repository.movie.MovieRepositoryImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,6 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
-@ActiveProfiles("local")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(QuerydslConfig.class)
 public class MovieRepositoryTest {
     @Autowired
@@ -36,12 +35,23 @@ public class MovieRepositoryTest {
     @Autowired
     CinemaRepository cinemaRepository;
 
+    Long cinemaId;
+    Long movieId;
+    String location;
+    LocalDateTime startDate;
+
+    @BeforeEach
+    public void setup(){
+        cinemaId = 1L;
+        movieId = 1L;
+        location = "서울";
+        startDate = LocalDateTime.of(LocalDate.of(2022, 01, 01), LocalTime.of(0,0));
+    }
+
     @Test
     @DisplayName("지역 + 상영일")
     public void testFindAllMovieOnScreenByLocationAndStartDate(){
         //given
-        String location = "서울";
-        LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
         //when
         List<Movie> actual = movieRepositoryImpl.findAllMovieOnScreen(location, startDate);
         //then
@@ -52,9 +62,6 @@ public class MovieRepositoryTest {
     @DisplayName("지역 + 상영일 + 영화관")
     public void testFindAllMovieOnScreenByLocationAndStartDateAndCinema(){
         //given
-        String location = "서울";
-        LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
-        Long cinemaId = 1L;
         //when
         List<Movie> actual = movieRepositoryImpl.findAllMovieOnScreen(location, startDate, cinemaId);
         //then
@@ -65,8 +72,6 @@ public class MovieRepositoryTest {
     @DisplayName("지역 + 상영일 + 영화관들")
     public void testFindAllMovieOnScreenByLocationAndStartDateAndCinemaList(){
         //given
-        String location = "서울";
-        LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
         List<Long> cinemaIdList = List.of(1L, 2L);
         //when
         List<Movie> actual = movieRepositoryImpl.findAllMovieOnScreen(location, startDate, cinemaIdList);
@@ -78,14 +83,9 @@ public class MovieRepositoryTest {
     @DisplayName("지역 + 상영일 + 영화관 + 영화")
     public void testFindAllMovieOnScreenByLocationAndStartDateAndCinemaAndMovie(){
         //given
-        String location = "서울";
-        LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
-        Long cinemaId = 1L;
-        Long movieId = 1L;
         //when
         List<Movie> actual = movieRepositoryImpl.findAllMovieOnScreen(location, startDate, cinemaId, movieId);
         //then
         assertThat(actual.size()).isEqualTo(1);
     }
-
 }

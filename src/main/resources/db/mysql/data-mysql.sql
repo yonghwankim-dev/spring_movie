@@ -150,8 +150,7 @@ VALUES ('김용환', '1990-01-01', '010-1111-1113', '06228', '서울특별시 �
 
 INSERT INTO MOVIE (film_rating, name, runtime) VALUES (15, '올빼미', 150);
 INSERT INTO MOVIE (film_rating, name, runtime) VALUES (12, '블랙 팬서: 와칸다 포에버', 120);
-INSERT INTO MOVIE (film_rating, name, runtime) VALUES (12, '데시벨', 130);
-
+INSERT INTO MOVIE (film_rating, name, runtime) VALUES (12, '영웅', 130);
 
 INSERT INTO THEATER(name, cinema_id) VALUES ('1관', 1);
 INSERT INTO THEATER(name, cinema_id) VALUES ('2관', 1);

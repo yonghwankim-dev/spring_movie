@@ -46,13 +46,13 @@ public class MovieRepositoryImpl{
         Predicate screenSearch = ScreenPredicate.search(startDate);
 
         List<Movie> result = factory.select(movie)
-                .distinct()
-                .from(screen)
-                .innerJoin(movie).on(movie.id.eq(screen.movie.id))
-                .innerJoin(theater).on(theater.id.eq(screen.theater.id))
-                .innerJoin(cinema).on(theater.cinema.id.eq(cinema.id))
-                .where(cinemaSearch, movieSearch, screenSearch)
-                .fetch();
+                                    .distinct()
+                                    .from(screen)
+                                    .innerJoin(movie).on(movie.id.eq(screen.movie.id))
+                                    .innerJoin(theater).on(theater.id.eq(screen.theater.id))
+                                    .innerJoin(cinema).on(theater.cinema.id.eq(cinema.id))
+                                    .where(cinemaSearch, movieSearch, screenSearch)
+                                    .fetch();
 
         return result;
     }

@@ -31,12 +31,16 @@ public class Seat {
     //== 연관 관계 메서드 ==//
     public void setTheater(Theater theater){
         this.theater = theater;
+        if(theater.getSeats().contains(this)){
+            theater.getSeats().remove(this);
+        }
         theater.getSeats().add(this);
     }
 
     //== 생성 로직 ==//
     public static Seat createSeat(SeatForm form, Theater theater){
         Seat seat = Seat.builder()
+                        .id(form.getId())
                         .seat_row(form.getSeat_row())
                         .seat_col(form.getSeat_col())
                         .build();
@@ -46,6 +50,7 @@ public class Seat {
 
     //== 수정 로직 ==//
     public void changeInfo(SeatForm form, Theater theater){
+        this.id = form.getId();
         this.seat_row = form.getSeat_row();
         this.seat_col = form.getSeat_col();
         setTheater(theater);

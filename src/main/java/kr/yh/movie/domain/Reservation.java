@@ -35,7 +35,7 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
     private List<ScreenSeat> screenSeats = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,15 +44,21 @@ public class Reservation {
 
     //== 연관 관계 메서드 ==//
     public void setMember(Member member){
+        if(this.member.getReservations().contains(this)){
+            this.member.getReservations().remove(this);
+        }
         this.member = member;
         member.getReservations().add(this);
     }
 
     public void setScreenSeats(ScreenSeat[] screenSeats){
-        Arrays.stream(screenSeats).forEach(screenSeat -> {
+        for(ScreenSeat screenSeat : screenSeats){
+            if(this.screenSeats.contains(screenSeat)){
+                this.screenSeats.remove(screenSeat);
+            }
             this.screenSeats.add(screenSeat);
             screenSeat.setReservation(this);
-        });
+        }
     }
 
     //== 생성 메서드 ==//

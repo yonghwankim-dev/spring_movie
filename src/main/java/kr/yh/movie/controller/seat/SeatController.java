@@ -60,7 +60,7 @@ public class SeatController {
         Seat seat = createSeat(form, theater);
         Seat savedSeat = seatService.save(seat);
 
-        rttr.addFlashAttribute("savedSeat", savedSeat);
+        rttr.addAttribute("savedSeat", savedSeat);
         rttr.addAttribute("theaterId", form.getTheaterId());
         return "redirect:/seats/list";
     }

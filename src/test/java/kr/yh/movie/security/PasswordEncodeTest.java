@@ -5,19 +5,16 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+
 public class PasswordEncodeTest {
 
-    @Autowired
-    private MemberService memberService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
     @Test

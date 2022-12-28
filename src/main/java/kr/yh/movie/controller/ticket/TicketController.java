@@ -84,6 +84,7 @@ public class TicketController {
         log.info("depth2 : " + screenId);
         ModelAndView mav = new ModelAndView("/ticket/depth2");
         Screen screen = screenRepository.findById(screenId).get();
+
         mav.getModelMap().addAttribute("screen", screen);
         mav.getModelMap().addAttribute("seatTitleList", getSeatTitleList());
         return mav;

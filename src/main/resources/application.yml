@@ -1,9 +1,9 @@
 spring:
   profiles:
     group:
-      "local": "testdb,common"
       "dev": "testdb,common"
       "prod": "proddb, common"
+    default: "testdb, common"
 ---
 spring:
   config:
@@ -41,19 +41,35 @@ logging:
     org.springframework.security: debug
 
 ---
-
 spring:
   config:
     activate:
       on-profile: "testdb"
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/movie?useSSL=false
-    username: movie_user
-    password: movie_user_password
----
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
 
+  jpa:
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  sql:
+    init:
+      data-locations: "classpath*:db/h2/data-h2.sql"
+      mode: always
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings.trace: false
+      settings.web-allow-others: false
+---
 spring:
   config:
     activate:
@@ -83,4 +99,3 @@ spring:
       data-locations: "classpath*:/db/mysql/data-mysql.sql"
       mode: always
       platform: mysql
-

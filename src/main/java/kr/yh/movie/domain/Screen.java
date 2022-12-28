@@ -43,7 +43,7 @@ public class Screen {
     private Theater theater;
 
     //== 연관 관계 메서드 ==//
-    private void setMovie(Movie movie){
+    public void setMovie(Movie movie){
         this.movie = movie;
         if(movie.getScreens().contains(this)){
             movie.getScreens().remove(this);
@@ -51,7 +51,7 @@ public class Screen {
         movie.getScreens().add(this);
     }
 
-    private void setTheater(Theater theater){
+    public void setTheater(Theater theater){
         this.theater = theater;
         if(theater.getScreens().contains(this)){
             theater.getScreens().remove(this);
